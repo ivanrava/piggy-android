@@ -1,4 +1,4 @@
-package dev.ivanravasi.piggy.ui.auth
+package dev.ivanravasi.piggy.ui.auth.login
 
 import androidx.lifecycle.ViewModel
 

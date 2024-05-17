@@ -6,14 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".ui.auth.LoginFragment">
+    tools:context=".ui.auth.login.LoginFragment">
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:fontFamily="@font/josefin_slab"
-        android:text="Login"
+        android:text="@string/fragment_title_login"
         android:textSize="42sp" />
 
     <com.google.android.material.textfield.TextInputLayout
