@@ -11,7 +11,7 @@
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="@dimen/vseparation_fields"
         android:fontFamily="@font/josefin_slab"
         android:text="@string/fragment_title_login"
         android:textSize="42sp" />
@@ -30,7 +30,7 @@
             android:fontFamily="@font/josefin_slab_semibold"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
-            android:paddingBottom="12dp" />
+            android:paddingBottom="@dimen/vseparation_fields" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -46,7 +46,7 @@
             android:fontFamily="@font/josefin_slab_semibold"
             android:hint="@string/hint_password"
             android:inputType="textPassword"
-            android:paddingBottom="12dp" />
+            android:paddingBottom="@dimen/vseparation_fields" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -63,7 +63,7 @@
             android:fontFamily="@font/josefin_slab_semibold"
             android:hint="@string/hint_instance_domain"
             android:inputType="text"
-            android:paddingBottom="12dp" />
+            android:paddingBottom="@dimen/vseparation_fields" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.switchmaterial.SwitchMaterial
@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="4dp"
         android:fontFamily="@font/inter"
-        android:padding="16dp"
+        android:padding="@dimen/vseparation_fields"
         android:text="@string/button_sign_in"
         android:textSize="20sp"
         app:cornerRadius="8dp" />
