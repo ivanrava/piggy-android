@@ -1,120 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_margin="24dp"
-    android:gravity="center"
     tools:context=".LoginActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="64dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="72dp"
         android:adjustViewBounds="true"
         android:src="@drawable/logo_align_left"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="64dp" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/josefin_slab"
-        android:text="Login"
-        android:textSize="38sp"
-        android:layout_marginBottom="8dp"/>
-
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
-        app:endIconDrawable="@drawable/ic_mail_24dp"
-        app:endIconMode="custom"
-        app:boxCornerRadiusBottomEnd="8dp"
-        app:boxCornerRadiusBottomStart="8dp"
-        app:boxCornerRadiusTopStart="8dp"
-        app:boxCornerRadiusTopEnd="8dp"
-        app:boxBackgroundMode="outline">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_email"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.65">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/josefin_slab"
+            android:text="Login"
+            android:textSize="38sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:hint="E-mail address"
-            android:inputType="textEmailAddress"
-            android:paddingBottom="12dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginVertical="4dp"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:endIconDrawable="@drawable/ic_mail_24dp"
+            app:endIconMode="custom">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
-        app:boxCornerRadiusBottomEnd="8dp"
-        app:boxCornerRadiusBottomStart="8dp"
-        app:boxCornerRadiusTopStart="8dp"
-        app:boxCornerRadiusTopEnd="8dp"
-        app:boxBackgroundMode="outline"
-        app:passwordToggleEnabled="true">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_password"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="E-mail address"
+                android:inputType="textEmailAddress"
+                android:paddingBottom="12dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="12dp"
-            android:hint="Password"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginVertical="4dp"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:passwordToggleEnabled="true">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
-        app:endIconDrawable="@drawable/ic_instance_24dp"
-        app:endIconMode="custom"
-        app:boxCornerRadiusBottomEnd="8dp"
-        app:boxCornerRadiusBottomStart="8dp"
-        app:boxCornerRadiusTopStart="8dp"
-        app:boxCornerRadiusTopEnd="8dp"
-        app:boxBackgroundMode="outline">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_instance_domain"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingBottom="12dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="12dp"
-            android:hint="Instance domain"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginVertical="4dp"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:endIconDrawable="@drawable/ic_instance_24dp"
+            app:endIconMode="custom">
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch_remember"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="10dp"
-        android:textSize="14sp"
-        android:text="Remember credentials"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_instance_domain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="Instance domain"
+                android:inputType="text"
+                android:paddingBottom="12dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_remember"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="10dp"
+            android:text="Remember credentials"
+            android:textSize="14sp" />
 
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_sign_in"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="Sign in"
-        android:textSize="20sp"
-        android:fontFamily="@font/inter"
-        android:layout_marginVertical="4dp"
-        app:cornerRadius="8dp" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_sign_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:fontFamily="@font/inter"
+            android:padding="16dp"
+            android:text="Sign in"
+            android:textSize="20sp"
+            app:cornerRadius="8dp" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/link_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="I do not have an account. Yet..." />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/link_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="I do not have an account. Yet..." />
+    </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
