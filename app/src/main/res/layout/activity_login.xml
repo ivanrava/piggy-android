@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/josefin_slab_semibold"
-                android:hint="E-mail address"
+                android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"
                 android:paddingBottom="12dp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -75,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/josefin_slab_semibold"
-                android:hint="Password"
+                android:hint="@string/hint_password"
                 android:inputType="textPassword"
                 android:paddingBottom="12dp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -97,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/josefin_slab_semibold"
-                android:hint="Instance domain"
+                android:hint="@string/hint_instance_domain"
                 android:inputType="text"
                 android:paddingBottom="12dp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -106,9 +106,9 @@
             android:id="@+id/switch_remember"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="10dp"
-            android:text="Remember credentials"
+            android:paddingStart="16dp"
+            android:paddingEnd="10dp"
+            android:text="@string/remember_credentials"
             android:textSize="14sp" />
 
 
@@ -119,7 +119,7 @@
             android:layout_marginVertical="4dp"
             android:fontFamily="@font/inter"
             android:padding="16dp"
-            android:text="Sign in"
+            android:text="@string/button_sign_in"
             android:textSize="20sp"
             app:cornerRadius="8dp" />
 
@@ -128,7 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="I do not have an account. Yet..." />
+            android:text="@string/link_register" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

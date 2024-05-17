@@ -5,4 +5,10 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_categories">Categories</string>
     <string name="title_beneficiaries">Beneficiaries</string>
+    <string name="button_sign_in">Sign in</string>
+    <string name="link_register">I do not have an account. Yet...</string>
+    <string name="remember_credentials">Remember credentials</string>
+    <string name="hint_instance_domain">Instance domain</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_email">E-mail address</string>
 </resources>
