@@ -9,10 +9,11 @@
     tools:context=".AuthActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="88dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="88dp"
         android:adjustViewBounds="true"
         android:src="@drawable/logo_align_left"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,15 +22,14 @@
         android:id="@+id/nav_host_fragment_activity_auth"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="88dp"
         android:layout_marginEnd="24dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65"
+        app:layout_constraintTop_toBottomOf="@id/logo"
         app:navGraph="@navigation/auth_navigation">
 
     </androidx.fragment.app.FragmentContainerView>
