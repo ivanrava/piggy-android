@@ -12,4 +12,8 @@
     <string name="hint_password">Password</string>
     <string name="hint_email">E-mail address</string>
     <string name="fragment_title_login">Login</string>
+    <string name="fragment_title_register">Register</string>
+    <string name="hint_password_confirm">Confirm your password</string>
+    <string name="button_sign_up">Sign up</string>
+    <string name="link_login">Have a deja-vu? Try logging in instead...</string>
 </resources>

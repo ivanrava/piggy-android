@@ -6,7 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.databinding.FragmentRegisterBinding
+import dev.ivanravasi.piggy.ui.auth.ViewUtils
 
 class RegisterFragment : Fragment() {
 
@@ -15,6 +19,8 @@ class RegisterFragment : Fragment() {
     }
 
     private val viewModel: RegisterViewModel by viewModels()
+    private lateinit var binding: FragmentRegisterBinding
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +32,16 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_register, container, false)
+        binding = FragmentRegisterBinding.inflate(inflater, container, false)
+
+        navController = findNavController()
+        binding.linkLogin.apply {
+            text = ViewUtils.underlineText(text)
+            setOnClickListener {
+                navController.navigate(R.id.action_registerFragment_to_loginFragment)
+            }
+        }
+
+        return binding.root
     }
 }

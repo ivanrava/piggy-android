@@ -6,27 +6,31 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="24dp"
-    tools:context=".LoginActivity">
+    tools:context=".AuthActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="64dp"
+        android:layout_marginHorizontal="88dp"
         android:layout_marginTop="72dp"
         android:adjustViewBounds="true"
         android:src="@drawable/logo_align_left"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="64dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_auth"
+        android:id="@+id/nav_host_fragment_activity_auth"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="dev.ivanravasi.piggy.ui.auth.login.LoginFragment"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65">
+        app:layout_constraintVertical_bias="0.65"
+        app:navGraph="@navigation/auth_navigation">
 
     </androidx.fragment.app.FragmentContainerView>
 

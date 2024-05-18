@@ -14,7 +14,7 @@
         android:layout_marginBottom="@dimen/vseparation_fields"
         android:fontFamily="@font/josefin_slab"
         android:text="@string/fragment_title_login"
-        android:textSize="42sp" />
+        android:textSize="@dimen/title_size" />
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/text_input_layout"
@@ -70,28 +70,28 @@
         android:id="@+id/switch_remember"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingEnd="10dp"
-        android:text="@string/remember_credentials"
-        android:textSize="14sp" />
+        android:paddingStart="@dimen/switch_padding_start"
+        android:paddingEnd="@dimen/switch_padding_end"
+        android:text="@string/remember_credentials" />
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_sign_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
+        android:layout_marginVertical="@dimen/vseparation_small"
+        android:enabled="false"
         android:fontFamily="@font/inter"
         android:padding="@dimen/vseparation_fields"
         android:text="@string/button_sign_in"
-        android:textSize="20sp"
-        app:cornerRadius="8dp" />
+        android:textSize="@dimen/button_text_size"
+        app:cornerRadius="@dimen/corner_radius" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/link_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/vseparation_medium"
         android:text="@string/link_register" />
 
 </LinearLayout>

@@ -3,4 +3,11 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="vseparation_fields">12dp</dimen>
+    <dimen name="vseparation_medium">16dp</dimen>
+    <dimen name="corner_radius">8dp</dimen>
+    <dimen name="title_size">42sp</dimen>
+    <dimen name="button_text_size">20sp</dimen>
+    <dimen name="vseparation_small">4dp</dimen>
+    <dimen name="switch_padding_start">16dp</dimen>
+    <dimen name="switch_padding_end">10dp</dimen>
 </resources>
