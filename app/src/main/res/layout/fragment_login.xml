@@ -18,6 +18,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/text_input_layout"
+        android:id="@+id/input_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:endIconDrawable="@drawable/ic_mail_24dp"
@@ -35,6 +36,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/text_input_layout"
+        android:id="@+id/input_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:passwordToggleEnabled="true">
@@ -51,6 +53,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/text_input_layout"
+        android:id="@+id/input_instance_domain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:endIconDrawable="@drawable/ic_instance_24dp"
@@ -80,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/vseparation_small"
-        android:enabled="false"
+        android:enabled="true"
         android:fontFamily="@font/inter"
         android:padding="@dimen/vseparation_fields"
         android:text="@string/button_sign_in"
