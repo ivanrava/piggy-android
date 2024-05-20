@@ -16,4 +16,6 @@
     <string name="hint_password_confirm">Confirm your password</string>
     <string name="button_sign_up">Sign up</string>
     <string name="link_login">Have a deja-vu? Try logging in instead...</string>
+    <string name="title_properties">Properties</string>
+    <string name="title_budget">Budget</string>
 </resources>

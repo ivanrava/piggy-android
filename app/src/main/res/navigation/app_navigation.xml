@@ -22,4 +22,14 @@
         android:name="dev.ivanravasi.piggy.ui.beneficiaries.BeneficiariesFragment"
         android:label="@string/title_beneficiaries"
         tools:layout="@layout/fragment_beneficiaries" />
+    <fragment
+        android:id="@+id/navigation_properties"
+        android:name="dev.ivanravasi.piggy.ui.properties.PropertiesFragment"
+        android:label="fragment_properties"
+        tools:layout="@layout/fragment_properties" />
+    <fragment
+        android:id="@+id/navigation_budget"
+        android:name="dev.ivanravasi.piggy.ui.budget.BudgetFragment"
+        android:label="fragment_budget"
+        tools:layout="@layout/fragment_budget" />
 </navigation>
