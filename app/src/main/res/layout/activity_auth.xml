@@ -16,6 +16,7 @@
         android:layout_marginTop="88dp"
         android:adjustViewBounds="true"
         android:src="@drawable/logo_align_left"
+        android:tint="@color/tint_logo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.fragment.app.FragmentContainerView
