@@ -1,6 +1,5 @@
 package dev.ivanravasi.piggy.ui.auth.login
 
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,11 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -20,12 +14,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.RetrofitClient
-import dev.ivanravasi.piggy.api.bodies.TokenRequest
+import dev.ivanravasi.piggy.api.bodies.TokenCreateRequest
+import dev.ivanravasi.piggy.data.DataStoreManager
 import dev.ivanravasi.piggy.databinding.FragmentLoginBinding
 import dev.ivanravasi.piggy.ui.auth.ViewUtils
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -39,8 +31,7 @@ class LoginFragment : Fragment() {
     private val viewModel: LoginViewModel by viewModels()
     private lateinit var binding: FragmentLoginBinding
     private lateinit var navController: NavController
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "local-prefs")
-    private val TOKEN_KEY = stringPreferencesKey("token")
+    private lateinit var dataStore: DataStoreManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,11 +45,13 @@ class LoginFragment : Fragment() {
     ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         navController = findNavController()
+        dataStore = DataStoreManager(requireContext())
 
         runBlocking {
-            val token = getToken().firstOrNull()
-            Log.i("token", token ?: "no token (initial)")
-            navController.navigate(R.id.action_loginFragment_to_mainActivity)
+            val token = dataStore.getToken()
+            Log.i("token", token ?: "no token (initial). Staying in auth")
+            if (token != null)
+                navController.navigate(R.id.action_loginFragment_to_mainActivity)
         }
 
         binding.linkRegister.apply {
@@ -76,14 +69,14 @@ class LoginFragment : Fragment() {
             val piggyApi = RetrofitClient.getInstance(domain)
             lifecycleScope.launch {
                 try {
-                    val response = piggyApi.token(TokenRequest(email, password, deviceName))
+                    val response = piggyApi.token(TokenCreateRequest(email, password, deviceName))
                     if (response.isSuccessful) {
                         val token = response.body()!!.token
                         Toast.makeText(context, token, Toast.LENGTH_LONG).show()
                         runBlocking {
-                            saveToken(token)
+                            dataStore.saveTokenAndDomain(token, domain)
                             Log.i("token", token)
-                            val tokenRead = getToken().firstOrNull()
+                            val tokenRead = dataStore.getToken()
                             Log.i("token", tokenRead ?: "no token after save")
                         }
                         navController.navigate(R.id.action_loginFragment_to_mainActivity)
@@ -106,23 +99,5 @@ class LoginFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    private suspend fun saveToken(token: String) {
-        context?.dataStore?.edit {
-            it[TOKEN_KEY] = token
-        }
-    }
-
-    private suspend fun deleteToken() {
-        context?.dataStore?.edit {
-            it.clear()
-        }
-    }
-
-    private fun getToken(): Flow<String?> {
-        return context?.dataStore?.data?.map {
-            it[TOKEN_KEY]
-        }!!
     }
 }

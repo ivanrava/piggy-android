@@ -32,4 +32,9 @@
         android:name="dev.ivanravasi.piggy.ui.budget.BudgetFragment"
         android:label="fragment_budget"
         tools:layout="@layout/fragment_budget" />
+    <activity
+        android:id="@+id/authActivity"
+        android:name="dev.ivanravasi.piggy.AuthActivity"
+        android:label="activity_auth"
+        tools:layout="@layout/activity_auth" />
 </navigation>

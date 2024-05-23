@@ -1,13 +1,24 @@
 package dev.ivanravasi.piggy.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.RetrofitClient
+import dev.ivanravasi.piggy.data.DataStoreManager
 import dev.ivanravasi.piggy.databinding.FragmentHomeBinding
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class HomeFragment : Fragment() {
 
@@ -16,6 +27,8 @@ class HomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var navController: NavController
+    private lateinit var dataStore: DataStoreManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,10 +41,38 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        navController = findNavController()
+        dataStore = DataStoreManager(requireContext())
+
+        binding.buttonLogout.setOnClickListener {
+            lifecycleScope.launch {
+                val domain = dataStore.getDomain()!!
+                Log.i("token", "Retrieved $domain")
+                val piggyApi = RetrofitClient.getInstance(domain)
+                try {
+                    val token = dataStore.getToken()!!
+                    Log.i("token", "Attempting to logout with token $token...")
+                    val response = piggyApi.revoke("Bearer $token")
+                    if (response.isSuccessful) {
+                        val token = response.body()!!.token
+                        Toast.makeText(context, "$token revoked. Logging out...", Toast.LENGTH_LONG).show()
+                        runBlocking {
+                            dataStore.deleteToken()
+                        }
+                        navController.navigate(R.id.authActivity)
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Error ${response.code()}. Please contact the app developer.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
+                }
+            }
         }
+
         return root
     }
 

@@ -2,7 +2,7 @@ package dev.ivanravasi.piggy.api.bodies
 
 import com.google.gson.annotations.SerializedName
 
-data class TokenRequest(
+data class TokenCreateRequest(
     @SerializedName("email")
     var email: String,
     @SerializedName("password")
