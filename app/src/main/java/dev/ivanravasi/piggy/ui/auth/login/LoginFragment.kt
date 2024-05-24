@@ -60,44 +60,52 @@ class LoginFragment : Fragment() {
                 navController.navigate(R.id.action_loginFragment_to_registerFragment)
             }
         }
+
         binding.buttonSignIn.setOnClickListener {
             val email = binding.inputEmail.editText!!.text.toString()
             val password = binding.inputPassword.editText!!.text.toString()
             val domain = binding.inputInstanceDomain.editText!!.text.toString()
             val deviceName = Build.MANUFACTURER + " " + Build.MODEL;
             // TODO: validate domain
-            val piggyApi = RetrofitClient.getInstance(domain)
-            lifecycleScope.launch {
-                try {
-                    val response = piggyApi.token(TokenCreateRequest(email, password, deviceName))
-                    if (response.isSuccessful) {
-                        val token = response.body()!!.token
-                        Toast.makeText(context, token, Toast.LENGTH_LONG).show()
-                        runBlocking {
-                            dataStore.saveTokenAndDomain(token, domain)
-                            Log.i("token", token)
-                            val tokenRead = dataStore.getToken()
-                            Log.i("token", tokenRead ?: "no token after save")
-                        }
-                        navController.navigate(R.id.action_loginFragment_to_mainActivity)
-                    } else {
-                        if (response.code() == 422) {
-                            binding.inputEmail.error = "Bad credentials"
-                            binding.inputPassword.error = "Bad credentials"
-                        } else {
-                            Toast.makeText(
-                                context,
-                                "Error ${response.code()}. Please contact the app developer.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    }
-                } catch (e: Exception) {
-                    Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
-                }
-            }
+            requestToken(domain, email, password, deviceName)
         }
 
         return binding.root
+    }
+
+    private fun requestToken(
+        domain: String,
+        email: String,
+        password: String,
+        deviceName: String
+    ) {
+        val piggyApi = RetrofitClient.getInstance(domain)
+        lifecycleScope.launch {
+            try {
+                val response = piggyApi.token(TokenCreateRequest(email, password, deviceName))
+                if (response.isSuccessful) {
+                    val token = response.body()!!.token
+                    dataStore.saveTokenAndDomain(token, domain)
+                    navController.navigate(R.id.action_loginFragment_to_mainActivity)
+                } else {
+                    if (response.code() == 422) {
+                        setErrorBadCredentials()
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Error ${response.code()}. Please contact the app developer.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            } catch (e: Exception) {
+                Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun setErrorBadCredentials() {
+        binding.inputEmail.error = "Bad credentials"
+        binding.inputPassword.error = "Bad credentials"
     }
 }
