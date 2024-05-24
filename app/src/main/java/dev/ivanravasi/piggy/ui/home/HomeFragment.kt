@@ -45,35 +45,33 @@ class HomeFragment : Fragment() {
         dataStore = DataStoreManager(requireContext())
 
         binding.buttonLogout.setOnClickListener {
-            lifecycleScope.launch {
-                val domain = dataStore.getDomain()!!
-                Log.i("token", "Retrieved $domain")
-                val piggyApi = RetrofitClient.getInstance(domain)
-                try {
-                    val token = dataStore.getToken()!!
-                    Log.i("token", "Attempting to logout with token $token...")
-                    val response = piggyApi.revoke("Bearer $token")
-                    if (response.isSuccessful) {
-                        val token = response.body()!!.token
-                        Toast.makeText(context, "$token revoked. Logging out...", Toast.LENGTH_LONG).show()
-                        runBlocking {
-                            dataStore.deleteToken()
-                        }
-                        navController.navigate(R.id.authActivity)
-                    } else {
-                        Toast.makeText(
-                            context,
-                            "Error ${response.code()}. Please contact the app developer.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                } catch (e: Exception) {
-                    Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
-                }
-            }
+            revokeToken()
         }
 
         return root
+    }
+
+    private fun revokeToken() {
+        lifecycleScope.launch {
+            val domain = dataStore.getDomain()!!
+            val token = dataStore.getToken()!!
+            val piggyApi = RetrofitClient.getInstance(domain)
+            try {
+                val response = piggyApi.revoke("Bearer $token")
+                if (response.isSuccessful) {
+                    dataStore.deleteToken()
+                    navController.navigate(R.id.authActivity)
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Error ${response.code()}. Please contact the app developer.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     override fun onDestroyView() {
