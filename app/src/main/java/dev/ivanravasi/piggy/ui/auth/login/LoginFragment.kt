@@ -49,7 +49,6 @@ class LoginFragment : Fragment() {
 
         runBlocking {
             val token = dataStore.getToken()
-            Log.i("token", token ?: "no token (initial). Staying in auth")
             if (token != null)
                 navController.navigate(R.id.action_loginFragment_to_mainActivity)
         }
@@ -65,9 +64,10 @@ class LoginFragment : Fragment() {
             val email = binding.inputEmail.editText!!.text.toString()
             val password = binding.inputPassword.editText!!.text.toString()
             val domain = binding.inputInstanceDomain.editText!!.text.toString()
-            val deviceName = Build.MANUFACTURER + " " + Build.MODEL;
+            val deviceName = Build.MANUFACTURER + " " + Build.MODEL
+            val remember = binding.switchRemember.isChecked
             // TODO: validate domain
-            requestToken(domain, email, password, deviceName)
+            requestToken(domain, email, password, deviceName, remember)
         }
 
         return binding.root
@@ -77,7 +77,8 @@ class LoginFragment : Fragment() {
         domain: String,
         email: String,
         password: String,
-        deviceName: String
+        deviceName: String,
+        remember: Boolean
     ) {
         val piggyApi = RetrofitClient.getInstance(domain)
         lifecycleScope.launch {
@@ -85,7 +86,7 @@ class LoginFragment : Fragment() {
                 val response = piggyApi.token(TokenCreateRequest(email, password, deviceName))
                 if (response.isSuccessful) {
                     val token = response.body()!!.token
-                    dataStore.saveTokenAndDomain(token, domain)
+                    dataStore.saveAuthData(token, domain, remember)
                     navController.navigate(R.id.action_loginFragment_to_mainActivity)
                 } else {
                     if (response.code() == 422) {
