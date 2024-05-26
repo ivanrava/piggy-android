@@ -9,14 +9,14 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import dev.ivanravasi.piggy.data.DataStoreManager
+import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var dataStore: DataStoreManager
+    private lateinit var tokenRepository: TokenRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        tokenRepository = TokenRepository(this@MainActivity)
 
         val navView: BottomNavigationView = binding.navView
 
@@ -42,8 +44,8 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         lifecycleScope.launch {
-            if (!dataStore.shouldRemember())
-                dataStore.deleteToken()
+            if (!tokenRepository.shouldRemember())
+                tokenRepository.deleteToken()
         }
     }
 }

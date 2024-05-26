@@ -9,10 +9,10 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-class DataStoreManager(val context: Context) {
-    companion object {
+class TokenRepository(private val context: Context) {
+    private companion object {
+        private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
         val TOKEN_KEY = stringPreferencesKey("token")
         val DOMAIN_KEY = stringPreferencesKey("domain")
         val REMEMBER_KEY = booleanPreferencesKey("remember")

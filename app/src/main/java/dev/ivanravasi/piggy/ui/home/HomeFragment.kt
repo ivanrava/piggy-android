@@ -1,7 +1,6 @@
 package dev.ivanravasi.piggy.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +12,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.RetrofitClient
-import dev.ivanravasi.piggy.data.DataStoreManager
+import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentHomeBinding
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class HomeFragment : Fragment() {
 
@@ -28,7 +24,7 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private lateinit var navController: NavController
-    private lateinit var dataStore: DataStoreManager
+    private lateinit var tokenRepository: TokenRepository
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +38,7 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
         navController = findNavController()
-        dataStore = DataStoreManager(requireContext())
+        tokenRepository = TokenRepository(requireContext())
 
         binding.buttonLogout.setOnClickListener {
             revokeToken()
@@ -53,13 +49,13 @@ class HomeFragment : Fragment() {
 
     private fun revokeToken() {
         lifecycleScope.launch {
-            val domain = dataStore.getDomain()!!
-            val token = dataStore.getToken()!!
+            val domain = tokenRepository.getDomain()!!
+            val token = tokenRepository.getToken()!!
             val piggyApi = RetrofitClient.getInstance(domain)
             try {
                 val response = piggyApi.revoke("Bearer $token")
                 if (response.isSuccessful) {
-                    dataStore.deleteToken()
+                    tokenRepository.deleteToken()
                     navController.navigate(R.id.authActivity)
                 } else {
                     Toast.makeText(

@@ -17,6 +17,13 @@
         android:text="Properties"
         android:textSize="32sp" />
 
+    <TextView
+        android:id="@+id/res"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_light"
+        android:text="Properties response" />
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

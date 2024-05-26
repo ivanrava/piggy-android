@@ -2,7 +2,6 @@ package dev.ivanravasi.piggy.ui.auth.login
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.RetrofitClient
 import dev.ivanravasi.piggy.api.bodies.TokenCreateRequest
-import dev.ivanravasi.piggy.data.DataStoreManager
+import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentLoginBinding
 import dev.ivanravasi.piggy.ui.auth.ViewUtils
 import kotlinx.coroutines.launch
@@ -31,7 +30,7 @@ class LoginFragment : Fragment() {
     private val viewModel: LoginViewModel by viewModels()
     private lateinit var binding: FragmentLoginBinding
     private lateinit var navController: NavController
-    private lateinit var dataStore: DataStoreManager
+    private lateinit var tokenRepository: TokenRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,10 +44,10 @@ class LoginFragment : Fragment() {
     ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         navController = findNavController()
-        dataStore = DataStoreManager(requireContext())
+        tokenRepository = TokenRepository(requireContext())
 
         runBlocking {
-            val token = dataStore.getToken()
+            val token = tokenRepository.getToken()
             if (token != null)
                 navController.navigate(R.id.action_loginFragment_to_mainActivity)
         }
@@ -86,7 +85,7 @@ class LoginFragment : Fragment() {
                 val response = piggyApi.token(TokenCreateRequest(email, password, deviceName))
                 if (response.isSuccessful) {
                     val token = response.body()!!.token
-                    dataStore.saveAuthData(token, domain, remember)
+                    tokenRepository.saveAuthData(token, domain, remember)
                     navController.navigate(R.id.action_loginFragment_to_mainActivity)
                 } else {
                     if (response.code() == 422) {
