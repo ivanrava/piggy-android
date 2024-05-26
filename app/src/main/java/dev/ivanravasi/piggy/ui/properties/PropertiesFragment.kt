@@ -19,8 +19,11 @@ class PropertiesFragment : Fragment() {
         binding = FragmentPropertiesBinding.inflate(inflater, container, false)
         viewModel = PropertiesViewModel(TokenRepository(requireContext()))
 
+        val adapter = PropertyAdapter()
+        binding.listProperties.adapter = adapter
+
         viewModel.properties.observe(viewLifecycleOwner) {
-            binding.res.text = it.toString()
+            adapter.submitList(it)
         }
 
         return binding.root
