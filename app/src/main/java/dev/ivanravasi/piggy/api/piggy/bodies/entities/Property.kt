@@ -1,4 +1,4 @@
-package dev.ivanravasi.piggy.api.bodies.entities
+package dev.ivanravasi.piggy.api.piggy.bodies.entities
 
 import com.google.gson.annotations.SerializedName
 

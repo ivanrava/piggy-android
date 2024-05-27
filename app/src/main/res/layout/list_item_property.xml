@@ -6,7 +6,7 @@
     <data>
         <variable
             name="property"
-            type="dev.ivanravasi.piggy.api.bodies.entities.Property" />
+            type="dev.ivanravasi.piggy.api.piggy.bodies.entities.Property" />
     </data>
     <com.google.android.material.card.MaterialCardView
         android:background="@color/md_theme_inverseOnSurface"
@@ -22,7 +22,7 @@
                 android:id="@+id/property_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_categories_24dp"
+                tools:src="@drawable/ic_categories_24dp"
                 app:layout_constraintBottom_toTopOf="@+id/property_description"
                 app:layout_constraintEnd_toStartOf="@+id/property_name"
                 app:layout_constraintTop_toTopOf="parent" />

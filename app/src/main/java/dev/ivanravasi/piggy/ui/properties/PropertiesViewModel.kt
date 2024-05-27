@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.ivanravasi.piggy.api.PiggyApi
-import dev.ivanravasi.piggy.api.RetrofitClient
-import dev.ivanravasi.piggy.api.bodies.entities.Property
+import dev.ivanravasi.piggy.api.piggy.PiggyApi
+import dev.ivanravasi.piggy.api.piggy.RetrofitClient
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.data.TokenRepository
 import kotlinx.coroutines.launch
 

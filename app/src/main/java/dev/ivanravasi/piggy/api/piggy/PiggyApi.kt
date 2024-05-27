@@ -1,9 +1,9 @@
-package dev.ivanravasi.piggy.api
+package dev.ivanravasi.piggy.api.piggy
 
-import dev.ivanravasi.piggy.api.bodies.entities.Property
-import dev.ivanravasi.piggy.api.bodies.TokenCreateRequest
-import dev.ivanravasi.piggy.api.bodies.TokenResponse
-import dev.ivanravasi.piggy.api.bodies.meta.ListResponse
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
+import dev.ivanravasi.piggy.api.piggy.bodies.TokenCreateRequest
+import dev.ivanravasi.piggy.api.piggy.bodies.TokenResponse
+import dev.ivanravasi.piggy.api.piggy.bodies.meta.ListResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
