@@ -22,6 +22,12 @@ class PropertiesFragment : Fragment() {
         val adapter = PropertyAdapter()
         binding.listProperties.adapter = adapter
 
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it)
+                binding.loadingProgress.show()
+            else
+                binding.loadingProgress.hide()
+        }
         viewModel.properties.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }

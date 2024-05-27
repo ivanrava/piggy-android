@@ -10,10 +10,6 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.data.TokenRepository
 import kotlinx.coroutines.launch
 
-data class PropertiesUiState (
-    val properties: List<Property> = emptyList()
-)
-
 class PropertiesViewModel(
     private val tokenRepository: TokenRepository
 ) : ViewModel() {
@@ -22,13 +18,16 @@ class PropertiesViewModel(
         value = emptyList()
     }
     val properties: LiveData<List<Property>> = _properties
+    private val _isLoading = MutableLiveData<Boolean>().apply { value = true }
+    val isLoading: LiveData<Boolean> = _isLoading
 
     init {
         getProperties()
     }
 
-    fun getProperties() {
+    private fun getProperties() {
         viewModelScope.launch {
+            _isLoading.value = true
             piggyApi = RetrofitClient.getInstance(tokenRepository.getDomain()!!)
             try {
                 val response = piggyApi.properties("Bearer ${tokenRepository.getToken()}")
@@ -36,6 +35,7 @@ class PropertiesViewModel(
             } catch (e: Exception) {
 //                Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
             }
+            _isLoading.value = false
         }
     }
 }
