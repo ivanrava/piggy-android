@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.ivanravasi.piggy.api.iconify.loadIconify
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.databinding.ListItemPropertyBinding
+import dev.ivanravasi.piggy.ui.setCurrency
 
 class PropertyAdapter: ListAdapter<Property, PropertyAdapter.PropertyViewHolder>(PropertyDiffCallback()) {
     override fun onBindViewHolder(holder: PropertyViewHolder, position: Int) {
@@ -23,10 +24,10 @@ class PropertyAdapter: ListAdapter<Property, PropertyAdapter.PropertyViewHolder>
         private val binding: ListItemPropertyBinding
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(property: Property) {
+            binding.propertyIcon.loadIconify(property.icon, binding.propertyName.currentTextColor)
             binding.propertyName.text = property.name
             binding.propertyDescription.text = property.description
-            binding.propertyValue.text = property.value.toString()
-            binding.propertyIcon.loadIconify(property.icon, binding.propertyName.currentTextColor)
+            binding.propertyValue.setCurrency(property.value)
         }
 
         companion object {

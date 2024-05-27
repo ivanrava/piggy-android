@@ -20,7 +20,7 @@ data class Property(
     @SerializedName("updated_at")
     val updatedAt: String,
     @SerializedName("value")
-    val value: Long,
+    val value: Double,
     @SerializedName("variations")
     val variations: List<String>
 )
