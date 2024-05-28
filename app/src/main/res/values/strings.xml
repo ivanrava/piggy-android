@@ -18,4 +18,10 @@
     <string name="link_login">Have a deja-vu? Try logging in instead...</string>
     <string name="title_properties">Properties</string>
     <string name="title_budget">Budget</string>
+    <string name="title_increment">Increment value</string>
+    <string name="title_decrement">Decrement value</string>
+    <string name="variation_value_hint">Variation amount</string>
+    <string name="date_hint">Date</string>
+    <string name="notes_hint">Any additional notes?</string>
+    <string name="button_add_variation">Add variation</string>
 </resources>

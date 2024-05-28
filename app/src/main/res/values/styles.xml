@@ -9,4 +9,17 @@
         <item name="boxCornerRadiusTopStart">@dimen/corner_radius</item>
         <item name="boxBackgroundMode">outline</item>
     </style>
+
+    <style name="fragment_title">
+        <item name="android:fontFamily">@font/inter_light</item>
+        <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="button_submit">
+        <item name="android:layout_marginVertical">@dimen/vseparation_small</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:padding">@dimen/vseparation_fields</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="cornerRadius">@dimen/corner_radius</item>
+    </style>
 </resources>
