@@ -53,7 +53,7 @@ class PropertyAdapter: ListAdapter<Property, PropertyAdapter.PropertyViewHolder>
             }
         }
 
-        class VariationBottomSheet(val titleResource: Int) : BottomSheetDialogFragment() {
+        class VariationBottomSheet(private val titleResource: Int) : BottomSheetDialogFragment() {
             override fun onCreateView(
                 inflater: LayoutInflater,
                 container: ViewGroup?,
