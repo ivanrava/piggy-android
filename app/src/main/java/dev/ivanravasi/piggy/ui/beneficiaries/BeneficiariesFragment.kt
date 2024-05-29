@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentBeneficiariesBinding
 
-private const val SPAN_COUNT = 4
+private const val SPAN_COUNT = 5
 
 class BeneficiariesFragment : Fragment() {
     private lateinit var viewModel: BeneficiariesViewModel
