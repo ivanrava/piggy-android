@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/inter_bold"
-                android:text="Property name"
+                tools:text="Property name"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@id/property_description"
                 app:layout_constraintStart_toEndOf="@+id/property_icon"
@@ -45,7 +45,7 @@
                 android:textSize="14sp"
                 android:fontFamily="@font/inter"
                 app:layout_constraintTop_toBottomOf="@+id/property_name"
-                android:text="Property description" />
+                tools:text="Property description" />
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_minus"
                 android:layout_width="wrap_content"
@@ -56,7 +56,7 @@
                 app:cornerRadius="@dimen/corner_radius"
                 android:textSize="20sp"
                 android:fontFamily="@font/inter_bold"
-                android:text="-"
+                tools:text="-"
                 />
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_plus"
@@ -67,7 +67,7 @@
                 app:cornerRadius="@dimen/corner_radius"
                 android:textSize="20sp"
                 android:fontFamily="@font/inter_bold"
-                android:text="+"
+                tools:text="+"
                 />
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/property_value"
@@ -82,7 +82,7 @@
                 android:layout_marginHorizontal="8dp"
                 android:textSize="24sp"
                 android:fontFamily="@font/inter_light"
-                android:text="0.00 €"
+                tools:text="0.00 €"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

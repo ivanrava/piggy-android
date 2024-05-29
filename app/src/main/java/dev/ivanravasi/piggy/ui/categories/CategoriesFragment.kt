@@ -4,39 +4,34 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentCategoriesBinding
 
 class CategoriesFragment : Fragment() {
-
-    private var _binding: FragmentCategoriesBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var viewModel: CategoriesViewModel
+    private lateinit var binding: FragmentCategoriesBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val categoriesViewModel =
-            ViewModelProvider(this).get(CategoriesViewModel::class.java)
+        binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+        viewModel = CategoriesViewModel(TokenRepository(requireContext()))
 
-        _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val adapter = CategoryAdapter()
+        binding.listCategories.adapter = adapter
 
-        val textView: TextView = binding.textDashboard
-        categoriesViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it)
+                binding.loadingProgress.show()
+            else
+                binding.loadingProgress.hide()
         }
-        return root
-    }
+        viewModel.categories.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        return binding.root
     }
 }

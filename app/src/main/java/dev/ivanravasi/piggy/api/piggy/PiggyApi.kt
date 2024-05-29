@@ -4,6 +4,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.api.piggy.bodies.TokenCreateRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.TokenResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ListResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -28,4 +29,8 @@ interface PiggyApi {
     @Headers("Accept: application/json")
     @GET("/api/beneficiaries")
     suspend fun beneficiaries(@Header("Authorization") authHeader: String): Response<ListResponse<Beneficiary>>
+
+    @Headers("Accept: application/json")
+    @GET("/api/categories")
+    suspend fun categories(@Header("Authorization") authHeader: String): Response<ListResponse<Category>>
 }
