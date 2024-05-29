@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import dev.ivanravasi.piggy.api.dicebear.loadAvatar
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.databinding.ListItemBeneficiaryBinding
 
@@ -23,10 +24,17 @@ class BeneficiaryAdapter: ListAdapter<Beneficiary, BeneficiaryAdapter.Beneficiar
         private val binding: ListItemBeneficiaryBinding
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(beneficiary: Beneficiary) {
-            binding.beneficiaryImg.load(beneficiary.img) {
-                crossfade(true)
-                size(128)
+            if (beneficiary.img.contains("://")) {
+                binding.beneficiaryImg.load(beneficiary.img) {
+                    size(128)
+                    crossfade(true)
+                    listener(onError = {_, _ ->
+                        binding.beneficiaryImg.loadAvatar(style = "initials", seed = beneficiary.name)
+                    })
+                }
             }
+            else
+                binding.beneficiaryImg.loadAvatar(style = beneficiary.img, seed = beneficiary.name)
         }
 
         companion object {
