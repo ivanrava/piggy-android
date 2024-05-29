@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import dev.ivanravasi.piggy.api.dicebear.loadAvatar
+import dev.ivanravasi.piggy.api.dicebear.loadFallback
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.databinding.ListItemBeneficiaryBinding
 
@@ -29,7 +30,7 @@ class BeneficiaryAdapter: ListAdapter<Beneficiary, BeneficiaryAdapter.Beneficiar
                     size(128)
                     crossfade(true)
                     listener(onError = {_, _ ->
-                        binding.beneficiaryImg.loadAvatar(style = "initials", seed = beneficiary.name)
+                        binding.beneficiaryImg.loadFallback(seed = beneficiary.name)
                     })
                 }
             }
