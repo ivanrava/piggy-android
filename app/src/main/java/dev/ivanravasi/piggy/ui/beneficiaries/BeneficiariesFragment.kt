@@ -4,39 +4,41 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentBeneficiariesBinding
 
+private const val SPAN_COUNT = 4
+
 class BeneficiariesFragment : Fragment() {
-
-    private var _binding: FragmentBeneficiariesBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var viewModel: BeneficiariesViewModel
+    private lateinit var binding: FragmentBeneficiariesBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val beneficiariesViewModel =
-            ViewModelProvider(this).get(BeneficiariesViewModel::class.java)
+        binding = FragmentBeneficiariesBinding.inflate(inflater, container, false)
+        viewModel = BeneficiariesViewModel(TokenRepository(requireContext()))
 
-        _binding = FragmentBeneficiariesBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val manager = GridLayoutManager(activity, SPAN_COUNT)
+        binding.listBeneficiaries.layoutManager = manager
 
-        val textView: TextView = binding.textNotifications
-        beneficiariesViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        val adapter = BeneficiaryAdapter()
+        binding.listBeneficiaries.adapter = adapter
+
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it)
+                binding.loadingProgress.show()
+            else
+                binding.loadingProgress.hide()
         }
-        return root
-    }
+        viewModel.beneficiaries.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        return binding.root
     }
 }
