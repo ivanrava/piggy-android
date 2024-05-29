@@ -26,4 +26,5 @@
     <string name="button_add_variation">Add variation</string>
     <string name="type_in">Income</string>
     <string name="type_out">Outcome</string>
+    <string name="title_accounts">Accounts</string>
 </resources>

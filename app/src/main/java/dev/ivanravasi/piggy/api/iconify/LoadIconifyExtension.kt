@@ -14,7 +14,7 @@ fun ImageView.loadIconify(
     val name = iconFields[1]
     val color = String.format("%06X", (0xFFFFFF and fillColor))
     this.load("https://api.iconify.design/$prefix/$name.svg?color=%23$color") {
-        size(64)
+        size(128)
         decoderFactory { result, options, _ -> SvgDecoder(result.source, options) }
         // TODO: set a better placeholder
         placeholder(R.drawable.ic_properties_24)

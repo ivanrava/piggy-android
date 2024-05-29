@@ -3,20 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_accounts">
 
     <fragment
         android:id="@+id/navigation_home"
         android:name="dev.ivanravasi.piggy.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
-
+    <fragment
+        android:id="@+id/navigation_accounts"
+        android:name="dev.ivanravasi.piggy.ui.accounts.AccountsFragment"
+        android:label="@string/title_accounts"
+        tools:layout="@layout/fragment_accounts" />
     <fragment
         android:id="@+id/navigation_categories"
         android:name="dev.ivanravasi.piggy.ui.categories.CategoriesFragment"
         android:label="@string/title_categories"
         tools:layout="@layout/fragment_categories" />
-
     <fragment
         android:id="@+id/navigation_beneficiaries"
         android:name="dev.ivanravasi.piggy.ui.beneficiaries.BeneficiariesFragment"

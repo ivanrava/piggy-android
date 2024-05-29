@@ -3,6 +3,7 @@ package dev.ivanravasi.piggy.api.piggy
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.api.piggy.bodies.TokenCreateRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.TokenResponse
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ListResponse
@@ -33,4 +34,8 @@ interface PiggyApi {
     @Headers("Accept: application/json")
     @GET("/api/categories/root")
     suspend fun categoryTrees(@Header("Authorization") authHeader: String): Response<ListResponse<Category>>
+
+    @Headers("Accept: application/json")
+    @GET("/api/accounts")
+    suspend fun accounts(@Header("Authorization") authHeader: String): Response<ListResponse<Account>>
 }

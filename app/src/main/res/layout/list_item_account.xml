@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="account"
+            type="dev.ivanravasi.piggy.api.piggy.bodies.entities.Account" />
+    </data>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_account"
+        app:strokeWidth="0dp"
+        app:cardElevation="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/md_theme_inverseOnSurface"
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:paddingStart="8dp"
+            android:paddingVertical="8dp"
+            android:paddingEnd="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/account_icon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="4dp"
+                app:layout_constraintDimensionRatio="w,1:1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_budget_24" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/account_name"
+                android:layout_marginStart="4dp"
+                app:layout_constraintStart_toEndOf="@id/account_icon"
+                app:layout_constraintBottom_toTopOf="@id/account_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="Account name" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/account_type"
+                android:layout_marginStart="4dp"
+                app:layout_constraintStart_toEndOf="@id/account_icon"
+                app:layout_constraintTop_toBottomOf="@id/account_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_light"
+                android:textSize="12sp"
+                tools:text="Type" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

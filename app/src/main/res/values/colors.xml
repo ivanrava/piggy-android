@@ -141,4 +141,6 @@
     <color name="md_theme_surfaceContainerHigh_highContrast">#F6E4E3</color>
     <color name="md_theme_surfaceContainerHighest_highContrast">#F0DEDE</color>
     <color name="tint_logo">#374151</color>
+    <color name="account_text_light">#F8FAFC</color>
+    <color name="account_text_dark">#020617</color>
 </resources>
