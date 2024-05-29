@@ -31,6 +31,6 @@ interface PiggyApi {
     suspend fun beneficiaries(@Header("Authorization") authHeader: String): Response<ListResponse<Beneficiary>>
 
     @Headers("Accept: application/json")
-    @GET("/api/categories")
-    suspend fun categories(@Header("Authorization") authHeader: String): Response<ListResponse<Category>>
+    @GET("/api/categories/root")
+    suspend fun categoryTrees(@Header("Authorization") authHeader: String): Response<ListResponse<Category>>
 }

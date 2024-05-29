@@ -29,8 +29,8 @@ class CategoriesViewModel(
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                val response = piggyApi.categories("Bearer ${tokenRepository.getToken()}")
-                _categories.value = response.body()!!.data
+                val response = piggyApi.categoryTrees("Bearer ${tokenRepository.getToken()}")
+                _categories.value = response.body()!!.data.sortedBy { it.name }
             } catch (e: Exception) {
 //                Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
             }
