@@ -25,7 +25,7 @@ class CategoryAdapter: ListAdapter<Category, CategoryAdapter.CategoryViewHolder>
         fun bind(category: Category) {
             binding.categoryIcon.loadIconify(category.icon, binding.categoryName.currentTextColor)
             binding.categoryName.text = category.name
-            binding.categoryType.text = category.type
+            binding.categoryDescription.text = "${category.children.count()} children categories"
         }
 
         companion object {

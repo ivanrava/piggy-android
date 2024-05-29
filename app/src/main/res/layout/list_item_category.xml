@@ -10,6 +10,7 @@
     </data>
     <com.google.android.material.card.MaterialCardView
         android:background="@color/md_theme_inverseOnSurface"
+        android:layout_marginVertical="@dimen/vseparation_small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:src="@drawable/ic_categories_24"
-                app:layout_constraintBottom_toTopOf="@+id/category_type"
+                app:layout_constraintBottom_toTopOf="@+id/category_description"
                 app:layout_constraintEnd_toStartOf="@+id/category_name"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,11 +36,11 @@
                 android:fontFamily="@font/inter_bold"
                 tools:text="Category name"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@id/category_type"
+                app:layout_constraintBottom_toTopOf="@id/category_description"
                 app:layout_constraintStart_toEndOf="@+id/category_icon"
                 app:layout_constraintTop_toTopOf="parent" />
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/category_type"
+                android:id="@+id/category_description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="14sp"
