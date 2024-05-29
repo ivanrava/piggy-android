@@ -32,7 +32,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Income"
+            android:text="@string/type_in"
+            app:icon="@drawable/ic_up_24"
+            app:iconGravity="textStart"
             />
         <com.google.android.material.button.MaterialButton
             style="?attr/materialButtonOutlinedStyle"
@@ -40,7 +42,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Outcome"
+            android:text="@string/type_out"
+            app:icon="@drawable/ic_down_24"
+            app:iconGravity="textStart"
             />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 

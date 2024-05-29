@@ -24,4 +24,6 @@
     <string name="date_hint">Date</string>
     <string name="notes_hint">Any additional notes?</string>
     <string name="button_add_variation">Add variation</string>
+    <string name="type_in">Income</string>
+    <string name="type_out">Outcome</string>
 </resources>
