@@ -3,7 +3,6 @@ package dev.ivanravasi.piggy.api.dicebear
 import android.widget.ImageView
 import coil.decode.SvgDecoder
 import coil.load
-import dev.ivanravasi.piggy.R
 
 fun ImageView.loadAvatar(
     style: String,
@@ -30,4 +29,21 @@ fun ImageView.loadFallback(
 //        placeholder(R.drawable.ic_properties_24)
         crossfade(true)
     }
+}
+
+fun ImageView.loadBeneficiary(
+    img: String,
+    seed: String
+) {
+    if (img.contains("://")) {
+        this.load(img) {
+            size(128)
+            crossfade(true)
+            listener(onError = {_, _ ->
+                this@loadBeneficiary.loadFallback(seed = seed)
+            })
+        }
+    }
+    else
+        this.loadAvatar(style = img, seed = seed)
 }
