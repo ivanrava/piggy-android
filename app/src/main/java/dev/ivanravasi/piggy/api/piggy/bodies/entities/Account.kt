@@ -29,4 +29,10 @@ data class Account(
     val opening: String,
     @SerializedName("closing")
     val closing: String?,
+    @SerializedName("transactions")
+    val transactions: List<Transaction>,
+    @SerializedName("in_transfers")
+    val inTransfers: List<Transfer>,
+    @SerializedName("out_transfers")
+    val outTransfers: List<Transfer>,
 )
