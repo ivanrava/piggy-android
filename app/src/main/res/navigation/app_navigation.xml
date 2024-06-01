@@ -40,4 +40,9 @@
         android:name="dev.ivanravasi.piggy.AuthActivity"
         android:label="activity_auth"
         tools:layout="@layout/activity_auth" />
+    <fragment
+        android:id="@+id/navigation_operations"
+        android:name="dev.ivanravasi.piggy.ui.operations.OperationsFragment"
+        android:label="fragment_operations"
+        tools:layout="@layout/fragment_operations" />
 </navigation>

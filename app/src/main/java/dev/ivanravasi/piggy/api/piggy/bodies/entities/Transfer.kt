@@ -17,4 +17,16 @@ data class Transfer(
     val to: Account?,
     @SerializedName("from")
     val from: Account?,
-)
+) : Operation {
+    override fun getOperationId(): Long {
+        return id
+    }
+
+    override fun type(): OperationType {
+        return OperationType.TRANSFER
+    }
+
+    override fun rawDate(): String {
+        return date
+    }
+}

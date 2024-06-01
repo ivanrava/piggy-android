@@ -19,4 +19,16 @@ data class Transaction(
     val beneficiary: Beneficiary,
     @SerializedName("account")
     val account: Account,
-)
+) : Operation {
+    override fun getOperationId(): Long {
+        return id
+    }
+
+    override fun type(): OperationType {
+        return OperationType.TRANSACTION
+    }
+
+    override fun rawDate(): String {
+        return date
+    }
+}
