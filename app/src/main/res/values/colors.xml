@@ -143,4 +143,6 @@
     <color name="tint_logo">#374151</color>
     <color name="account_text_light">#F8FAFC</color>
     <color name="account_text_dark">#020617</color>
+    <color name="out_value">#B91C1C</color>
+    <color name="in_value">#047857</color>
 </resources>

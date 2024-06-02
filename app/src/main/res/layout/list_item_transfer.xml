@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter"
             android:textSize="28sp"
+            tools:textColor="@color/out_value"
             tools:text="-42,42 €" />
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/date"

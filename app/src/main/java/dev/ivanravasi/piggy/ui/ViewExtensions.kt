@@ -12,12 +12,16 @@ import dev.ivanravasi.piggy.databinding.CardAccountBinding
 import java.text.NumberFormat
 import java.util.Currency
 
-fun TextView.setCurrency(value: Double) {
+fun TextView.setCurrency(value: Double, colorize: Boolean = false) {
     val currencyFormatter: NumberFormat = NumberFormat.getCurrencyInstance()
     currencyFormatter.maximumFractionDigits = 2
     currencyFormatter.minimumFractionDigits = 2
     currencyFormatter.currency = Currency.getInstance("EUR")
     text = currencyFormatter.format(value)
+    if (colorize) {
+        val colorId = if (value < 0) R.color.out_value else R.color.in_value
+        setTextColor(ContextCompat.getColor(this.context, colorId))
+    }
 }
 
 fun CardAccountBinding.setAccount(account: Account, navController: NavController) {

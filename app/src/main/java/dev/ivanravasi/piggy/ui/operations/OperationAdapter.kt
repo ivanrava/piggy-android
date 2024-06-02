@@ -56,7 +56,7 @@ class OperationAdapter: ListAdapter<Operation, OperationAdapter.OperationViewHol
                 binding.notes.text = "\"${transaction.notes}\""
             }
 
-            binding.value.setCurrency(transaction.amount.toDouble() * if (transaction.category.type == "out") -1 else 1)
+            binding.value.setCurrency(transaction.amount.toDouble() * if (transaction.category.type == "out") -1 else 1, true)
             binding.date.text = transaction.date
         }
 
@@ -85,7 +85,7 @@ class OperationAdapter: ListAdapter<Operation, OperationAdapter.OperationViewHol
             else
                 binding.cardAccount.cardAccount.visibility = View.GONE
 
-            binding.value.setCurrency(transfer.amount.toDouble() * if (transfer.to != null) -1 else 1)
+            binding.value.setCurrency(transfer.amount.toDouble() * if (transfer.to != null) -1 else 1, true)
             binding.date.text = transfer.date
         }
 
