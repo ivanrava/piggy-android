@@ -19,6 +19,7 @@ import dev.ivanravasi.piggy.databinding.ListItemTransactionBinding
 import dev.ivanravasi.piggy.databinding.ListItemTransferBinding
 import dev.ivanravasi.piggy.ui.setAccount
 import dev.ivanravasi.piggy.ui.setCurrency
+import dev.ivanravasi.piggy.ui.setDate
 
 class OperationAdapter: ListAdapter<Operation, OperationAdapter.OperationViewHolder>(OperationDiffCallback()) {
     override fun onBindViewHolder(holder: OperationViewHolder, position: Int) {
@@ -57,7 +58,7 @@ class OperationAdapter: ListAdapter<Operation, OperationAdapter.OperationViewHol
             }
 
             binding.value.setCurrency(transaction.amount.toDouble() * if (transaction.category.type == "out") -1 else 1, true)
-            binding.date.text = transaction.date
+            binding.date.setDate(transaction.date)
         }
 
         companion object {
@@ -86,7 +87,7 @@ class OperationAdapter: ListAdapter<Operation, OperationAdapter.OperationViewHol
                 binding.cardAccount.cardAccount.visibility = View.GONE
 
             binding.value.setCurrency(transfer.amount.toDouble() * if (transfer.to != null) -1 else 1, true)
-            binding.date.text = transfer.date
+            binding.date.setDate(transfer.date)
         }
 
         companion object {

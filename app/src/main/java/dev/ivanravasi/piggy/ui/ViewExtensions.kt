@@ -9,7 +9,9 @@ import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.iconify.loadIconify
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.databinding.CardAccountBinding
+import java.text.DateFormat
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.Currency
 
 fun TextView.setCurrency(value: Double, colorize: Boolean = false) {
@@ -22,6 +24,12 @@ fun TextView.setCurrency(value: Double, colorize: Boolean = false) {
         val colorId = if (value < 0) R.color.out_value else R.color.in_value
         setTextColor(ContextCompat.getColor(this.context, colorId))
     }
+}
+
+fun TextView.setDate(dateString: String) {
+    val date = SimpleDateFormat("yyyy-MM-dd").parse(dateString)
+    val dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM)
+    text = dateFormat.format(date!!)
 }
 
 fun CardAccountBinding.setAccount(account: Account, navController: NavController) {
