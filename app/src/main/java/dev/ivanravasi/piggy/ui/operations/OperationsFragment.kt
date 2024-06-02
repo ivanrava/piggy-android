@@ -32,6 +32,10 @@ class OperationsFragment : Fragment() {
             adapter.submitList(it)
         }
 
+        viewModel.accountName.observe(viewLifecycleOwner) {
+            binding.title.text = it.ifEmpty { "Loading operations..." }
+        }
+
         return binding.root
     }
 }

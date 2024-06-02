@@ -24,9 +24,13 @@ class OperationsViewModel(
     private val _operations = MutableLiveData<List<Operation>>().apply {
         value = emptyList()
     }
+    private val _accountName = MutableLiveData<String>().apply {
+        value = ""
+    }
     val transactions: LiveData<List<Transaction>> = _transactions
     val transfers: LiveData<List<Transfer>> = _transfers
     val operations: LiveData<List<Operation>> = _operations
+    val accountName: LiveData<String> = _accountName
     private val _isLoading = MutableLiveData<Boolean>().apply { value = true }
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -47,6 +51,7 @@ class OperationsViewModel(
                 _operations.value =
                     (response.body()!!.data.transactions + response.body()!!.data.inTransfers + response.body()!!.data.outTransfers)
                         .sortedByDescending { it.rawDate() }
+                _accountName.value = response.body()!!.data.name
             } catch (e: Exception) {
                 e.localizedMessage?.let { Log.i("message", it) }
             }
