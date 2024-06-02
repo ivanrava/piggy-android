@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.chip.ChipGroup
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.data.TokenRepository
@@ -32,24 +32,24 @@ class AccountsFragment : Fragment() {
                 binding.loadingProgress.hide()
         }
         viewModel.accounts.observe(viewLifecycleOwner) {
-            updateList(it, binding.toggleAccountType)
+            updateList(it, binding.chipAccountType)
         }
-        binding.toggleAccountType.addOnButtonCheckedListener { toggleButton, _, _ ->
-            viewModel.accounts.value?.let { updateList(it, toggleButton) }
+        binding.chipAccountType.setOnCheckedStateChangeListener { group, checkedIds ->
+            viewModel.accounts.value?.let { updateList(it, group) }
         }
 
         return binding.root
     }
 
-    private fun updateList(accounts: List<Account>, toggleButton: MaterialButtonToggleGroup) {
-        val selection = toggleButton.checkedButtonId
-        val list = when (selection) {
-            R.id.button_cash -> accounts.filter { account -> account.type == "Cash" }
-            R.id.button_voucher -> accounts.filter { account -> account.type == "Voucher" }
-            R.id.button_bank_account -> accounts.filter { account -> account.type == "Bank account" }
-            R.id.button_investments -> accounts.filter { account -> account.type == "Investments" }
-            else -> accounts
-        }
-        adapter.submitList(list)
+    private fun updateList(accounts: List<Account>, chipGroup: ChipGroup) {
+        val selections = chipGroup.checkedChipIds
+        val idType = mapOf(
+            R.id.chip_cash to "Cash",
+            R.id.chip_voucher to "Voucher",
+            R.id.chip_bank_account to "Bank account",
+            R.id.chip_investments to "Investments"
+        )
+        val types = selections.map { chipId -> idType[chipId] }
+        adapter.submitList(accounts.filter { account -> account.type in types })
     }
 }
