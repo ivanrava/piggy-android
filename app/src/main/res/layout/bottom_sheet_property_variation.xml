@@ -48,6 +48,7 @@
             android:fontFamily="@font/josefin_slab_semibold"
             android:hint="@string/date_hint"
             android:inputType="date"
+            android:focusable="false"
             android:paddingBottom="@dimen/vseparation_fields" />
     </com.google.android.material.textfield.TextInputLayout>
 
