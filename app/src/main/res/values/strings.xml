@@ -31,4 +31,6 @@
     <string name="account_type_bank_account">Bank account</string>
     <string name="account_type_investments">Investments</string>
     <string name="account_type_voucher">Voucher</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
 </resources>

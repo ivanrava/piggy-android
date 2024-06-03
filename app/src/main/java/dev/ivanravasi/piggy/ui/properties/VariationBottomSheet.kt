@@ -10,7 +10,10 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.BottomSheetPropertyVariationBinding
 
-class VariationBottomSheet(private val titleResource: Int, private val fragmentManager: FragmentManager) : BottomSheetDialogFragment() {
+class VariationBottomSheet(
+    private val titleResource: Int,
+    private val fragmentManager: FragmentManager
+) : BottomSheetDialogFragment() {
     private lateinit var viewModel: VariationViewModel
 
     override fun onCreateView(
