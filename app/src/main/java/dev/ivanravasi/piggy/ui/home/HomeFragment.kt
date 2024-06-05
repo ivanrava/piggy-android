@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
         lifecycleScope.launch {
             val domain = tokenRepository.getDomain()!!
             val token = tokenRepository.getToken()!!
-            val piggyApi = RetrofitClient.getInstance(domain)
+            val piggyApi = RetrofitClient.getPiggyInstance(domain)
             try {
                 val response = piggyApi.revoke("Bearer $token")
                 if (response.isSuccessful) {

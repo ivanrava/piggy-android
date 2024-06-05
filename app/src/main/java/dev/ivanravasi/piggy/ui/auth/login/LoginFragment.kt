@@ -79,7 +79,7 @@ class LoginFragment : Fragment() {
         deviceName: String,
         remember: Boolean
     ) {
-        val piggyApi = RetrofitClient.getInstance(domain)
+        val piggyApi = RetrofitClient.getPiggyInstance(domain)
         lifecycleScope.launch {
             try {
                 val response = piggyApi.token(TokenCreateRequest(email, password, deviceName))

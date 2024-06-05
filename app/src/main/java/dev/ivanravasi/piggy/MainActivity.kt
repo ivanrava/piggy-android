@@ -38,6 +38,11 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        binding.fab.setOnClickListener {
+            navController.navigate(R.id.navigation_add_property)
+//            binding.fab.hide()
+        }
+
         navView.setupWithNavController(navController)
     }
 

@@ -11,6 +11,6 @@ open class ApiViewModel(
     protected lateinit var piggyApi: PiggyApi
 
     protected suspend fun hydrateApiClient() {
-        piggyApi = RetrofitClient.getInstance(tokenRepository.getDomain()!!)
+        piggyApi = RetrofitClient.getPiggyInstance(tokenRepository.getDomain()!!)
     }
 }
