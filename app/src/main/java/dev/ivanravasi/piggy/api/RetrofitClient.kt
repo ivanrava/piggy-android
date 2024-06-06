@@ -1,6 +1,7 @@
-package dev.ivanravasi.piggy.api.piggy
+package dev.ivanravasi.piggy.api
 
 import dev.ivanravasi.piggy.api.iconify.IconifyApi
+import dev.ivanravasi.piggy.api.piggy.PiggyApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.ivanravasi.piggy.api.iconify.loadIconify
-import dev.ivanravasi.piggy.api.piggy.RetrofitClient
 import dev.ivanravasi.piggy.databinding.ListItemIconBinding
 
 interface OnIconClickListener {
@@ -17,8 +16,6 @@ class IconAdapter(
     private val color: Int,
     private val iconClickListener: OnIconClickListener
 ): ListAdapter<String, IconAdapter.IconifyIconViewHolder>(IconDiffCallback()) {
-    private val iconifyApi = RetrofitClient.getIconifyInstance()
-
     override fun onBindViewHolder(holder: IconifyIconViewHolder, position: Int) {
         val icon = getItem(position)
         holder.bind(icon, color, iconClickListener)

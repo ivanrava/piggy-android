@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.ivanravasi.piggy.api.piggy.RetrofitClient
+import dev.ivanravasi.piggy.api.RetrofitClient
 import kotlinx.coroutines.launch
 
 class IconPickerViewModel: ViewModel() {

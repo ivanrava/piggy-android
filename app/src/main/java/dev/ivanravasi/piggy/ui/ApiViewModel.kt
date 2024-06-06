@@ -2,7 +2,7 @@ package dev.ivanravasi.piggy.ui
 
 import androidx.lifecycle.ViewModel
 import dev.ivanravasi.piggy.api.piggy.PiggyApi
-import dev.ivanravasi.piggy.api.piggy.RetrofitClient
+import dev.ivanravasi.piggy.api.RetrofitClient
 import dev.ivanravasi.piggy.data.TokenRepository
 
 open class ApiViewModel(
