@@ -41,4 +41,5 @@
     <string name="banner_no_beneficiaries">No beneficiaries to show</string>
     <string name="banner_no_categories">No categories to show</string>
     <string name="banner_no_properties">No properties to show</string>
+    <string name="banner_no_operations">There are no operations in this account</string>
 </resources>

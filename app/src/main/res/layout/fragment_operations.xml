@@ -40,4 +40,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/nodata"
+        android:text="@string/banner_no_operations"
+        style="@style/nodata_banner_text" />
 </androidx.constraintlayout.widget.ConstraintLayout>
