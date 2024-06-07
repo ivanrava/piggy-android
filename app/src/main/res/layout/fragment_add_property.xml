@@ -7,7 +7,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/add_property_title"
+        android:id="@+id/add_title"
         style="@style/fragment_title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
         android:id="@+id/input_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/picker_icon"
-        app:layout_constraintTop_toBottomOf="@id/add_property_title"
+        app:layout_constraintTop_toBottomOf="@id/add_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         style="@style/text_input_layout"
@@ -36,17 +36,14 @@
             android:paddingBottom="@dimen/vseparation_fields" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <dev.ivanravasi.piggy.ui.iconify.IconPickerView
         android:id="@+id/picker_icon"
         app:layout_constraintStart_toEndOf="@id/input_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/input_name"
         android:src="@drawable/ic_icon_24"
         app:layout_constraintDimensionRatio="w,1:1"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="20dp" />
+        style="@style/icon_picker_baseline" />
 
     <com.google.android.material.textfield.TextInputLayout
         app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +88,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_add_property"
+        android:id="@+id/button_add"
         app:layout_constraintTop_toBottomOf="@id/input_description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
