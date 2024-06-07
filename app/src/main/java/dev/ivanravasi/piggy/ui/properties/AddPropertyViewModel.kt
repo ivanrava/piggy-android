@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
-import dev.ivanravasi.piggy.api.piggy.bodies.PropertyRequest
-import dev.ivanravasi.piggy.api.piggy.bodies.PropertyValidationError
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyRequest
+import dev.ivanravasi.piggy.api.piggy.bodies.errors.PropertyValidationError
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.ui.ApiViewModel
 import kotlinx.coroutines.launch

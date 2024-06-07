@@ -13,7 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.RetrofitClient
-import dev.ivanravasi.piggy.api.piggy.bodies.TokenCreateRequest
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.TokenCreateRequest
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentLoginBinding
 import dev.ivanravasi.piggy.ui.auth.ViewUtils

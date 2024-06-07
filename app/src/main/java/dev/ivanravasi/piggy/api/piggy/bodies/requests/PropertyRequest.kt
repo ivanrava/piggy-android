@@ -1,4 +1,4 @@
-package dev.ivanravasi.piggy.api.piggy.bodies
+package dev.ivanravasi.piggy.api.piggy.bodies.requests
 
 import com.google.gson.annotations.SerializedName
 

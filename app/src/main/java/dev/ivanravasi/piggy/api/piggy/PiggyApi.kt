@@ -1,14 +1,17 @@
 package dev.ivanravasi.piggy.api.piggy
 
-import dev.ivanravasi.piggy.api.piggy.bodies.PropertyRequest
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
-import dev.ivanravasi.piggy.api.piggy.bodies.TokenCreateRequest
-import dev.ivanravasi.piggy.api.piggy.bodies.TokenResponse
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.TokenCreateRequest
+import dev.ivanravasi.piggy.api.piggy.bodies.responses.TokenResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ListResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.AccountRequest
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.BeneficiaryRequest
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.CategoryRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -39,12 +42,24 @@ interface PiggyApi {
     suspend fun beneficiaries(@Header("Authorization") authHeader: String): Response<ListResponse<Beneficiary>>
 
     @Headers("Accept: application/json")
+    @POST("/api/beneficiaries")
+    suspend fun beneficiaryAdd(@Header("Authorization") authHeader: String, @Body beneficiaryBody: BeneficiaryRequest): Response<ObjectResponse<Beneficiary>>
+
+    @Headers("Accept: application/json")
     @GET("/api/categories/root")
     suspend fun categoryTrees(@Header("Authorization") authHeader: String): Response<ListResponse<Category>>
 
     @Headers("Accept: application/json")
+    @POST("/api/categories")
+    suspend fun categoryAdd(@Header("Authorization") authHeader: String, @Body categoryBody: CategoryRequest): Response<ObjectResponse<Category>>
+
+    @Headers("Accept: application/json")
     @GET("/api/accounts")
     suspend fun accounts(@Header("Authorization") authHeader: String): Response<ListResponse<Account>>
+
+    @Headers("Accept: application/json")
+    @POST("/api/accounts")
+    suspend fun accountAdd(@Header("Authorization") authHeader: String, @Body accountBody: AccountRequest): Response<ObjectResponse<Account>>
 
     @Headers("Accept: application/json")
     @GET("/api/accounts/{id}")
