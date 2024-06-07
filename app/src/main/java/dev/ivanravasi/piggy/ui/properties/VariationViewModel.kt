@@ -3,7 +3,7 @@ package dev.ivanravasi.piggy.ui.properties
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.ivanravasi.piggy.data.TokenRepository
-import dev.ivanravasi.piggy.ui.ApiViewModel
+import dev.ivanravasi.piggy.ui.common.ApiViewModel
 import java.text.DateFormat
 import java.util.Date
 

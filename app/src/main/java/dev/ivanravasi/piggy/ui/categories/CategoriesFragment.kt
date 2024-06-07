@@ -4,38 +4,35 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButtonToggleGroup
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentCategoriesBinding
+import dev.ivanravasi.piggy.ui.common.CRUDFragment
 
-class CategoriesFragment : Fragment() {
-    private lateinit var viewModel: CategoriesViewModel
-    private lateinit var binding: FragmentCategoriesBinding
+class CategoriesFragment : CRUDFragment<Category, CategoryAdapter.CategoryViewHolder>() {
     private val adapter = CategoryAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCategoriesBinding.inflate(inflater, container, false)
-        viewModel = CategoriesViewModel(TokenRepository(requireContext()))
+        val binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+        val viewModel = CategoriesViewModel(TokenRepository(requireContext()))
 
-        binding.listCategories.adapter = adapter
-
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            if (it)
-                binding.loadingProgress.show()
-            else
-                binding.loadingProgress.hide()
-        }
-        viewModel.categories.observe(viewLifecycleOwner) {
+        setup(
+            list = binding.listCategories,
+            adapter = adapter,
+            viewModel = viewModel,
+            noDataView = binding.nodata,
+            loadingProgressIndicator = binding.loadingProgress
+        ) {
             updateList(it, binding.toggleCategoryType)
         }
+
         binding.toggleCategoryType.addOnButtonCheckedListener { toggleButton, _, _ ->
-            viewModel.categories.value?.let { updateList(it, toggleButton) }
+            viewModel.objList.value?.let { updateList(it, toggleButton) }
         }
 
         return binding.root

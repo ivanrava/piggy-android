@@ -7,7 +7,7 @@ import com.google.gson.Gson
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.errors.PropertyValidationError
 import dev.ivanravasi.piggy.data.TokenRepository
-import dev.ivanravasi.piggy.ui.ApiViewModel
+import dev.ivanravasi.piggy.ui.common.ApiViewModel
 import kotlinx.coroutines.launch
 
 class AddPropertyViewModel(

@@ -1,23 +1,14 @@
 package dev.ivanravasi.piggy.ui.categories
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.data.TokenRepository
-import dev.ivanravasi.piggy.ui.ApiViewModel
+import dev.ivanravasi.piggy.ui.common.IndexApiViewModel
 import kotlinx.coroutines.launch
 
 class CategoriesViewModel(
-    private val tokenRepository: TokenRepository
-) : ApiViewModel(tokenRepository) {
-    private val _categories = MutableLiveData<List<Category>>().apply {
-        value = emptyList()
-    }
-    val categories: LiveData<List<Category>> = _categories
-    private val _isLoading = MutableLiveData<Boolean>().apply { value = true }
-    val isLoading: LiveData<Boolean> = _isLoading
-
+    tokenRepository: TokenRepository
+) : IndexApiViewModel<Category>(tokenRepository) {
     init {
         viewModelScope.launch {
             hydrateApiClient()
@@ -30,7 +21,7 @@ class CategoriesViewModel(
             _isLoading.value = true
             try {
                 val response = piggyApi.categoryTrees("Bearer ${tokenRepository.getToken()}")
-                _categories.value = response.body()!!.data.sortedBy { it.name }
+                _objList.value = response.body()!!.data.sortedBy { it.name }
             } catch (e: Exception) {
 //                Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
             }

@@ -1,4 +1,4 @@
-package dev.ivanravasi.piggy.ui
+package dev.ivanravasi.piggy.ui.common
 
 import androidx.lifecycle.ViewModel
 import dev.ivanravasi.piggy.api.piggy.PiggyApi

@@ -1,34 +1,30 @@
 package dev.ivanravasi.piggy.ui.properties
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentPropertiesBinding
+import dev.ivanravasi.piggy.ui.common.CRUDFragment
 
-class PropertiesFragment : Fragment() {
-    private lateinit var viewModel: PropertiesViewModel
-    private lateinit var binding: FragmentPropertiesBinding
-
+class PropertiesFragment : CRUDFragment<Property, PropertyAdapter.PropertyViewHolder>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentPropertiesBinding.inflate(inflater, container, false)
-        viewModel = PropertiesViewModel(TokenRepository(requireContext()))
+        val binding = FragmentPropertiesBinding.inflate(inflater, container, false)
+        val viewModel = PropertiesViewModel(TokenRepository(requireContext()))
 
         val adapter = PropertyAdapter()
-        binding.listProperties.adapter = adapter
-
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            if (it)
-                binding.loadingProgress.show()
-            else
-                binding.loadingProgress.hide()
-        }
-        viewModel.properties.observe(viewLifecycleOwner) {
+        setup(
+            list = binding.listProperties,
+            adapter = adapter,
+            viewModel = viewModel,
+            noDataView = binding.nodata,
+            loadingProgressIndicator = binding.loadingProgress
+        ) {
             adapter.submitList(it)
         }
 

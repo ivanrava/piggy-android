@@ -8,7 +8,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Operation
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transaction
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transfer
 import dev.ivanravasi.piggy.data.TokenRepository
-import dev.ivanravasi.piggy.ui.ApiViewModel
+import dev.ivanravasi.piggy.ui.common.ApiViewModel
 import kotlinx.coroutines.launch
 
 class OperationsViewModel(

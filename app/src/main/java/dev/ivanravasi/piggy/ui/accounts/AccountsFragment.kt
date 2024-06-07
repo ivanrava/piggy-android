@@ -4,38 +4,35 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.google.android.material.chip.ChipGroup
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentAccountsBinding
+import dev.ivanravasi.piggy.ui.common.CRUDFragment
 
-class AccountsFragment : Fragment() {
-    private lateinit var viewModel: AccountsViewModel
-    private lateinit var binding: FragmentAccountsBinding
+class AccountsFragment : CRUDFragment<Account, AccountAdapter.AccountViewHolder>() {
     private val adapter = AccountAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAccountsBinding.inflate(inflater, container, false)
-        viewModel = AccountsViewModel(TokenRepository(requireContext()))
+        val binding = FragmentAccountsBinding.inflate(inflater, container, false)
+        val viewModel = AccountsViewModel(TokenRepository(requireContext()))
 
-        binding.listAccounts.adapter = adapter
-
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            if (it)
-                binding.loadingProgress.show()
-            else
-                binding.loadingProgress.hide()
-        }
-        viewModel.accounts.observe(viewLifecycleOwner) {
+        setup(
+            list = binding.listAccounts,
+            adapter = adapter,
+            viewModel = viewModel,
+            noDataView = binding.nodata,
+            loadingProgressIndicator = binding.loadingProgress
+        ) {
             updateList(it, binding.chipAccountType)
         }
+
         binding.chipAccountType.setOnCheckedStateChangeListener { group, checkedIds ->
-            viewModel.accounts.value?.let { updateList(it, group) }
+            viewModel.objList.value?.let { updateList(it, group) }
         }
 
         return binding.root
