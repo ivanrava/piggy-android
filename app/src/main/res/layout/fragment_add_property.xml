@@ -41,13 +41,12 @@
         app:layout_constraintStart_toEndOf="@id/input_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/input_name"
-        app:layout_constraintBottom_toBottomOf="@id/input_name"
         android:src="@drawable/ic_icon_24"
         app:layout_constraintDimensionRatio="w,1:1"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="20dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         app:layout_constraintStart_toStartOf="parent"

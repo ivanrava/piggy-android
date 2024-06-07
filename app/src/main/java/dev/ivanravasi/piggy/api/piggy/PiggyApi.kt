@@ -1,5 +1,6 @@
 package dev.ivanravasi.piggy.api.piggy
 
+import dev.ivanravasi.piggy.api.piggy.bodies.PropertyRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.api.piggy.bodies.TokenCreateRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.TokenResponse
@@ -28,6 +29,10 @@ interface PiggyApi {
     @Headers("Accept: application/json")
     @GET("/api/properties")
     suspend fun properties(@Header("Authorization") authHeader: String): Response<ListResponse<Property>>
+
+    @Headers("Accept: application/json")
+    @POST("/api/properties")
+    suspend fun propertyAdd(@Header("Authorization") authHeader: String, @Body propertyBody: PropertyRequest): Response<ObjectResponse<Property>>
 
     @Headers("Accept: application/json")
     @GET("/api/beneficiaries")
