@@ -1,6 +1,7 @@
 package dev.ivanravasi.piggy.ui.properties
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.findFragment
 import androidx.recyclerview.widget.DiffUtil
@@ -29,6 +30,9 @@ class PropertyAdapter: ListAdapter<Property, PropertyAdapter.PropertyViewHolder>
             binding.propertyIcon.loadIconify(property.icon, binding.propertyName.currentTextColor)
             binding.propertyName.text = property.name
             binding.propertyDescription.text = property.description
+            if (property.description == null) {
+                binding.propertyDescription.visibility = View.GONE
+            }
             binding.propertyValue.setCurrency(property.value)
 
             binding.btnPlus.setOnClickListener {

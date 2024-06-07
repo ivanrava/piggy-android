@@ -10,6 +10,7 @@
     </data>
     <com.google.android.material.card.MaterialCardView
         android:background="@color/md_theme_inverseOnSurface"
+        android:layout_marginVertical="@dimen/vseparation_small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.constraintlayout.widget.ConstraintLayout

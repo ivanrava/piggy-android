@@ -14,7 +14,7 @@ data class Property(
     @SerializedName("initial_value")
     val initialValue: String,
     @SerializedName("description")
-    val description: String,
+    val description: String?,
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("updated_at")
