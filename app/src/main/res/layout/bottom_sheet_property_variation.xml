@@ -41,13 +41,12 @@
         app:endIconDrawable="@drawable/ic_calendar_24"
         app:endIconMode="custom">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <dev.ivanravasi.piggy.ui.common.TextInputEditDate
             android:id="@+id/edit_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/josefin_slab_semibold"
             android:hint="@string/date_hint"
-            android:inputType="date"
             android:focusable="false"
             android:paddingBottom="@dimen/vseparation_fields" />
     </com.google.android.material.textfield.TextInputLayout>
