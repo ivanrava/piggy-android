@@ -39,7 +39,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.fab.setOnClickListener {
-            navController.navigate(R.id.navigation_add_property)
+            navController.navigate(when (navController.currentDestination?.id) {
+                R.id.navigation_accounts -> R.id.navigation_add_account
+                else -> R.id.navigation_add_property
+            })
 //            binding.fab.hide()
         }
 

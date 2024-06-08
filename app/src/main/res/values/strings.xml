@@ -42,4 +42,12 @@
     <string name="banner_no_categories">No categories to show</string>
     <string name="banner_no_properties">No properties to show</string>
     <string name="banner_no_operations">There are no operations in this account</string>
+    <string name="title_new_account">New account</string>
+    <string name="title_new_beneficiary">New beneficiary</string>
+    <string name="title_new_category">New category</string>
+    <string name="initial_balance_hint">Initial balance</string>
+    <string name="opening_hint">Date of opening</string>
+    <string name="closing_hint">Date of closing</string>
+    <string name="button_add_account">Add account</string>
+    <string name="color_picker_description">Open color picker</string>
 </resources>

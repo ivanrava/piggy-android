@@ -48,4 +48,8 @@ class IconPickerView(
     public fun setOnSelectedIconListener(listener: (icon: String) -> Unit) {
         listeners.add(listener)
     }
+
+    fun loadIconify(icon: String) {
+        loadIconify(icon, iconColor)
+    }
 }

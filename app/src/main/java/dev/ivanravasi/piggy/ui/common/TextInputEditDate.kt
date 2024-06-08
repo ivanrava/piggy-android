@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
 import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.Date
 
 class TextInputEditDate(
@@ -16,6 +17,8 @@ class TextInputEditDate(
 ): TextInputEditText(context, attrs) {
     private val listeners: MutableList<(date: Long) -> Unit> = mutableListOf()
     private val dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM)
+    private var submittableDate: String = ""
+    private val submittableDateFormat = SimpleDateFormat("yyyy-MM-dd")
 
     init {
         inputType = AUTOFILL_TYPE_DATE
@@ -29,7 +32,8 @@ class TextInputEditDate(
                 datePicker.show(fragmentManager, "DatePicker")
             }
             datePicker.addOnPositiveButtonClickListener { dateLong ->
-                setText(format(dateLong))
+                setText(dateFormat.format(Date(dateLong)))
+                submittableDate = submittableDateFormat.format(Date(dateLong))
                 listeners.forEach { it(dateLong) }
             }
         }
@@ -48,16 +52,12 @@ class TextInputEditDate(
         listeners.add(listener)
     }
 
-    private fun today(): String {
-        val dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM)
-        return dateFormat.format(Date())
-    }
-
     fun setToday() {
-        setText(today())
+        submittableDate = submittableDateFormat.format(Date())
+        setText(dateFormat.format(Date()))
     }
 
-    private fun format(dateNumeric: Long): String {
-        return dateFormat.format(Date(dateNumeric))
+    fun date(): String {
+        return submittableDate
     }
 }

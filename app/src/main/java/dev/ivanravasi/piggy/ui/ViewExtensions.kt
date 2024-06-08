@@ -1,5 +1,6 @@
 package dev.ivanravasi.piggy.ui
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.TextView
@@ -32,23 +33,27 @@ fun TextView.setDate(dateString: String) {
     text = dateFormat.format(date!!)
 }
 
-fun CardAccountBinding.setAccount(account: Account, navController: NavController) {
-    fun isColorDark(hex: String): Boolean {
-        val brightness = Math.round(
-            ((Integer.parseInt(hex.substring(0,2), 16) * 299) +
-                    (Integer.parseInt(hex.substring(2,4), 16) * 587) +
-                    (Integer.parseInt(hex.substring(4,6), 16) * 114)) / 1000.0)
+private fun isColorDark(hex: String): Boolean {
+    val brightness = Math.round(
+        ((Integer.parseInt(hex.substring(0,2), 16) * 299) +
+                (Integer.parseInt(hex.substring(2,4), 16) * 587) +
+                (Integer.parseInt(hex.substring(4,6), 16) * 114)) / 1000.0)
 
-        return brightness > 148
-    }
+    return brightness > 148
+}
 
-    this.cardAccount.setCardBackgroundColor(Color.parseColor(account.color))
-
-    val color = ContextCompat.getColor(this.root.context, if (isColorDark(account.color.substring(1))) {
+fun accountTextColor(context: Context, hex: String): Int {
+    return ContextCompat.getColor(context, if (isColorDark(hex)) {
         R.color.account_text_dark
     } else {
         R.color.account_text_light
     })
+}
+
+fun CardAccountBinding.setAccount(account: Account, navController: NavController) {
+    this.cardAccount.setCardBackgroundColor(Color.parseColor(account.color))
+
+    val color = accountTextColor(this.root.context, account.color.substring(1))
     this.accountIcon.loadIconify(account.icon, color)
     this.accountName.text = account.name
     this.accountType.text = account.type
