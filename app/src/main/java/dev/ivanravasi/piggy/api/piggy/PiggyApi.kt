@@ -5,6 +5,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TokenCreateRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.responses.TokenResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.AccountType
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ListResponse
@@ -52,6 +53,10 @@ interface PiggyApi {
     @Headers("Accept: application/json")
     @POST("/api/categories")
     suspend fun categoryAdd(@Header("Authorization") authHeader: String, @Body categoryBody: CategoryRequest): Response<ObjectResponse<Category>>
+
+    @Headers("Accept: application/json")
+    @GET("/api/account_types")
+    suspend fun accountTypes(@Header("Authorization") authHeader: String): Response<List<AccountType>>
 
     @Headers("Accept: application/json")
     @GET("/api/accounts")
