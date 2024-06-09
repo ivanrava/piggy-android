@@ -3,9 +3,13 @@ package dev.ivanravasi.piggy.ui
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.iconify.loadIconify
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
@@ -65,4 +69,14 @@ fun CardAccountBinding.setAccount(account: Account, navController: NavController
         bundle.putLong("id", account.id)
         navController.navigate(R.id.navigation_operations, bundle)
     }
+}
+
+fun Fragment.backWithSnackbar(viewRef: View, message: String) {
+    Snackbar.make(
+        viewRef,
+        message,
+        Snackbar.LENGTH_SHORT
+    ).setAnchorView(R.id.bottom_bar)
+        .show()
+    findNavController().popBackStack()
 }

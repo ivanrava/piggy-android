@@ -49,4 +49,8 @@
         android:id="@+id/navigation_add_property"
         android:name="dev.ivanravasi.piggy.ui.properties.AddPropertyFragment"
         android:label="AddPropertyFragment" />
+    <fragment
+        android:id="@+id/navigation_add_account"
+        android:name="dev.ivanravasi.piggy.ui.accounts.AddAccountFragment"
+        android:label="AddAccountFragment" />
 </navigation>

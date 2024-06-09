@@ -6,7 +6,7 @@ data class AccountRequest(
     @SerializedName("name")
     var name: String,
     @SerializedName("icon")
-    var icon: String,
+    var icon: String?,
     @SerializedName("color")
     var color: String,
     @SerializedName("opening")

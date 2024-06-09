@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyRequest
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddPropertyBinding
+import dev.ivanravasi.piggy.ui.backWithSnackbar
 
 class AddPropertyFragment : Fragment() {
     override fun onCreateView(
@@ -36,18 +36,14 @@ class AddPropertyFragment : Fragment() {
         }
 
         binding.buttonAdd.setOnClickListener {
-            viewModel.submit(
+            val request = PropertyRequest(
                 binding.editName.text.toString(),
+                viewModel.icon.value,
                 binding.editInitialValue.text.toString(),
                 binding.editDescription.text.toString()
-            ) {
-                Snackbar.make(
-                    binding.buttonAdd,
-                    "Property added successfully",
-                    Snackbar.LENGTH_SHORT
-                ).setAnchorView(R.id.bottom_bar)
-                    .show()
-                findNavController().popBackStack()
+            )
+            viewModel.submit(request) {
+                backWithSnackbar(binding.buttonAdd, "Property added successfully")
             }
         }
 

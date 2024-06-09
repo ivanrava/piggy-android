@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.AccountRequest
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddAccountBinding
 import dev.ivanravasi.piggy.ui.accountTextColor
+import dev.ivanravasi.piggy.ui.backWithSnackbar
 
 
 class AddAccountFragment : Fragment() {
@@ -66,21 +66,22 @@ class AddAccountFragment : Fragment() {
         }
 
         binding.buttonAdd.setOnClickListener {
-            viewModel.submit(
+            if (binding.editAccountType.text.isEmpty()) {
+                binding.editAccountType.error = "You need to specify an account type"
+                return@setOnClickListener
+            }
+            val request = AccountRequest(
                 binding.editName.text.toString(),
-                binding.editInitialBalance.text.toString(),
+                viewModel.icon.value,
+                "#${viewModel.color.value?.hexCode}",
                 binding.editOpening.date(),
                 binding.editClosing.date(),
+                binding.editInitialBalance.text.toString(),
                 binding.editDescription.text.toString(),
-                binding.editAccountType.text.toString()
-            ) {
-                Snackbar.make(
-                    binding.buttonAdd,
-                    "Account added successfully",
-                    Snackbar.LENGTH_SHORT
-                ).setAnchorView(R.id.bottom_bar)
-                    .show()
-                findNavController().popBackStack()
+                viewModel.accountTypes.value?.find { it.type == binding.editAccountType.text.toString() }?.id!!
+            )
+            viewModel.submit(request) {
+                backWithSnackbar(binding.buttonAdd, "Account added successfully")
             }
         }
 

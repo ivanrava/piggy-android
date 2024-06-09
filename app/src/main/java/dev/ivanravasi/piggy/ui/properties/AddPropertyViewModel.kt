@@ -1,23 +1,23 @@
 package dev.ivanravasi.piggy.ui.properties
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.errors.PropertyValidationError
+import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
 import dev.ivanravasi.piggy.data.TokenRepository
-import dev.ivanravasi.piggy.ui.common.ApiViewModel
+import dev.ivanravasi.piggy.ui.common.StoreApiViewModel
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class AddPropertyViewModel(
     private val tokenRepository: TokenRepository
-) : ApiViewModel(tokenRepository) {
-    private val _isLoading = MutableLiveData<Boolean>().apply { value = true }
-    val isLoading: LiveData<Boolean> = _isLoading
+) : StoreApiViewModel<Property, PropertyRequest, PropertyValidationError.Errors>(
+    tokenRepository, PropertyValidationError.Errors()
+) {
     val icon = MutableLiveData<String?>().apply { value = null }
-    private val _errors = MutableLiveData<PropertyValidationError.Errors>().apply { value = PropertyValidationError.Errors() }
-    val errors: LiveData<PropertyValidationError.Errors> = _errors
 
     init {
         viewModelScope.launch {
@@ -25,33 +25,20 @@ class AddPropertyViewModel(
         }
     }
 
-    fun submit(name: String, initialValue: String, description: String, onSuccess: () -> Unit) {
+    override fun validate(request: PropertyRequest): Boolean {
         if (icon.value == null) {
             _errors.value!!.icon = mutableListOf("The icon is required")
             _errors.postValue(_errors.value)
-            return
+            return false
         }
-        viewModelScope.launch {
-            _isLoading.value = true
-            try {
-                val req = PropertyRequest(
-                    name,
-                    icon.value!!,
-                    initialValue,
-                    description
-                )
-                val response = piggyApi.propertyAdd("Bearer ${tokenRepository.getToken()}", req)
-                if (response.isSuccessful) {
-                    onSuccess()
-                } else {
-                    val errorString = response.errorBody()!!.string()
-                    _errors.value =
-                        Gson().fromJson(errorString, PropertyValidationError::class.java).errors
-                }
-            } catch (e: Exception) {
-//                Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
-            }
-            _isLoading.value = false
-        }
+        return true
+    }
+
+    override fun loadErrors(errors: String): PropertyValidationError.Errors {
+        return Gson().fromJson(errors, PropertyValidationError::class.java).errors
+    }
+
+    override suspend fun request(request: PropertyRequest): Response<ObjectResponse<Property>> {
+        return piggyApi.propertyAdd("Bearer ${tokenRepository.getToken()}", request)
     }
 }

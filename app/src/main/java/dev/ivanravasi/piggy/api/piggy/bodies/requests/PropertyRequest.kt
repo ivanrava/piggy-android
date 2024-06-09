@@ -6,7 +6,7 @@ data class PropertyRequest(
     @SerializedName("name")
     var name: String,
     @SerializedName("icon")
-    var icon: String,
+    var icon: String?,
     @SerializedName("initial_value")
     var initialValue: String,
     @SerializedName("description")
