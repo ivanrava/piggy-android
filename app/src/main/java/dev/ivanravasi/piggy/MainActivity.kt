@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dev.ivanravasi.piggy.data.TokenRepository
@@ -14,9 +16,12 @@ import dev.ivanravasi.piggy.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var tokenRepository: TokenRepository
+    private val fabActions = mapOf(
+        R.id.navigation_accounts to R.id.navigation_add_account,
+        R.id.navigation_properties to R.id.navigation_add_property,
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,15 +43,28 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        binding.fab.setOnClickListener {
-            navController.navigate(when (navController.currentDestination?.id) {
-                R.id.navigation_accounts -> R.id.navigation_add_account
-                else -> R.id.navigation_add_property
-            })
-//            binding.fab.hide()
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            setupFab(
+                controller,
+                destination
+            )
         }
 
         navView.setupWithNavController(navController)
+    }
+
+    private fun setupFab(navController: NavController, destination: NavDestination) {
+        val currentId = destination.id
+        val destinationId = fabActions[currentId]
+        if (destinationId == null) {
+            binding.fab.hide()
+        } else {
+            binding.fab.show()
+            binding.fab.setOnClickListener {
+                navController.navigate(destinationId)
+                binding.fab.hide()
+            }
+        }
     }
 
     override fun onDestroy() {
