@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dev.ivanravasi.piggy.databinding.BottomSheetIconPickerBinding
+import dev.ivanravasi.piggy.ui.afterTextChangedDebounced
 
 class IconPickerBottomSheet(val color: Int, val onIconClickListener: OnIconClickListener) : BottomSheetDialogFragment() {
     private val SPAN_COUNT = 6
@@ -32,8 +32,8 @@ class IconPickerBottomSheet(val color: Int, val onIconClickListener: OnIconClick
         })
         binding.gridIcons.adapter = adapter
 
-        binding.editSearch.doAfterTextChanged {
-            viewModel.queryIcons(it.toString())
+        binding.editSearch.afterTextChangedDebounced {
+            viewModel.queryIcons(it)
         }
         viewModel.icons.observe(viewLifecycleOwner) {
             adapter.submitList(it)
