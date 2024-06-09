@@ -53,4 +53,8 @@
         android:id="@+id/navigation_add_account"
         android:name="dev.ivanravasi.piggy.ui.accounts.AddAccountFragment"
         android:label="AddAccountFragment" />
+    <fragment
+        android:id="@+id/navigation_add_beneficiary"
+        android:name="dev.ivanravasi.piggy.ui.beneficiaries.AddBeneficiaryFragment"
+        android:label="AddBeneficiaryFragment" />
 </navigation>

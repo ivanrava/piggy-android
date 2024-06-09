@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tokenRepository: TokenRepository
     private val fabActions = mapOf(
         R.id.navigation_accounts to R.id.navigation_add_account,
+        R.id.navigation_beneficiaries to R.id.navigation_add_beneficiary,
         R.id.navigation_properties to R.id.navigation_add_property,
     )
 
