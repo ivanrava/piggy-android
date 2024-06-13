@@ -59,7 +59,14 @@ class MainActivity : AppCompatActivity() {
         val destinationId = fabActions[currentId]
         if (destinationId == null) {
             binding.fab.hide()
+            if (currentId == R.id.navigation_operations) {
+                binding.fabTransaction.show()
+                binding.fabTransfer.show()
+            }
         } else {
+            binding.fabTransaction.hide()
+            binding.fabTransfer.hide()
+
             binding.fab.show()
             binding.fab.setOnClickListener {
                 navController.navigate(destinationId)

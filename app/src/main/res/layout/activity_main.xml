@@ -6,7 +6,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="?attr/actionBarSize"
     tools:context=".MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
@@ -26,28 +25,51 @@
             android:id="@+id/nav_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:background="?android:attr/windowBackground"
-            app:fontFamily="@font/inter"
             app:menu="@menu/bottom_nav_menu" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
+        style="?attr/floatingActionButtonPrimaryStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="Add a property"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="84dp"
+        android:contentDescription="Add something"
         app:layout_anchor="@id/bottom_bar"
-        app:layout_anchorGravity="end|top"
-        app:srcCompat="@drawable/ic_add_24"/>
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@drawable/ic_plus_24"/>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_transaction"
+        style="?attr/extendedFloatingActionButtonPrimaryStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="96dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Add a transaction"
+        android:text="New transaction"
+        app:layout_anchor="@id/bottom_bar"
+        app:layout_anchorGravity="bottom|end"
+        app:icon="@drawable/ic_plus_24"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_transfer"
+        style="?attr/floatingActionButtonSmallSecondaryStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Add a transfer"
+        android:translationY="-36dp"
+        android:layout_marginEnd="16dp"
+        app:layout_anchor="@id/fab_transaction"
+        app:layout_anchorGravity="top|end"
+        app:srcCompat="@drawable/ic_transfer_24"/>
 
     <FrameLayout
         android:id="@+id/bottom_sheet"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content">
+        android:layout_gravity="bottom"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     </FrameLayout>
 
