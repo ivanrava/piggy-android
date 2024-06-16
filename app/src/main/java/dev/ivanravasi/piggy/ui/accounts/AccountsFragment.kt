@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.ChipGroup
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
@@ -12,7 +14,14 @@ import dev.ivanravasi.piggy.databinding.FragmentAccountsBinding
 import dev.ivanravasi.piggy.ui.common.CRUDFragment
 
 class AccountsFragment : CRUDFragment<Account, AccountAdapter.AccountViewHolder>() {
-    private val adapter = AccountAdapter()
+    private lateinit var navController: NavController
+    private val adapter = AccountAdapter(object : OnAccountClickListener {
+        override fun onAccountClick(account: Account) {
+            val bundle = Bundle()
+            bundle.putLong("id", account.id)
+            navController.navigate(R.id.navigation_operations, bundle)
+        }
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -20,6 +29,7 @@ class AccountsFragment : CRUDFragment<Account, AccountAdapter.AccountViewHolder>
     ): View {
         val binding = FragmentAccountsBinding.inflate(inflater, container, false)
         val viewModel = AccountsViewModel(TokenRepository(requireContext()))
+        navController = findNavController()
 
         setup(
             list = binding.listAccounts,

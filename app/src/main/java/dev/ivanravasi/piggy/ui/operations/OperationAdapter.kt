@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.findFragment
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -75,14 +74,13 @@ class OperationAdapter: ListAdapter<Operation, OperationAdapter.OperationViewHol
     }
 
     class TransferViewHolder private constructor(
-        private val binding: ListItemTransferBinding,
-        private val navController: NavController
+        private val binding: ListItemTransferBinding
     ): OperationViewHolder(root = binding.root) {
         private fun bind(transfer: Transfer) {
             if (transfer.to != null)
-                binding.cardAccount.setAccount(transfer.to, navController)
+                binding.cardAccount.setAccount(transfer.to)
             else if (transfer.from != null)
-                binding.cardAccount.setAccount(transfer.from, navController)
+                binding.cardAccount.setAccount(transfer.from)
             else
                 binding.cardAccount.cardAccount.visibility = View.GONE
 
@@ -94,8 +92,8 @@ class OperationAdapter: ListAdapter<Operation, OperationAdapter.OperationViewHol
             fun from(parent: ViewGroup): TransferViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ListItemTransferBinding.inflate(layoutInflater, parent, false)
-                val navController = parent.findFragment<OperationsFragment>().findNavController()
-                return TransferViewHolder(binding, navController)
+                parent.findFragment<OperationsFragment>().findNavController()
+                return TransferViewHolder(binding)
             }
         }
 

@@ -61,4 +61,8 @@
         android:id="@+id/navigation_add_transaction"
         android:name="dev.ivanravasi.piggy.ui.operations.AddTransactionFragment"
         android:label="AddTransactionFragment" />
+    <fragment
+        android:id="@+id/navigation_add_transfer"
+        android:name="dev.ivanravasi.piggy.ui.operations.AddTransferFragment"
+        android:label="AddTransferFragment" />
 </navigation>

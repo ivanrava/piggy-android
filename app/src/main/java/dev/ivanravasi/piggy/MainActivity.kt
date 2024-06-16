@@ -49,6 +49,11 @@ class MainActivity : AppCompatActivity() {
             binding.fabTransaction.hide()
             binding.fabTransfer.hide()
         }
+        binding.fabTransfer.setOnClickListener {
+            navController.navigate(R.id.navigation_add_transfer)
+            binding.fabTransaction.hide()
+            binding.fabTransfer.hide()
+        }
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             setupFab(

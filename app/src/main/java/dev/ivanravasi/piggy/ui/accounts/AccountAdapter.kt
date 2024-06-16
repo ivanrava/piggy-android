@@ -3,7 +3,6 @@ package dev.ivanravasi.piggy.ui.accounts
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.findFragment
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -12,11 +11,20 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.databinding.ListItemAccountBinding
 import dev.ivanravasi.piggy.ui.setAccount
 
+interface OnAccountClickListener {
+    fun onAccountClick(account: Account)
+}
 
-class AccountAdapter : ListAdapter<Account, AccountAdapter.AccountViewHolder>(AccountDiffCallback()) {
+class AccountAdapter(
+    private val accountClickListener: OnAccountClickListener = object : OnAccountClickListener {
+        override fun onAccountClick(account: Account) {
+            TODO("Not yet implemented")
+        }
+    }
+) : ListAdapter<Account, AccountAdapter.AccountViewHolder>(AccountDiffCallback()) {
     override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {
         val account = getItem(position)
-        holder.bind(account)
+        holder.bind(account, accountClickListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
@@ -24,11 +32,13 @@ class AccountAdapter : ListAdapter<Account, AccountAdapter.AccountViewHolder>(Ac
     }
 
     class AccountViewHolder private constructor(
-        private val binding: ListItemAccountBinding,
-        private val navController: NavController
+        private val binding: ListItemAccountBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(account: Account) {
-            binding.cardAccount.setAccount(account, navController)
+        fun bind(account: Account, listener: OnAccountClickListener) {
+            binding.cardAccount.setAccount(account)
+            binding.cardAccount.cardAccount.setOnClickListener {
+                listener.onAccountClick(account)
+            }
         }
 
 
@@ -36,8 +46,8 @@ class AccountAdapter : ListAdapter<Account, AccountAdapter.AccountViewHolder>(Ac
             fun from(parent: ViewGroup): AccountViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ListItemAccountBinding.inflate(layoutInflater, parent, false)
-                val navController = parent.findFragment<AccountsFragment>().findNavController()
-                return AccountViewHolder(binding, navController)
+                parent.findFragment<AccountsFragment>().findNavController()
+                return AccountViewHolder(binding)
             }
         }
     }

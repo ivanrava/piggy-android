@@ -2,7 +2,6 @@ package dev.ivanravasi.piggy.ui
 
 import android.content.Context
 import android.graphics.Color
-import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,7 +9,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dev.ivanravasi.piggy.R
@@ -57,7 +55,7 @@ fun accountTextColor(context: Context, hex: String): Int {
     })
 }
 
-fun CardAccountBinding.setAccount(account: Account, navController: NavController) {
+fun CardAccountBinding.setAccount(account: Account) {
     this.cardAccount.setCardBackgroundColor(Color.parseColor(account.color))
 
     val color = accountTextColor(this.root.context, account.color.substring(1))
@@ -67,11 +65,6 @@ fun CardAccountBinding.setAccount(account: Account, navController: NavController
 
     this.accountName.setTextColor(color)
     this.accountType.setTextColor(color)
-    this.cardAccount.setOnClickListener {
-        val bundle = Bundle()
-        bundle.putLong("id", account.id)
-        navController.navigate(R.id.navigation_operations, bundle)
-    }
 }
 
 fun Fragment.backWithSnackbar(viewRef: View, message: String) {
