@@ -9,6 +9,7 @@
             type="dev.ivanravasi.piggy.api.piggy.bodies.entities.Category" />
     </data>
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_category"
         android:background="@color/md_theme_inverseOnSurface"
         android:layout_marginVertical="@dimen/vseparation_small"
         android:layout_width="match_parent"

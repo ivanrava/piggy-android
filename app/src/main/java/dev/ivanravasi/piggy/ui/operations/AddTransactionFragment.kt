@@ -13,6 +13,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddTransactionBinding
 import dev.ivanravasi.piggy.ui.beneficiaries.OnBeneficiaryClickListener
+import dev.ivanravasi.piggy.ui.categories.OnCategoryClickListener
 
 
 class AddTransactionFragment : Fragment() {
@@ -45,12 +46,18 @@ class AddTransactionFragment : Fragment() {
         }
 
         binding.cardBeneficiary.beneficiaryImg.setOnClickListener {
-            BeneficiaryBottomSheet(viewModel.beneficiaries.value!!, object :
-                OnBeneficiaryClickListener {
+            BeneficiaryBottomSheet(viewModel.beneficiaries.value!!, object : OnBeneficiaryClickListener {
                 override fun onBeneficiaryClick(beneficiary: Beneficiary) {
                     setBeneficiary(beneficiary)
                 }
             }).show(parentFragmentManager, "BeneficiaryBottomSheet")
+        }
+        binding.cardCategory.setOnClickListener {
+            CategoryBottomSheet(viewModel.categories.value!!, object : OnCategoryClickListener {
+                override fun onCategoryClick(category: Category) {
+                    setCategory(category)
+                }
+            }).show(parentFragmentManager, "CategoryBottomSheet")
         }
 
         binding.editDate.setToday()

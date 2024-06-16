@@ -9,10 +9,20 @@ import dev.ivanravasi.piggy.api.iconify.loadIconify
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.databinding.ListItemCategoryBinding
 
-class CategoryAdapter: ListAdapter<Category, CategoryAdapter.CategoryViewHolder>(CategoryDiffCallback()) {
+interface OnCategoryClickListener {
+    fun onCategoryClick(category: Category)
+}
+
+class CategoryAdapter(
+    private val categoryClickListener: OnCategoryClickListener = object : OnCategoryClickListener {
+        override fun onCategoryClick(category: Category) {
+            TODO("Not yet implemented")
+        }
+    }
+): ListAdapter<Category, CategoryAdapter.CategoryViewHolder>(CategoryDiffCallback()) {
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        val property = getItem(position)
-        holder.bind(property)
+        val category = getItem(position)
+        holder.bind(category, categoryClickListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -22,10 +32,13 @@ class CategoryAdapter: ListAdapter<Category, CategoryAdapter.CategoryViewHolder>
     class CategoryViewHolder private constructor(
         private val binding: ListItemCategoryBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(category: Category) {
+        fun bind(category: Category, listener: OnCategoryClickListener) {
             binding.categoryIcon.loadIconify(category.icon, binding.categoryName.currentTextColor)
             binding.categoryName.text = category.name
             binding.categoryDescription.text = "${category.children.count()} children categories"
+            binding.cardCategory.setOnClickListener {
+                listener.onCategoryClick(category)
+            }
         }
 
         companion object {
