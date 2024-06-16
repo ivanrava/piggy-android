@@ -44,6 +44,12 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        binding.fabTransaction.setOnClickListener {
+            navController.navigate(R.id.navigation_add_transaction)
+            binding.fabTransaction.hide()
+            binding.fabTransfer.hide()
+        }
+
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             setupFab(
                 controller,

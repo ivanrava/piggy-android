@@ -8,11 +8,15 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.AccountType
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transaction
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transfer
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ListResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.AccountRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.BeneficiaryRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.CategoryRequest
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransactionRequest
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransferRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -51,6 +55,10 @@ interface PiggyApi {
     suspend fun categoryTrees(@Header("Authorization") authHeader: String): Response<ListResponse<Category>>
 
     @Headers("Accept: application/json")
+    @GET("/api/categories/leaves")
+    suspend fun categoryLeaves(@Header("Authorization") authHeader: String): Response<ListResponse<Category>>
+
+    @Headers("Accept: application/json")
     @POST("/api/categories")
     suspend fun categoryAdd(@Header("Authorization") authHeader: String, @Body categoryBody: CategoryRequest): Response<ObjectResponse<Category>>
 
@@ -69,4 +77,12 @@ interface PiggyApi {
     @Headers("Accept: application/json")
     @GET("/api/accounts/{id}")
     suspend fun account(@Header("Authorization") authHeader: String, @Path("id") id: Long): Response<ObjectResponse<Account>>
+
+    @Headers("Accept: application/json")
+    @POST("/api/transactions")
+    suspend fun transactionAdd(@Header("Authorization") authHeader: String, @Body transactionBody: TransactionRequest): Response<ObjectResponse<Transaction>>
+
+    @Headers("Accept: application/json")
+    @POST("/api/transfers")
+    suspend fun transferAdd(@Header("Authorization") authHeader: String, @Body transferBody: TransferRequest): Response<ObjectResponse<Transfer>>
 }

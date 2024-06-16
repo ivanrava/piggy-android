@@ -23,7 +23,7 @@ class BeneficiaryAdapter: ListAdapter<Beneficiary, BeneficiaryAdapter.Beneficiar
         private val binding: ListItemBeneficiaryBinding
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(beneficiary: Beneficiary) {
-            binding.beneficiaryImg.loadBeneficiary(img = beneficiary.img, seed = beneficiary.name)
+            binding.cardBeneficiary.beneficiaryImg.loadBeneficiary(img = beneficiary.img, seed = beneficiary.name)
         }
 
         companion object {

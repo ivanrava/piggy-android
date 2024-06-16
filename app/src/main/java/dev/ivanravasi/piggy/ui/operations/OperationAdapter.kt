@@ -46,7 +46,7 @@ class OperationAdapter: ListAdapter<Operation, OperationAdapter.OperationViewHol
         private val binding: ListItemTransactionBinding
     ): OperationViewHolder(root = binding.root) {
         private fun bind(transaction: Transaction) {
-            binding.beneficiaryImg.loadBeneficiary(img = transaction.beneficiary.img, seed = transaction.beneficiary.name)
+            binding.cardBeneficiary.beneficiaryImg.loadBeneficiary(img = transaction.beneficiary.img, seed = transaction.beneficiary.name)
             binding.beneficiaryName.text = transaction.beneficiary.name
 
             binding.categoryIcon.loadIconify(transaction.category.icon, binding.categoryName.currentTextColor)
