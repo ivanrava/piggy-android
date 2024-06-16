@@ -8,16 +8,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import dev.ivanravasi.piggy.api.dicebear.loadBeneficiary
 import dev.ivanravasi.piggy.api.iconify.loadIconify
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddTransactionBinding
+import dev.ivanravasi.piggy.ui.beneficiaries.OnBeneficiaryClickListener
 
 
 class AddTransactionFragment : Fragment() {
+    private lateinit var binding: FragmentAddTransactionBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentAddTransactionBinding.inflate(inflater, container, false)
+        binding = FragmentAddTransactionBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(this, AddTransactionViewModel.Factory(
             TokenRepository(requireContext())
         ))[AddTransactionViewModel::class.java]
@@ -29,16 +34,23 @@ class AddTransactionFragment : Fragment() {
         viewModel.beneficiaries.observe(viewLifecycleOwner) {
             val suggestion = it.firstOrNull()
             suggestion?.let {
-                binding.beneficiaryName.text = it.name
-                binding.cardBeneficiary.beneficiaryImg.loadBeneficiary(it.img, it.name)
+                setBeneficiary(it)
             }
         }
         viewModel.categories.observe(viewLifecycleOwner) {
             val suggestion = it.firstOrNull()
             suggestion?.let {
-                binding.categoryName.text = it.name
-                binding.categoryIcon.loadIconify(it.icon, binding.categoryName.currentTextColor)
+                setCategory(it)
             }
+        }
+
+        binding.cardBeneficiary.beneficiaryImg.setOnClickListener {
+            BeneficiaryBottomSheet(viewModel.beneficiaries.value!!, object :
+                OnBeneficiaryClickListener {
+                override fun onBeneficiaryClick(beneficiary: Beneficiary) {
+                    setBeneficiary(beneficiary)
+                }
+            }).show(parentFragmentManager, "BeneficiaryBottomSheet")
         }
 
         binding.editDate.setToday()
@@ -60,5 +72,15 @@ class AddTransactionFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun setBeneficiary(beneficiary: Beneficiary) {
+        binding.beneficiaryName.text = beneficiary.name
+        binding.cardBeneficiary.beneficiaryImg.loadBeneficiary(beneficiary.img, beneficiary.name)
+    }
+
+    private fun setCategory(category: Category) {
+        binding.categoryName.text = category.name
+        binding.categoryIcon.loadIconify(category.icon, binding.categoryName.currentTextColor)
     }
 }
