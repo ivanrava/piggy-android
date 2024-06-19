@@ -33,7 +33,9 @@ class AddTransactionFragment : Fragment() {
         ))[AddTransactionViewModel::class.java]
 
         viewModel.errors.observe(viewLifecycleOwner) {
-            // TODO: handle validation errors
+            binding.inputDate.error = it.date.first()
+            binding.inputAmount.error = it.amount.first()
+            binding.inputNotes.error = it.notes.first()
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
@@ -85,7 +87,7 @@ class AddTransactionFragment : Fragment() {
                 viewModel.category.value!!,
                 binding.editDate.date(),
                 binding.switchChecked.isChecked,
-                binding.editValue.text.toString(),
+                binding.editAmount.text.toString(),
                 binding.editNotes.text.toString(),
             )
             viewModel.submit(request) {
