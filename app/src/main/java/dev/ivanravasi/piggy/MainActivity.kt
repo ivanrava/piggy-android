@@ -45,17 +45,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.fabTransaction.setOnClickListener {
-            val fragment = supportFragmentManager.primaryNavigationFragment
-            if (fragment is NavHostFragment) {
-                val childFragment = fragment.childFragmentManager.fragments[0]
-                val bundle = childFragment.requireArguments()
-                navController.navigate(R.id.navigation_add_transaction, bundle)
-                binding.fabTransaction.hide()
-                binding.fabTransfer.hide()
-            }
+            navController.navigate(R.id.navigation_add_transaction, getCurrentBundle())
+            binding.fabTransaction.hide()
+            binding.fabTransfer.hide()
         }
         binding.fabTransfer.setOnClickListener {
-            navController.navigate(R.id.navigation_add_transfer)
+            navController.navigate(R.id.navigation_add_transfer, getCurrentBundle())
             binding.fabTransaction.hide()
             binding.fabTransfer.hide()
         }
@@ -68,6 +63,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         navView.setupWithNavController(navController)
+    }
+
+    private fun getCurrentBundle(): Bundle? {
+        val fragment = supportFragmentManager.primaryNavigationFragment
+        if (fragment is NavHostFragment) {
+            val childFragment = fragment.childFragmentManager.fragments[0]
+            return childFragment.requireArguments()
+        }
+        return null
     }
 
     private fun setupFab(navController: NavController, destination: NavDestination) {
