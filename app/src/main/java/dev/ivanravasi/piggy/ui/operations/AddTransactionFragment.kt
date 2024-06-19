@@ -36,6 +36,13 @@ class AddTransactionFragment : Fragment() {
             // TODO: handle validation errors
         }
 
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            binding.buttonAdd.isEnabled = !it
+
+            if (it) binding.loadingProgress.show()
+            else binding.loadingProgress.hide()
+        }
+
         viewModel.beneficiary.observe(viewLifecycleOwner) {
             if (it != null) {
                 setBeneficiary(it)

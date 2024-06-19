@@ -40,9 +40,11 @@ class AddTransactionViewModel(
     init {
         viewModelScope.launch {
             hydrateApiClient()
+            _isLoading.value = true
             getAccount()
             getBeneficiaries()
             getCategories()
+            _isLoading.value = false
         }
     }
 
@@ -72,16 +74,12 @@ class AddTransactionViewModel(
 
     // TODO: try to avoid this call by grabbing the object from the previous fragment
     private suspend fun getAccount() {
-        viewModelScope.launch {
-            _isLoading.value = true
-            try {
-                val response = piggyApi.account("Bearer ${tokenRepository.getToken()}", accountId)
-                if (response.isSuccessful)
-                    _account.value = response.body()!!.data
-            } catch (e: Exception) {
-                e.localizedMessage?.let { Log.i("message", it) }
-            }
-            _isLoading.value = false
+        try {
+            val response = piggyApi.account("Bearer ${tokenRepository.getToken()}", accountId)
+            if (response.isSuccessful)
+                _account.value = response.body()!!.data
+        } catch (e: Exception) {
+            e.localizedMessage?.let { Log.i("message", it) }
         }
     }
 
