@@ -63,4 +63,5 @@
     <string name="type_to">Give to...</string>
     <string name="type_from">Take from...</string>
     <string name="checked">Have you already checked the transaction?</string>
+    <string name="card_edit_hint">Touch the image to edit</string>
 </resources>

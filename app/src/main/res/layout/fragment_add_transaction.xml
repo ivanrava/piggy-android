@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="@font/inter_light"
-        android:text="Touch the image to edit"
+        android:text="@string/card_edit_hint"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@id/card_beneficiary"
         app:layout_constraintTop_toBottomOf="@id/beneficiary_name" />
@@ -102,7 +102,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/inter_light"
-        android:text="Touch the image to edit"
+        android:text="@string/card_edit_hint"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/card_category"
         app:layout_constraintEnd_toStartOf="@id/card_category" />
