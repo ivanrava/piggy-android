@@ -15,6 +15,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        app:layout_constraintTop_toBottomOf="@+id/add_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/toggle_transfer_type"
+        android:id="@+id/loading_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/progress_initial_api_request" />
+
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggle_transfer_type"
         android:layout_marginTop="16dp"
@@ -27,7 +37,7 @@
         android:layout_height="wrap_content">
         <com.google.android.material.button.MaterialButton
             style="?attr/materialButtonOutlinedStyle"
-            android:id="@+id/button_income"
+            android:id="@+id/button_outcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -37,7 +47,7 @@
             />
         <com.google.android.material.button.MaterialButton
             style="?attr/materialButtonOutlinedStyle"
-            android:id="@+id/button_outcome"
+            android:id="@+id/button_income"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -62,6 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:endIconDrawable="@drawable/ic_calendar_24"
+        android:layout_marginVertical="16dp"
         app:endIconMode="custom"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/card_account">
@@ -118,17 +129,27 @@
             android:paddingBottom="@dimen/vseparation_fields" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switch_checked"
+        app:layout_constraintTop_toBottomOf="@id/input_notes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/switch_padding_start"
+        android:paddingEnd="@dimen/switch_padding_end"
+        android:text="@string/checked" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_add"
         style="@style/button_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/md_theme_primary"
         android:enabled="true"
         android:text="@string/button_add_transfer"
         android:textColor="@color/md_theme_onPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_notes" />
+        app:layout_constraintTop_toBottomOf="@id/switch_checked" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

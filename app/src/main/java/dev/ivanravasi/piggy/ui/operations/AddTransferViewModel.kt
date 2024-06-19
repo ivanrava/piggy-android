@@ -18,7 +18,8 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class AddTransferViewModel(
-    private val tokenRepository: TokenRepository
+    private val tokenRepository: TokenRepository,
+    private val accountId: Long
 ) : StoreApiViewModel<Transfer, TransferRequest, TransferValidationError.Errors>(
     tokenRepository,
     TransferValidationError.Errors()
@@ -26,29 +27,50 @@ class AddTransferViewModel(
     private val _accounts = MutableLiveData<List<Account>>().apply { value = emptyList() }
     val accounts: LiveData<List<Account>> = _accounts
 
+    private val _fromAccount = MutableLiveData<Account>().apply { value = null }
+    val fromAccount: LiveData<Account> = _fromAccount
+
+    val toAccount = MutableLiveData<Account?>().apply { value = null }
+
     init {
         viewModelScope.launch {
             hydrateApiClient()
+            _isLoading.value = true
             getAccounts()
+            getAccount()
+            _isLoading.value = false
         }
     }
 
     private suspend fun getAccounts() {
         try {
             val res = piggyApi.accounts("Bearer ${tokenRepository.getToken()}")
-            // FIXME: filter out current account
-            if (res.isSuccessful)
-                _accounts.value = res.body()!!.data
+            if (res.isSuccessful) {
+                _accounts.value = res.body()!!.data.filter { it.id != accountId }.sortedBy { it.name }
+                toAccount.value = accounts.value!!.first()
+            }
         } catch (e: Exception) {
             Log.e("transactions.accounts", e.toString())
         }
     }
 
+    // TODO: try to avoid this call by grabbing the object from the previous fragment
+    private suspend fun getAccount() {
+        try {
+            val response = piggyApi.account("Bearer ${tokenRepository.getToken()}", accountId)
+            if (response.isSuccessful)
+                _fromAccount.value = response.body()!!.data
+        } catch (e: Exception) {
+            e.localizedMessage?.let { Log.i("message", it) }
+        }
+    }
+
     class Factory(
-        private val tokenRepository: TokenRepository
+        private val tokenRepository: TokenRepository,
+        private val accountId: Long
     ): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AddTransferViewModel(tokenRepository) as T
+            return AddTransferViewModel(tokenRepository, accountId) as T
         }
     }
 
