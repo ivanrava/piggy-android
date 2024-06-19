@@ -36,8 +36,12 @@ class CategoryAdapter(
         fun bind(category: Category, listener: OnCategoryClickListener) {
             binding.categoryIcon.loadIconify(category.icon, binding.categoryName.currentTextColor)
             binding.categoryName.text = category.name
-            binding.categoryDescription.text =
-                binding.root.context.getString(R.string.children_categories, category.children.count())
+            if (category.parent == null) {
+                binding.categoryDescription.text =
+                    binding.root.context.getString(R.string.children_categories, category.children.count())
+            } else {
+                binding.categoryDescription.text = category.parent.name
+            }
             binding.cardCategory.setOnClickListener {
                 listener.onCategoryClick(category)
             }
