@@ -159,6 +159,17 @@
             android:paddingBottom="@dimen/vseparation_fields" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switch_checked"
+        app:layout_constraintTop_toBottomOf="@id/input_notes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/switch_padding_start"
+        android:paddingEnd="@dimen/switch_padding_end"
+        android:text="@string/checked" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_add"
         style="@style/button_submit"
@@ -170,6 +181,6 @@
         android:textColor="@color/md_theme_onPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_notes" />
+        app:layout_constraintTop_toBottomOf="@id/switch_checked" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

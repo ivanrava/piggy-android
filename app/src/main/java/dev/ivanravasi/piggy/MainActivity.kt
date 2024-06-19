@@ -45,9 +45,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.fabTransaction.setOnClickListener {
-            navController.navigate(R.id.navigation_add_transaction)
-            binding.fabTransaction.hide()
-            binding.fabTransfer.hide()
+            val fragment = supportFragmentManager.primaryNavigationFragment
+            if (fragment is NavHostFragment) {
+                val childFragment = fragment.childFragmentManager.fragments[0]
+                val bundle = childFragment.requireArguments()
+                navController.navigate(R.id.navigation_add_transaction, bundle)
+                binding.fabTransaction.hide()
+                binding.fabTransfer.hide()
+            }
         }
         binding.fabTransfer.setOnClickListener {
             navController.navigate(R.id.navigation_add_transfer)

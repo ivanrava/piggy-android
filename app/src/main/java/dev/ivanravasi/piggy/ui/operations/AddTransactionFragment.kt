@@ -10,8 +10,10 @@ import dev.ivanravasi.piggy.api.dicebear.loadBeneficiary
 import dev.ivanravasi.piggy.api.iconify.loadIconify
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransactionRequest
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddTransactionBinding
+import dev.ivanravasi.piggy.ui.backWithSnackbar
 import dev.ivanravasi.piggy.ui.beneficiaries.OnBeneficiaryClickListener
 import dev.ivanravasi.piggy.ui.categories.OnCategoryClickListener
 
@@ -25,37 +27,44 @@ class AddTransactionFragment : Fragment() {
     ): View {
         binding = FragmentAddTransactionBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(this, AddTransactionViewModel.Factory(
-            TokenRepository(requireContext())
+            TokenRepository(requireContext()),
+            // FIXME: rename to account_id
+            requireArguments().getLong("id")
         ))[AddTransactionViewModel::class.java]
 
         viewModel.errors.observe(viewLifecycleOwner) {
             // TODO: handle validation errors
         }
 
-        viewModel.beneficiaries.observe(viewLifecycleOwner) {
-            val suggestion = it.firstOrNull()
-            suggestion?.let {
+        viewModel.beneficiary.observe(viewLifecycleOwner) {
+            if (it != null) {
                 setBeneficiary(it)
             }
         }
-        viewModel.categories.observe(viewLifecycleOwner) {
-            val suggestion = it.firstOrNull()
-            suggestion?.let {
+        viewModel.category.observe(viewLifecycleOwner) {
+            if (it != null) {
                 setCategory(it)
+            }
+        }
+
+        viewModel.account.observe(viewLifecycleOwner) {
+            if (it != null && it.type != "Bank account") {
+                binding.switchChecked.isChecked = true
+                binding.switchChecked.visibility = View.GONE
             }
         }
 
         binding.cardBeneficiary.beneficiaryImg.setOnClickListener {
             BeneficiaryBottomSheet(viewModel.beneficiaries.value!!, object : OnBeneficiaryClickListener {
                 override fun onBeneficiaryClick(beneficiary: Beneficiary) {
-                    setBeneficiary(beneficiary)
+                    viewModel.beneficiary.value = beneficiary
                 }
             }).show(parentFragmentManager, "BeneficiaryBottomSheet")
         }
         binding.cardCategory.setOnClickListener {
             CategoryBottomSheet(viewModel.categories.value!!, object : OnCategoryClickListener {
                 override fun onCategoryClick(category: Category) {
-                    setCategory(category)
+                    viewModel.category.value = category
                 }
             }).show(parentFragmentManager, "CategoryBottomSheet")
         }
@@ -63,19 +72,18 @@ class AddTransactionFragment : Fragment() {
         binding.editDate.setToday()
 
         binding.buttonAdd.setOnClickListener {
-//            val request = TransactionRequest(
-//                binding.editName.text.toString(),
-//                viewModel.icon.value,
-//                "#${viewModel.color.value?.hexCode}",
-//                binding.editOpening.date(),
-//                binding.editClosing.date(),
-//                binding.editInitialBalance.text.toString(),
-//                binding.editDescription.text.toString(),
-//                viewModel.beneficiaries.value?.find { it.type == binding.editAccountType.text.toString() }?.id!!
-//            )
-//            viewModel.submit(request) {
-//                backWithSnackbar(binding.buttonAdd, "Transaction added successfully")
-//            }
+            val request = TransactionRequest(
+                requireArguments().getLong("id"),
+                viewModel.beneficiary.value!!,
+                viewModel.category.value!!,
+                binding.editDate.date(),
+                binding.switchChecked.isChecked,
+                binding.editValue.text.toString(),
+                binding.editNotes.text.toString(),
+            )
+            viewModel.submit(request) {
+                backWithSnackbar(binding.buttonAdd, "Transaction added successfully")
+            }
         }
 
         return binding.root
