@@ -64,4 +64,5 @@
     <string name="type_from">Take from...</string>
     <string name="checked">Have you already checked the transaction?</string>
     <string name="card_edit_hint">Touch the image to edit</string>
+    <string name="children_categories">%1$d children categories</string>
 </resources>

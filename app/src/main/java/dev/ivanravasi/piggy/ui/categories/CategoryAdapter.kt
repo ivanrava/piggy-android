@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.iconify.loadIconify
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.databinding.ListItemCategoryBinding
@@ -35,7 +36,8 @@ class CategoryAdapter(
         fun bind(category: Category, listener: OnCategoryClickListener) {
             binding.categoryIcon.loadIconify(category.icon, binding.categoryName.currentTextColor)
             binding.categoryName.text = category.name
-            binding.categoryDescription.text = "${category.children.count()} children categories"
+            binding.categoryDescription.text =
+                binding.root.context.getString(R.string.children_categories, category.children.count())
             binding.cardCategory.setOnClickListener {
                 listener.onCategoryClick(category)
             }
