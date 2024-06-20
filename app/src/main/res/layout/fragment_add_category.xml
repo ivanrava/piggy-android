@@ -95,9 +95,200 @@
         android:paddingEnd="@dimen/switch_padding_end"
         android:text="@string/virtual_switch_hint" />
 
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/layout_budget"
+        app:layout_constraintTop_toBottomOf="@id/switch_virtual"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/subtitle_budget"
+            android:text="@string/subtitle_budget"
+            style="@style/fragment_title"
+            android:textSize="24sp"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chips_budget_type"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/subtitle_budget"
+            app:layout_constraintStart_toStartOf="parent"
+            app:selectionRequired="true"
+            app:singleSelection="true"
+            >
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_yearly_fixed"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/chip_budget_yearly"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_monthly_fixed"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chip_budget_monthly"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_monthly_custom"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chip_budget_monthly_customized"/>
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <com.google.android.material.textfield.TextInputLayout
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chips_budget_type"
+            style="@style/text_input_layout"
+            android:id="@+id/input_budget_overall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:endIconDrawable="@drawable/ic_money_24"
+            app:endIconMode="custom">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_budget_overall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="@string/hint_overall_budget"
+                android:inputType="numberDecimal"
+                android:paddingBottom="@dimen/vseparation_fields" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <GridLayout
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="-4dp"
+            android:visibility="gone"
+            android:id="@+id/grid_months"
+            android:rowCount="4"
+            android:columnCount="3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/budget_input_layout"
+                android:id="@+id/input_jan">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_jan"
+                    style="@style/budget_edit"
+                    android:hint="@string/january" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/budget_input_layout"
+                android:id="@+id/input_feb">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_feb"
+                    style="@style/budget_edit"
+                    android:hint="@string/february" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/budget_input_layout"
+                android:id="@+id/input_mar">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_mar"
+                    style="@style/budget_edit"
+                    android:hint="@string/march" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/budget_input_layout"
+                android:id="@+id/input_apr">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_apr"
+                    style="@style/budget_edit"
+                    android:hint="@string/april" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/budget_input_layout"
+                android:id="@+id/input_may">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_may"
+                    style="@style/budget_edit"
+                    android:hint="@string/may" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/budget_input_layout"
+                android:id="@+id/input_jun">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_jun"
+                    style="@style/budget_edit"
+                    android:hint="@string/june" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/budget_input_layout"
+                android:id="@+id/input_jul">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_jul"
+                    style="@style/budget_edit"
+                    android:hint="@string/july" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/budget_input_layout"
+                android:id="@+id/input_aug">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_aug"
+                    style="@style/budget_edit"
+                    android:hint="@string/august" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/budget_input_layout"
+                android:id="@+id/input_sep">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_sep"
+                    style="@style/budget_edit"
+                    android:hint="@string/september" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/budget_input_layout"
+                android:id="@+id/input_oct">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_oct"
+                    style="@style/budget_edit"
+                    android:hint="@string/october" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/budget_input_layout"
+                android:id="@+id/input_nov">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_nov"
+                    style="@style/budget_edit"
+                    android:hint="@string/november" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/budget_input_layout"
+                android:id="@+id/input_dec">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_dec"
+                    style="@style/budget_edit"
+                    android:hint="@string/december" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </GridLayout>
+    </LinearLayout>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_add"
-        app:layout_constraintTop_toBottomOf="@id/switch_virtual"
+        app:layout_constraintTop_toBottomOf="@id/layout_budget"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"

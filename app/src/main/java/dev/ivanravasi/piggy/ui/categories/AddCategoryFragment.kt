@@ -64,13 +64,29 @@ class AddCategoryFragment : Fragment() {
                     binding.toggleCategoryType.check(R.id.button_outcome)
                 }
                 binding.switchVirtual.visibility = View.VISIBLE
+
+                binding.layoutBudget.visibility = View.VISIBLE
             } else {
                 binding.buttonIncome.visibility = View.VISIBLE
                 binding.buttonOutcome.visibility = View.VISIBLE
                 binding.toggleCategoryType.check(R.id.button_income)
                 binding.switchVirtual.visibility = View.GONE
-            }
 
+                binding.layoutBudget.visibility = View.GONE
+            }
+        }
+
+        binding.chipsBudgetType.setOnCheckedStateChangeListener { group, checkedIds ->
+            when (group.checkedChipId) {
+                R.id.chip_monthly_custom -> {
+                    binding.inputBudgetOverall.visibility = View.GONE
+                    binding.gridMonths.visibility = View.VISIBLE
+                }
+                else -> {
+                    binding.inputBudgetOverall.visibility = View.VISIBLE
+                    binding.gridMonths.visibility = View.GONE
+                }
+            }
         }
 
         binding.buttonAdd.setOnClickListener {

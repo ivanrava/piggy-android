@@ -10,6 +10,25 @@
         <item name="boxBackgroundMode">outline</item>
     </style>
 
+    <style name="budget_input_layout" parent="text_input_layout">
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">fill_horizontal</item>
+<!--        <item name="endIconDrawable">@drawable/ic_money_24</item>-->
+<!--        <item name="endIconMode">custom</item>-->
+    </style>
+
+    <style name="budget_edit">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/josefin_slab_semibold</item>
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:paddingBottom">@dimen/vseparation_fields</item>
+    </style>
+
     <style name="fragment_title">
         <item name="android:fontFamily">@font/inter_light</item>
         <item name="android:textSize">32sp</item>
