@@ -14,9 +14,9 @@ data class Category(
     @SerializedName("virtual")
     val virtual: Boolean,
     @SerializedName("parent")
-    val parent: Category?,
+    var parent: Category?,
     @SerializedName("parent_category_id")
-    val parentCategoryId: Long,
+    val parentCategoryId: Long?,
     @SerializedName("children")
     val children: List<Category>,
     @SerializedName("expenditures")

@@ -33,17 +33,28 @@ class CategoryAdapter(
     class CategoryViewHolder private constructor(
         private val binding: ListItemCategoryBinding
     ): RecyclerView.ViewHolder(binding.root) {
+        private val adapterChildren = CategoryAdapter()
+        private var isOpened: Boolean = false
+
         fun bind(category: Category, listener: OnCategoryClickListener) {
             binding.categoryIcon.loadIconify(category.icon, binding.categoryName.currentTextColor)
             binding.categoryName.text = category.name
-            if (category.parent == null) {
+            if (category.parent == null && category.parentCategoryId == null) {
                 binding.categoryDescription.text =
                     binding.root.context.getString(R.string.children_categories, category.children.count())
+                binding.children.adapter = adapterChildren
+                adapterChildren.submitList(null)
+                binding.cardCategory.setOnClickListener {
+                    adapterChildren.submitList(if (isOpened) null else category.children.map {
+                        it.parent = category
+                        return@map it
+                    })
+                    isOpened = !isOpened
+                }
             } else {
-                binding.categoryDescription.text = category.parent.name
-            }
-            binding.cardCategory.setOnClickListener {
-                listener.onCategoryClick(category)
+                binding.cardCategory.setCardBackgroundColor(binding.root.context.getColor(R.color.md_theme_surfaceContainer))
+                binding.categoryDescription.text = category.parent?.name
+                binding.children.adapter = null
             }
         }
 
