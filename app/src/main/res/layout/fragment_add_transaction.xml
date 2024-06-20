@@ -61,63 +61,22 @@
         app:layout_constraintStart_toEndOf="@id/card_beneficiary"
         app:layout_constraintTop_toBottomOf="@id/beneficiary_name" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_category"
-        android:layout_width="wrap_content"
+    <dev.ivanravasi.piggy.ui.common.CategoryPicker
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="32dp"
-        android:background="@color/md_theme_inverseOnSurface"
-        app:layout_constraintBottom_toTopOf="@id/input_date"
+        app:layout_constraintTop_toBottomOf="@id/card_beneficiary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_beneficiary">
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/category_icon"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:padding="16dp"
-            tools:src="@drawable/ic_categories_24" />
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/category_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:ellipsize="end"
-        android:fontFamily="@font/inter_bold"
-        android:maxLines="1"
-        android:textAlignment="textEnd"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@id/category_edit_hint"
-        app:layout_constraintEnd_toStartOf="@id/card_category"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/card_category"
-        app:layout_constraintVertical_bias="1.0"
-        tools:text="Category name" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/category_edit_hint"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/inter_light"
-        android:text="@string/card_edit_hint"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/card_category"
-        app:layout_constraintEnd_toStartOf="@id/card_category" />
+        android:id="@+id/pick_category" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_date"
         style="@style/text_input_layout"
-        android:layout_marginVertical="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:endIconDrawable="@drawable/ic_calendar_24"
         app:endIconMode="custom"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_category">
+        app:layout_constraintTop_toBottomOf="@id/pick_category">
 
         <dev.ivanravasi.piggy.ui.common.TextInputEditDate
             android:id="@+id/edit_date"

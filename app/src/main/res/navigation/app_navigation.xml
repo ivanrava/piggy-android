@@ -54,6 +54,10 @@
         android:name="dev.ivanravasi.piggy.ui.accounts.AddAccountFragment"
         android:label="AddAccountFragment" />
     <fragment
+        android:id="@+id/navigation_add_category"
+        android:name="dev.ivanravasi.piggy.ui.categories.AddCategoryFragment"
+        android:label="AddCategoryFragment" />
+    <fragment
         android:id="@+id/navigation_add_beneficiary"
         android:name="dev.ivanravasi.piggy.ui.beneficiaries.AddBeneficiaryFragment"
         android:label="AddBeneficiaryFragment" />

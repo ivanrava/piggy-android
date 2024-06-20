@@ -52,9 +52,11 @@ class AddTransactionFragment : Fragment() {
         }
         viewModel.category.observe(viewLifecycleOwner) {
             if (it != null) {
-                setCategory(it)
+                binding.pickCategory.setCategory(it)
             }
         }
+
+        binding.pickCategory.disableDeselection()
 
         viewModel.account.observe(viewLifecycleOwner) {
             if (it != null && it.type != "Bank account") {
@@ -70,12 +72,11 @@ class AddTransactionFragment : Fragment() {
                 }
             }).show(parentFragmentManager, "BeneficiaryBottomSheet")
         }
-        binding.cardCategory.setOnClickListener {
-            CategoryBottomSheet(viewModel.categories.value!!, object : OnCategoryClickListener {
-                override fun onCategoryClick(category: Category) {
-                    viewModel.category.value = category
-                }
-            }).show(parentFragmentManager, "CategoryBottomSheet")
+        viewModel.categories.observe(viewLifecycleOwner) {
+            binding.pickCategory.updateCategories(it)
+        }
+        binding.pickCategory.setOnSelectedCategoryListener {
+            viewModel.category.value = it
         }
 
         binding.editDate.setToday()
@@ -101,10 +102,5 @@ class AddTransactionFragment : Fragment() {
     private fun setBeneficiary(beneficiary: Beneficiary) {
         binding.beneficiaryName.text = beneficiary.name
         binding.cardBeneficiary.beneficiaryImg.loadBeneficiary(beneficiary.img, beneficiary.name)
-    }
-
-    private fun setCategory(category: Category) {
-        binding.categoryName.text = category.name
-        binding.categoryIcon.loadIconify(category.icon, binding.categoryName.currentTextColor)
     }
 }
