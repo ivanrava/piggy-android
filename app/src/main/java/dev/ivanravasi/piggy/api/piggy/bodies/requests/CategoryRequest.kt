@@ -17,5 +17,5 @@ data class CategoryRequest(
     @SerializedName("budget_overall")
     var budgetOverall: String?,
     @SerializedName("budget")
-    var budget: Budget,
+    var budget: Budget?,
 )

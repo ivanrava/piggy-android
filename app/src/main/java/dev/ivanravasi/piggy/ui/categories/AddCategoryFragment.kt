@@ -18,13 +18,14 @@ import dev.ivanravasi.piggy.ui.backWithSnackbar
 
 class AddCategoryFragment : Fragment() {
     private lateinit var binding: FragmentAddCategoryBinding
+    private lateinit var viewModel: AddCategoryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAddCategoryBinding.inflate(inflater, container, false)
-        val viewModel = ViewModelProvider(this, AddCategoryViewModel.Factory(
+        viewModel = ViewModelProvider(this, AddCategoryViewModel.Factory(
             TokenRepository(requireContext())
         ))[AddCategoryViewModel::class.java]
 
@@ -45,6 +46,19 @@ class AddCategoryFragment : Fragment() {
             if (it.icon.first() != null) {
                 binding.pickerIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.md_theme_error))
             }
+            binding.inputBudgetOverall.error = it.budgetOverall.first()
+            binding.inputJan.error = it.budget.jan.first()
+            binding.inputFeb.error = it.budget.feb.first()
+            binding.inputMar.error = it.budget.mar.first()
+            binding.inputApr.error = it.budget.apr.first()
+            binding.inputMay.error = it.budget.may.first()
+            binding.inputJun.error = it.budget.jun.first()
+            binding.inputJul.error = it.budget.jul.first()
+            binding.inputAug.error = it.budget.aug.first()
+            binding.inputSep.error = it.budget.sep.first()
+            binding.inputOct.error = it.budget.oct.first()
+            binding.inputNov.error = it.budget.nov.first()
+            binding.inputDec.error = it.budget.dec.first()
         }
 
         viewModel.rootCategories.observe(viewLifecycleOwner) {
@@ -96,8 +110,8 @@ class AddCategoryFragment : Fragment() {
                 selectedType(),
                 viewModel.parent.value?.id,
                 binding.switchVirtual.isChecked,
-                "",
-                Budget("","","","","","","","","","","","")
+                getOverallBudgetForRequest(),
+                buildBudgetForRequest()
             )
             viewModel.submit(request) {
                 backWithSnackbar(binding.buttonAdd, "Category added successfully")
@@ -113,5 +127,48 @@ class AddCategoryFragment : Fragment() {
             R.id.button_income -> "in"
             else -> ""
         }
+    }
+
+    private fun getOverallBudgetForRequest(): String? {
+        if (viewModel.parent.value == null || binding.chipsBudgetType.checkedChipId != R.id.chip_yearly_fixed)
+            return null
+
+        return binding.editBudgetOverall.text.toString()
+    }
+
+    private fun buildBudgetForRequest(): Budget? {
+        if (viewModel.parent.value == null || binding.chipsBudgetType.checkedChipId == R.id.chip_yearly_fixed)
+            return null
+
+        if (binding.chipsBudgetType.checkedChipId == R.id.chip_monthly_fixed)
+            return Budget(
+                binding.editBudgetOverall.toString(),
+                binding.editBudgetOverall.toString(),
+                binding.editBudgetOverall.toString(),
+                binding.editBudgetOverall.toString(),
+                binding.editBudgetOverall.toString(),
+                binding.editBudgetOverall.toString(),
+                binding.editBudgetOverall.toString(),
+                binding.editBudgetOverall.toString(),
+                binding.editBudgetOverall.toString(),
+                binding.editBudgetOverall.toString(),
+                binding.editBudgetOverall.toString(),
+                binding.editBudgetOverall.toString(),
+            )
+
+        return Budget(
+            binding.editJan.toString(),
+            binding.editFeb.toString(),
+            binding.editMar.toString(),
+            binding.editApr.toString(),
+            binding.editMay.toString(),
+            binding.editJun.toString(),
+            binding.editJul.toString(),
+            binding.editAug.toString(),
+            binding.editSep.toString(),
+            binding.editOct.toString(),
+            binding.editNov.toString(),
+            binding.editDec.toString()
+        )
     }
 }
