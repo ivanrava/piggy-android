@@ -1,5 +1,6 @@
 package dev.ivanravasi.piggy.ui.accounts
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.data.TokenRepository
@@ -12,20 +13,18 @@ class AccountsViewModel(
     init {
         viewModelScope.launch {
             hydrateApiClient()
-            getProperties()
+            _isLoading.value = true
+            getAccounts()
+            _isLoading.value = false
         }
     }
 
-    private fun getProperties() {
-        viewModelScope.launch {
-            _isLoading.value = true
-            try {
-                val response = piggyApi.accounts("Bearer ${tokenRepository.getToken()}")
-                _objList.value = response.body()!!.data.sortedBy { it.name }
-            } catch (e: Exception) {
-//                Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
-            }
-            _isLoading.value = false
+    private suspend fun getAccounts() {
+        try {
+            val response = piggyApi.accounts("Bearer ${tokenRepository.getToken()}")
+            _objList.value = response.body()!!.data.sortedBy { it.name }
+        } catch (e: Exception) {
+            Log.e("accounts", e.toString())
         }
     }
 }

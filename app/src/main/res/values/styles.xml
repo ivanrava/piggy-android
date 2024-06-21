@@ -34,6 +34,11 @@
         <item name="android:textSize">32sp</item>
     </style>
 
+    <style name="fragment_subtitle" parent="fragment_title">
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
     <style name="button_submit">
         <item name="android:layout_marginVertical">@dimen/vseparation_small</item>
         <item name="android:fontFamily">@font/inter</item>

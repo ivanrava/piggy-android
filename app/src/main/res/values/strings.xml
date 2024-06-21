@@ -86,4 +86,5 @@
     <string name="chip_budget_monthly">Monthly</string>
     <string name="chip_budget_monthly_customized">Monthly (customized)</string>
     <string name="subtitle_budget">Budget</string>
+    <string name="subtitle_recent_accounts">Recent accounts</string>
 </resources>
