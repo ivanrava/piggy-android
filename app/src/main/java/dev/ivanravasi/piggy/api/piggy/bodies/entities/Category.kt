@@ -1,6 +1,17 @@
 package dev.ivanravasi.piggy.api.piggy.bodies.entities
 
+import com.google.gson.Gson
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.JsonSyntaxException
 import com.google.gson.annotations.SerializedName
+import java.lang.reflect.Type
+
+sealed class CategoryBudget<T>(val value: T) {
+    class Yearly(value: String) : CategoryBudget<String>(value)
+    class Monthly(value: Budget) : CategoryBudget<Budget>(value)
+}
 
 data class Category(
     @SerializedName("id")
@@ -18,11 +29,27 @@ data class Category(
     @SerializedName("parent_category_id")
     val parentCategoryId: Long?,
     @SerializedName("children")
-    val children: List<Category>,
+    var children: List<Category>,
     @SerializedName("expenditures")
-    val expenditures: List<String>,
-    @SerializedName("transactions")
-    val transactions: List<String>,
+    val expenditures: Budget,
     @SerializedName("budget")
-    val budget: String
+    var budget: CategoryBudget<*>
 )
+
+class BudgetDeserializer: JsonDeserializer<CategoryBudget<*>> {
+    override fun deserialize(
+        json: JsonElement?,
+        typeOfT: Type?,
+        context: JsonDeserializationContext?
+    ): CategoryBudget<*> {
+        val str = json!!.toString()
+        var budgetRepr: CategoryBudget<*>
+        try {
+            val budget = Gson().fromJson(str, Budget::class.java)
+            budgetRepr = CategoryBudget.Monthly(budget)
+        } catch (exc: JsonSyntaxException) {
+            budgetRepr = CategoryBudget.Yearly(str)
+        }
+        return budgetRepr
+    }
+}

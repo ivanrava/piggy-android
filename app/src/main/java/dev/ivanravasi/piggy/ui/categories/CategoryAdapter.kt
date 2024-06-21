@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.iconify.loadIconify
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
 import dev.ivanravasi.piggy.databinding.ListItemCategoryBinding
 
 interface OnCategoryClickListener {
@@ -53,8 +54,15 @@ class CategoryAdapter(
                 }
             } else {
                 binding.cardCategory.setCardBackgroundColor(binding.root.context.getColor(R.color.md_theme_surfaceContainer))
-                binding.categoryDescription.text = category.parent?.name
+                binding.categoryDescription.text = budgetText(category)
                 binding.children.adapter = null
+            }
+        }
+
+        private fun budgetText(category: Category): String {
+            return when (category.budget) {
+                is CategoryBudget.Monthly -> (category.budget as CategoryBudget.Monthly).value.toString()
+                is CategoryBudget.Yearly -> "Yearly"
             }
         }
 

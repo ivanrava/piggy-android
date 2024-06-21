@@ -24,6 +24,7 @@ import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface PiggyApi {
     @Headers("Accept: application/json")
@@ -85,4 +86,8 @@ interface PiggyApi {
     @Headers("Accept: application/json")
     @POST("/api/transfers")
     suspend fun transferAdd(@Header("Authorization") authHeader: String, @Body transferBody: TransferRequest): Response<ObjectResponse<Transfer>>
+
+    @Headers("Accept: application/json")
+    @GET("/api/budget")
+    suspend fun budget(@Header("Authorization") authHeader: String, @Query("year") year: Int): Response<ListResponse<Category>>
 }

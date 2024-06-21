@@ -1,5 +1,6 @@
 package dev.ivanravasi.piggy.ui.categories
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.data.TokenRepository
@@ -12,20 +13,37 @@ class CategoriesViewModel(
     init {
         viewModelScope.launch {
             hydrateApiClient()
-            getProperties()
+            _isLoading.value = true
+            getCategoryTrees()
+            getBudgets()
+            _isLoading.value = false
         }
     }
 
-    private fun getProperties() {
-        viewModelScope.launch {
-            _isLoading.value = true
-            try {
-                val response = piggyApi.categoryTrees("Bearer ${tokenRepository.getToken()}")
-                _objList.value = response.body()!!.data.sortedBy { it.name }
-            } catch (e: Exception) {
-//                Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
+    private suspend fun getCategoryTrees() {
+        try {
+            val response = piggyApi.categoryTrees("Bearer ${tokenRepository.getToken()}")
+            _objList.value = response.body()!!.data.sortedBy { it.name }
+        } catch (e: Exception) {
+            Log.e("categories", e.toString())
+        }
+    }
+
+    private suspend fun getBudgets() {
+        try {
+            // TODO: parametrize with current year
+            val response = piggyApi.budget("Bearer ${tokenRepository.getToken()}", 2024)
+            if (response.isSuccessful) {
+                _objList.value = _objList.value!!.map { parent ->
+                    parent.children = parent.children.map { child ->
+                        child.budget = response.body()!!.data.find { it.id == child.id }!!.budget
+                        child
+                    }
+                    parent
+                }
             }
-            _isLoading.value = false
+        } catch (e: Exception) {
+            Log.e("budget", e.toString())
         }
     }
 }
