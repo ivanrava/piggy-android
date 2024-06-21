@@ -30,11 +30,6 @@
         android:name="dev.ivanravasi.piggy.ui.properties.PropertiesFragment"
         android:label="fragment_properties"
         tools:layout="@layout/fragment_properties" />
-    <fragment
-        android:id="@+id/navigation_budget"
-        android:name="dev.ivanravasi.piggy.ui.budget.BudgetFragment"
-        android:label="fragment_budget"
-        tools:layout="@layout/fragment_budget" />
     <activity
         android:id="@+id/authActivity"
         android:name="dev.ivanravasi.piggy.AuthActivity"
