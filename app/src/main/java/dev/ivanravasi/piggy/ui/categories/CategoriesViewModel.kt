@@ -36,7 +36,9 @@ class CategoriesViewModel(
             if (response.isSuccessful) {
                 _objList.value = _objList.value!!.map { parent ->
                     parent.children = parent.children.map { child ->
-                        child.budget = response.body()!!.data.find { it.id == child.id }!!.budget
+                        val objWithBudgetData = response.body()!!.data.find { it.id == child.id }!!
+                        child.budget = objWithBudgetData.budget
+                        child.expenditures = objWithBudgetData.expenditures
                         child
                     }
                     parent

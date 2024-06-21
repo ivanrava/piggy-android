@@ -31,7 +31,7 @@ data class Category(
     @SerializedName("children")
     var children: List<Category>,
     @SerializedName("expenditures")
-    val expenditures: Budget,
+    var expenditures: Budget,
     @SerializedName("budget")
     var budget: CategoryBudget<*>
 )
@@ -48,7 +48,7 @@ class BudgetDeserializer: JsonDeserializer<CategoryBudget<*>> {
             val budget = Gson().fromJson(str, Budget::class.java)
             budgetRepr = CategoryBudget.Monthly(budget)
         } catch (exc: JsonSyntaxException) {
-            budgetRepr = CategoryBudget.Yearly(str)
+            budgetRepr = CategoryBudget.Yearly(str.substring(1, str.length-2))
         }
         return budgetRepr
     }

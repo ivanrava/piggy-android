@@ -1,7 +1,11 @@
 package dev.ivanravasi.piggy.ui.categories
 
+import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -52,17 +56,44 @@ class CategoryAdapter(
                     })
                     isOpened = !isOpened
                 }
+                binding.budgetBar.visibility = View.INVISIBLE
             } else {
                 binding.cardCategory.setCardBackgroundColor(binding.root.context.getColor(R.color.md_theme_surfaceContainer))
                 binding.categoryDescription.text = budgetText(category)
                 binding.children.adapter = null
+                binding.budgetBar.visibility = View.VISIBLE
+                binding.budgetBar.background = AppCompatResources.getDrawable(
+                    binding.root.context,
+                    if (category.type == "in") R.drawable.budget_bar_income else R.drawable.budget_bar_outcome
+                )
+                setBudgetBarPercentage(calculateBudgetBarPercentage(category))
             }
+        }
+
+        private fun calculateBudgetBarPercentage(category: Category): Float {
+            return when (category.budget) {
+                is CategoryBudget.Monthly -> (category.expenditures.currentMonthValue() / (category.budget as CategoryBudget.Monthly).value.currentMonthValue()).toFloat()
+                is CategoryBudget.Yearly -> (category.expenditures.sum() / (category.budget as CategoryBudget.Yearly).value.toDouble()).toFloat()
+            }
+        }
+
+        private fun setBudgetBarPercentage(percentage: Float) {
+            binding.budgetBar.layoutParams = LinearLayout.LayoutParams(
+                0,
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, binding.root.context.resources.displayMetrics).toInt(),
+                percentage
+            )
+            binding.barStrut.layoutParams = LinearLayout.LayoutParams(
+                0,
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, binding.root.context.resources.displayMetrics).toInt(),
+                1-percentage
+            )
         }
 
         private fun budgetText(category: Category): String {
             return when (category.budget) {
-                is CategoryBudget.Monthly -> (category.budget as CategoryBudget.Monthly).value.toString()
-                is CategoryBudget.Yearly -> "Yearly"
+                is CategoryBudget.Monthly -> "Monthly. This month: ${category.expenditures.currentMonthValue()} / ${(category.budget as CategoryBudget.Monthly).value.currentMonthValue()}"
+                is CategoryBudget.Yearly -> "Yearly: ${category.expenditures.sum()} / ${(category.budget as CategoryBudget.Yearly).value.toDouble()}"
             }
         }
 
