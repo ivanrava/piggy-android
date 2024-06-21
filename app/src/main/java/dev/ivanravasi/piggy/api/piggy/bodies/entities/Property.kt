@@ -22,5 +22,24 @@ data class Property(
     @SerializedName("value")
     val value: Double,
     @SerializedName("variations")
-    val variations: List<String>
-)
+    val variations: List<PropertyVariation>
+) {
+    data class PropertyVariation(
+        @SerializedName("id")
+        val id: Long,
+        @SerializedName("property_id")
+        val propertyId: Long,
+        @SerializedName("date")
+        val date: String,
+        @SerializedName("amount")
+        val amount: String,
+        @SerializedName("notes")
+        val notes: String?,
+        @SerializedName("type")
+        val type: String,
+        @SerializedName("value")
+        val value: String,
+        @SerializedName("created_at")
+        val createdAt: String,
+    )
+}
