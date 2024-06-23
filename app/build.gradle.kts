@@ -63,4 +63,6 @@ dependencies {
     implementation("io.coil-kt:coil-svg:2.6.0")
     implementation("com.github.skydoves:colorpickerview:2.3.0")
     implementation(kotlin("reflect"))
+    implementation(libs.vico.core)
+    implementation(libs.vico.views)
 }

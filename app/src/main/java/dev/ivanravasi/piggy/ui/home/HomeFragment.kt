@@ -38,15 +38,20 @@ class HomeFragment : Fragment() {
         }
 
         val adapter = AccountAdapter(object : OnAccountClickListener {
-        override fun onAccountClick(account: Account) {
-            val bundle = Bundle()
-            bundle.putLong("id", account.id)
-            navController.navigate(R.id.navigation_operations, bundle)
-        }
-    })
+            override fun onAccountClick(account: Account) {
+                val bundle = Bundle()
+                bundle.putLong("id", account.id)
+                navController.navigate(R.id.navigation_operations, bundle)
+            }
+        })
         binding.listRecentAccounts.adapter = adapter
         viewModel.accounts.observe(viewLifecycleOwner) {
             adapter.submitList(it)
+        }
+
+        viewModel.favoriteCharts.observe(viewLifecycleOwner) {
+            val testChart = it.firstOrNull { it.id.toInt() == 1 }
+            testChart?.let { it1 -> binding.chartWrapper.hydrateChart(it1) }
         }
 
         return binding.root

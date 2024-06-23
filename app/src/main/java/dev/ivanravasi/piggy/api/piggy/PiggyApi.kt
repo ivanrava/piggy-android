@@ -8,6 +8,8 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.AccountType
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Chart
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Stat
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transaction
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transfer
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ListResponse
@@ -80,6 +82,14 @@ interface PiggyApi {
     suspend fun account(@Header("Authorization") authHeader: String, @Path("id") id: Long): Response<ObjectResponse<Account>>
 
     @Headers("Accept: application/json")
+    @GET("/api/categories/{id}")
+    suspend fun category(@Header("Authorization") authHeader: String, @Path("id") id: Long): Response<ObjectResponse<Category>>
+
+    @Headers("Accept: application/json")
+    @GET("/api/beneficiaries/{id}")
+    suspend fun beneficiary(@Header("Authorization") authHeader: String, @Path("id") id: Long): Response<ObjectResponse<Beneficiary>>
+
+    @Headers("Accept: application/json")
     @POST("/api/transactions")
     suspend fun transactionAdd(@Header("Authorization") authHeader: String, @Body transactionBody: TransactionRequest): Response<ObjectResponse<Transaction>>
 
@@ -90,4 +100,30 @@ interface PiggyApi {
     @Headers("Accept: application/json")
     @GET("/api/budget")
     suspend fun budget(@Header("Authorization") authHeader: String, @Query("year") year: Int): Response<ListResponse<Category>>
+
+    @Headers("Accept: application/json")
+    @GET("/api/charts")
+    suspend fun charts(@Header("Authorization") authHeader: String): Response<ListResponse<Chart>>
+
+    @Headers("Accept: application/json")
+    @GET("/api/charts/favorites")
+    suspend fun chartsFavorites(@Header("Authorization") authHeader: String): Response<ListResponse<Chart>>
+
+    @Headers("Accept: application/json")
+    @GET("/api/stats/{interval}/{filter}/{filter_id}")
+    suspend fun statsFiltered(
+        @Header("Authorization") authHeader: String,
+        @Path("interval") interval: String,
+        @Path("filter") filter: String,
+        @Path("filter_id") filterId: Long,
+        @Query("stat") stat: String
+    ): Response<List<Stat>>
+
+    @Headers("Accept: application/json")
+    @GET("/api/stats/{interval}")
+    suspend fun stats(
+        @Header("Authorization") authHeader: String,
+        @Path("interval") interval: String,
+        @Query("stat") stat: String
+    ): Response<List<Stat>>
 }

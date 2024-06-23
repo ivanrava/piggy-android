@@ -67,4 +67,24 @@
         <item name="android:layout_marginHorizontal">12dp</item>
         <item name="android:layout_marginTop">16dp</item>
     </style>
+
+    <style name="OutLineStyle">
+        <item name="color">@color/out_value</item>
+        <item name="pointSize">4dp</item>
+    </style>
+
+    <style name="InLineStyle">
+        <item name="color">@color/in_value</item>
+        <item name="pointSize">2dp</item>
+    </style>
+
+    <style name="OutInLineLayerStyle">
+        <item name="line1Spec">@style/OutLineStyle</item>
+        <item name="line2Spec">@style/InLineStyle</item>
+    </style>
+
+    <style name="OutInColumnLayerStyle">
+        <item name="column1">@style/OutLineStyle</item>
+        <item name="column2">@style/InLineStyle</item>
+    </style>
 </resources>
