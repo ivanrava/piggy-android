@@ -16,6 +16,7 @@ import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentHomeBinding
 import dev.ivanravasi.piggy.ui.accounts.AccountAdapter
 import dev.ivanravasi.piggy.ui.accounts.OnAccountClickListener
+import dev.ivanravasi.piggy.ui.charts.ChartAdapter
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -49,9 +50,10 @@ class HomeFragment : Fragment() {
             adapter.submitList(it)
         }
 
+        val chartAdapter = ChartAdapter()
+        binding.listCharts.adapter = chartAdapter
         viewModel.favoriteCharts.observe(viewLifecycleOwner) {
-            val testChart = it.firstOrNull { it.id.toInt() == 17 }
-            testChart?.let { it1 -> binding.chartWrapper.hydrateChart(it1) }
+            chartAdapter.submitList(it)
         }
 
         return binding.root

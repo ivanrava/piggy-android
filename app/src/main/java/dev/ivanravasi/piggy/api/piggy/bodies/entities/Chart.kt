@@ -19,4 +19,16 @@ data class Chart(
     val filterGroup: String?,
     @SerializedName("favorite")
     val favorite: Boolean,
-)
+) {
+    fun getChartKind(): ChartKind {
+        return when (kind) {
+            "list" -> ChartKind.LIST
+            "pie" -> ChartKind.PIE
+            else -> ChartKind.LINE_BAR
+        }
+    }
+}
+
+enum class ChartKind {
+    LINE_BAR, LIST, PIE
+}

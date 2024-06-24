@@ -26,10 +26,10 @@ const val LINE_MAX_HISTORY = 12
 
 class VicoChartLoaderView(
     context: Context,
-    attrs: AttributeSet
-): LinearLayout(context, attrs), ChartLoadable {
+    attrs: AttributeSet?
+): ChartLoader(context, attrs) {
     private var chartView: CartesianChartView
-    private var viewModel = ChartLoaderViewModel(TokenRepository(context))
+    private var viewModel: ChartLoaderViewModel = ChartLoaderViewModel(TokenRepository(context))
     private val binding: ChartBinding =
         ChartBinding.inflate(LayoutInflater.from(context), this, true)
     private lateinit var chartData: Chart

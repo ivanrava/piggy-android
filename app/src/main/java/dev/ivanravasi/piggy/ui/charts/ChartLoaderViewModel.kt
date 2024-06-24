@@ -31,14 +31,9 @@ class ChartLoaderViewModel(
     private val _chartName = MutableLiveData<String>().apply { value = "Loading..." }
     val chartName: LiveData<String> = _chartName
 
-    init {
-        viewModelScope.launch {
-            hydrateApiClient()
-        }
-    }
-
     fun requestChart(chart: Chart) {
         viewModelScope.launch {
+            hydrateApiClient()
             requestStats(chart)
             getChartName(chart)
         }
