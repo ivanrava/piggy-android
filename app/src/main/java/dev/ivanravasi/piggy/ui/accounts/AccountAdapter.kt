@@ -46,7 +46,6 @@ class AccountAdapter(
             fun from(parent: ViewGroup): AccountViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ListItemAccountBinding.inflate(layoutInflater, parent, false)
-                parent.findFragment<AccountsFragment>().findNavController()
                 return AccountViewHolder(binding)
             }
         }

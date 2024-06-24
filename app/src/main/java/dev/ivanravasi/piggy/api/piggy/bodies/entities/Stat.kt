@@ -17,6 +17,16 @@ data class Stat(
     val max: String,
     @SerializedName("type")
     val type: String,
+    @SerializedName("name")
+    val name: String?,
+    @SerializedName("color")
+    val color: String?,
+    @SerializedName("icon")
+    val icon: String?,
+    @SerializedName("id")
+    val id: Long?,
+    @SerializedName("img")
+    val img: String?,
 ) {
     fun getStat(stat: String): Float {
         return when (stat) {

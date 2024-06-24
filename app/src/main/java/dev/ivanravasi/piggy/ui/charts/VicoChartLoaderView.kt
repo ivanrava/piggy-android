@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.patrykandpatrick.vico.core.cartesian.Scroll
 import com.patrykandpatrick.vico.core.cartesian.Zoom
@@ -23,23 +22,21 @@ import dev.ivanravasi.piggy.databinding.ChartBinding
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-val LINE_MAX_HISTORY = 12
+const val LINE_MAX_HISTORY = 12
 
-class ChartLoaderView(
+class VicoChartLoaderView(
     context: Context,
     attrs: AttributeSet
-): LinearLayout(context, attrs), LifecycleObserver {
+): LinearLayout(context, attrs), ChartLoadable {
     private var chartView: CartesianChartView
-    private var viewModel: ChartLoaderViewModel
-    private var binding: ChartBinding =
+    private var viewModel = ChartLoaderViewModel(TokenRepository(context))
+    private val binding: ChartBinding =
         ChartBinding.inflate(LayoutInflater.from(context), this, true)
     private lateinit var chartData: Chart
 
     init {
         chartView = binding.chartHost
         chartView.modelProducer = CartesianChartModelProducer.build()
-
-        viewModel = ChartLoaderViewModel(TokenRepository(context))
 
         viewModel.chartName.observe(context as LifecycleOwner) {
             binding.chartTitle.text = it
@@ -102,7 +99,7 @@ class ChartLoaderView(
         }
     }
 
-    fun hydrateChart(chartData: Chart) {
+    override fun hydrateChart(chartData: Chart) {
         this.chartData = chartData
         viewModel.requestChart(chartData)
     }

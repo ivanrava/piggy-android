@@ -24,7 +24,8 @@ class ChartLoaderViewModel(
     )
     private val intervalDescriptions = mapOf(
         "month" to "Monthly",
-        "year" to "Yearly"
+        "year" to "Yearly",
+        "all" to "Global"
     )
 
     private val _chartName = MutableLiveData<String>().apply { value = "Loading..." }
@@ -51,12 +52,19 @@ class ChartLoaderViewModel(
                     chart.interval,
                     chart.stat
                 )
-            } else {
+            } else if (chart.filterId != null) {
                 piggyApi.statsFiltered(
                     "Bearer ${tokenRepository.getToken()}",
                     chart.interval,
                     chart.filter,
                     chart.filterId,
+                    chart.stat
+                )
+            } else {
+                piggyApi.statsList(
+                    "Bearer ${tokenRepository.getToken()}",
+                    chart.filter,
+                    chart.interval,
                     chart.stat
                 )
             }
@@ -68,9 +76,9 @@ class ChartLoaderViewModel(
 
     private suspend fun getChartName(chart: Chart) {
         when (chart.filter) {
-            "accounts" -> getAccount(chart.filterId)
-            "categories" -> getCategory(chart.filterId)
-            "beneficiaries" -> getBeneficiary(chart.filterId)
+            "accounts" -> if (chart.filterId != null) getAccount(chart.filterId) else _chartName.value = "Accounts"
+            "categories" -> if (chart.filterId != null) getCategory(chart.filterId) else _chartName.value = "Categories"
+            "beneficiaries" -> if (chart.filterId != null) getBeneficiary(chart.filterId) else _chartName.value = "Beneficiaries"
             "all" -> _chartName.value = "Global In/Out History"
         }
         _chartName.value = "${_chartName.value} - ${humanStatDescription(chart)}"

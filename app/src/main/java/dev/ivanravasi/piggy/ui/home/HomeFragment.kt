@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.favoriteCharts.observe(viewLifecycleOwner) {
-            val testChart = it.firstOrNull { it.id.toInt() == 1 }
+            val testChart = it.firstOrNull { it.id.toInt() == 17 }
             testChart?.let { it1 -> binding.chartWrapper.hydrateChart(it1) }
         }
 

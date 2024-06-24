@@ -126,4 +126,13 @@ interface PiggyApi {
         @Path("interval") interval: String,
         @Query("stat") stat: String
     ): Response<List<Stat>>
+
+    @Headers("Accept: application/json")
+    @GET("/api/stats/{type}/top")
+    suspend fun statsList(
+        @Header("Authorization") authHeader: String,
+        @Path("type") entityType: String,
+        @Query("interval") interval: String,
+        @Query("stat") stat: String
+    ): Response<List<Stat>>
 }

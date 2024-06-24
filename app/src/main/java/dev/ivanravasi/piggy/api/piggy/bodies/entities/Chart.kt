@@ -14,7 +14,7 @@ data class Chart(
     @SerializedName("filter")
     val filter: String,
     @SerializedName("filter_id")
-    val filterId: Long,
+    val filterId: Long?,
     @SerializedName("filter_group")
     val filterGroup: String?,
     @SerializedName("favorite")

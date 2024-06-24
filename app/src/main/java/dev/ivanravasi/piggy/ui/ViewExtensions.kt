@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.iconify.loadIconify
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Stat
 import dev.ivanravasi.piggy.databinding.CardAccountBinding
 import java.text.DateFormat
 import java.text.NumberFormat
@@ -56,15 +57,28 @@ fun accountTextColor(context: Context, hex: String): Int {
 }
 
 fun CardAccountBinding.setAccount(account: Account) {
-    this.cardAccount.setCardBackgroundColor(Color.parseColor(account.color))
+    this.setAccount(account.color, account.icon, account.name, account.type)
+}
 
-    val color = accountTextColor(this.root.context, account.color.substring(1))
-    this.accountIcon.loadIconify(account.icon, color)
-    this.accountName.text = account.name
-    this.accountType.text = account.type
+fun CardAccountBinding.setAccount(stat: Stat) {
+    this.setAccount("#${stat.color!!}", stat.icon!!, stat.name!!, stat.type)
+}
 
-    this.accountName.setTextColor(color)
-    this.accountType.setTextColor(color)
+private fun CardAccountBinding.setAccount(
+    color: String,
+    icon: String,
+    name: String,
+    type: String
+) {
+    this.cardAccount.setCardBackgroundColor(Color.parseColor(color))
+
+    val textColor = accountTextColor(this.root.context, color.substring(1))
+    this.accountIcon.loadIconify(icon, textColor)
+    this.accountName.text = name
+    this.accountType.text = type
+
+    this.accountName.setTextColor(textColor)
+    this.accountType.setTextColor(textColor)
 }
 
 fun Fragment.backWithSnackbar(viewRef: View, message: String) {
