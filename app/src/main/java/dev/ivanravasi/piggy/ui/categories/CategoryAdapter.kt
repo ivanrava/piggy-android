@@ -6,14 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textview.MaterialTextView
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.iconify.loadIconify
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
 import dev.ivanravasi.piggy.databinding.ListItemCategoryBinding
+import dev.ivanravasi.piggy.ui.toCurrency
 
 interface OnCategoryClickListener {
     fun onCategoryClick(category: Category)
@@ -59,7 +62,7 @@ class CategoryAdapter(
                 binding.budgetBar.visibility = View.INVISIBLE
             } else {
                 binding.cardCategory.setCardBackgroundColor(binding.root.context.getColor(R.color.md_theme_surfaceContainer))
-                binding.categoryDescription.text = budgetText(category)
+                setBudgetText(binding.categoryDescription, category)
                 binding.children.adapter = null
                 binding.budgetBar.visibility = View.VISIBLE
                 binding.budgetBar.background = AppCompatResources.getDrawable(
@@ -90,10 +93,13 @@ class CategoryAdapter(
             )
         }
 
-        private fun budgetText(category: Category): String {
-            return when (category.budget) {
-                is CategoryBudget.Monthly -> "Monthly. This month: ${category.expenditures.currentMonthValue()} / ${(category.budget as CategoryBudget.Monthly).value.currentMonthValue()}"
-                is CategoryBudget.Yearly -> "Yearly: ${category.expenditures.sum()} / ${(category.budget as CategoryBudget.Yearly).value.toDouble()}"
+        private fun setBudgetText(categoryDescription: MaterialTextView, category: Category) {
+            categoryDescription.text = when (category.budget) {
+                is CategoryBudget.Monthly -> "Monthly. This month: ${category.expenditures.currentMonthValue().toCurrency()} / ${(category.budget as CategoryBudget.Monthly).value.currentMonthValue().toCurrency()}"
+                is CategoryBudget.Yearly -> "Yearly: ${category.expenditures.sum().toCurrency()} / ${(category.budget as CategoryBudget.Yearly).value.toDouble().toCurrency()}"
+            }
+            if (categoryDescription.text.endsWith(" ${0.0.toCurrency()} / ${0.0.toCurrency()}")) {
+                categoryDescription.setTextColor(ColorUtils.setAlphaComponent(categoryDescription.currentTextColor, 128))
             }
         }
 
