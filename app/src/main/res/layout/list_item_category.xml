@@ -70,8 +70,10 @@
                     android:layout_weight="0.5"
                     />
                 <View
-                    android:id="@+id/bar_strut"
+                    android:id="@+id/budget_bar_back"
                     android:layout_weight="0.5"
+                    tools:background="@drawable/budget_bar_outcome"
+                    android:alpha="0.3"
                     android:layout_width="0dp"
                     android:layout_height="4dp"/>
             </LinearLayout>

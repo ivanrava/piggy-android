@@ -69,6 +69,7 @@ class CategoryAdapter(
                     binding.root.context,
                     if (category.type == "in") R.drawable.budget_bar_income else R.drawable.budget_bar_outcome
                 )
+                binding.budgetBarBack.background = binding.budgetBar.background
                 setBudgetBarPercentage(calculateBudgetBarPercentage(category))
             }
         }
@@ -86,7 +87,7 @@ class CategoryAdapter(
                 TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, binding.root.context.resources.displayMetrics).toInt(),
                 percentage
             )
-            binding.barStrut.layoutParams = LinearLayout.LayoutParams(
+            binding.budgetBarBack.layoutParams = LinearLayout.LayoutParams(
                 0,
                 TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, binding.root.context.resources.displayMetrics).toInt(),
                 1-percentage
