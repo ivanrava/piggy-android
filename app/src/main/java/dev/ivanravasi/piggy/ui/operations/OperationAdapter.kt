@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.ivanravasi.piggy.api.dicebear.loadBeneficiary
 import dev.ivanravasi.piggy.api.iconify.loadIconify
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryType
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Operation
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.OperationType
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transaction
@@ -56,7 +57,7 @@ class OperationAdapter: ListAdapter<Operation, OperationAdapter.OperationViewHol
                 binding.notes.text = "\"${transaction.notes}\""
             }
 
-            binding.value.setCurrency(transaction.amount.toDouble() * if (transaction.category.type == "out") -1 else 1, true)
+            binding.value.setCurrency(transaction.amount.toDouble() * if (transaction.category.type() == CategoryType.OUT) -1 else 1, true)
             binding.date.setDate(transaction.date)
         }
 

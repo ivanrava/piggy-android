@@ -15,6 +15,7 @@ import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.iconify.loadIconify
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryType
 import dev.ivanravasi.piggy.databinding.ListItemCategoryBinding
 import dev.ivanravasi.piggy.ui.toCurrency
 
@@ -31,20 +32,21 @@ class CategoryAdapter(
 ): ListAdapter<Category, CategoryAdapter.CategoryViewHolder>(CategoryDiffCallback()) {
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val category = getItem(position)
-        holder.bind(category, categoryClickListener)
+        holder.bind(category)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-        return CategoryViewHolder.from(parent)
+        return CategoryViewHolder.from(parent, categoryClickListener)
     }
 
     class CategoryViewHolder private constructor(
-        private val binding: ListItemCategoryBinding
+        private val binding: ListItemCategoryBinding,
+        private val listener: OnCategoryClickListener
     ): RecyclerView.ViewHolder(binding.root) {
-        private val adapterChildren = CategoryAdapter()
+        private val adapterChildren = CategoryAdapter(listener)
         private var isOpened: Boolean = false
 
-        fun bind(category: Category, listener: OnCategoryClickListener) {
+        fun bind(category: Category) {
             binding.categoryIcon.loadIconify(category.icon, binding.categoryName.currentTextColor)
             binding.categoryName.text = category.name
             if (category.parent == null && category.parentCategoryId == null) {
@@ -72,10 +74,13 @@ class CategoryAdapter(
                 binding.budgetBar.visibility = View.VISIBLE
                 binding.budgetBar.background = AppCompatResources.getDrawable(
                     binding.root.context,
-                    if (category.type == "in") R.drawable.budget_bar_income else R.drawable.budget_bar_outcome
+                    if (category.type() == CategoryType.IN) R.drawable.budget_bar_income else R.drawable.budget_bar_outcome
                 )
                 binding.budgetBarBack.background = binding.budgetBar.background
                 setBudgetBarPercentage(calculateBudgetBarPercentage(category))
+            }
+            binding.cardCategory.setOnClickListener {
+                listener.onCategoryClick(category)
             }
         }
 
@@ -124,10 +129,10 @@ class CategoryAdapter(
         }
 
         companion object {
-            fun from(parent: ViewGroup): CategoryViewHolder {
+            fun from(parent: ViewGroup, listener: OnCategoryClickListener): CategoryViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ListItemCategoryBinding.inflate(layoutInflater, parent, false)
-                return CategoryViewHolder(binding)
+                return CategoryViewHolder(binding, listener)
             }
         }
     }

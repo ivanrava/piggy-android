@@ -1,16 +1,37 @@
 package dev.ivanravasi.piggy.api.piggy.bodies.entities
 
+import com.google.gson.ExclusionStrategy
+import com.google.gson.FieldAttributes
 import com.google.gson.Gson
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
+import com.google.gson.JsonObject
+import com.google.gson.JsonPrimitive
+import com.google.gson.JsonSerializationContext
+import com.google.gson.JsonSerializer
 import com.google.gson.JsonSyntaxException
 import com.google.gson.annotations.SerializedName
 import java.lang.reflect.Type
 
+
 sealed class CategoryBudget<T>(val value: T) {
     class Yearly(value: String) : CategoryBudget<String>(value)
     class Monthly(value: Budget) : CategoryBudget<Budget>(value)
+}
+
+@Target(AnnotationTarget.FIELD)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class Exclude
+
+class AnnotationExclusionStrategy: ExclusionStrategy {
+    override fun shouldSkipField(f: FieldAttributes): Boolean {
+        return f.getAnnotation(Exclude::class.java) != null
+    }
+
+    override fun shouldSkipClass(clazz: Class<*>?): Boolean {
+        return false
+    }
 }
 
 data class Category(
@@ -19,7 +40,7 @@ data class Category(
     @SerializedName("name")
     val name: String,
     @SerializedName("type")
-    val type: String,
+    private val type: String,
     @SerializedName("icon")
     val icon: String,
     @SerializedName("virtual")
@@ -29,12 +50,23 @@ data class Category(
     @SerializedName("parent_category_id")
     val parentCategoryId: Long?,
     @SerializedName("children")
-    var children: List<Category>,
+    @Exclude var children: List<Category>,
     @SerializedName("expenditures")
     var expenditures: Budget,
     @SerializedName("budget")
     var budget: CategoryBudget<*>
-)
+) {
+    fun type(): CategoryType {
+        return when (type) {
+            "in" -> CategoryType.IN
+            else -> CategoryType.OUT
+        }
+    }
+}
+
+enum class CategoryType {
+    IN, OUT
+}
 
 class BudgetDeserializer: JsonDeserializer<CategoryBudget<*>> {
     override fun deserialize(
@@ -52,4 +84,36 @@ class BudgetDeserializer: JsonDeserializer<CategoryBudget<*>> {
         }
         return budgetRepr
     }
+}
+
+class BudgetSerializer: JsonSerializer<CategoryBudget<*>> {
+    override fun serialize(
+        src: CategoryBudget<*>?,
+        typeOfSrc: Type?,
+        context: JsonSerializationContext?
+    ): JsonElement {
+        val obj = JsonObject()
+        when (src) {
+            is CategoryBudget.Yearly -> {
+                return JsonPrimitive(src.value)
+            }
+            is CategoryBudget.Monthly -> {
+                obj.addProperty("jan", src.value.jan)
+                obj.addProperty("feb", src.value.feb)
+                obj.addProperty("mar", src.value.mar)
+                obj.addProperty("apr", src.value.apr)
+                obj.addProperty("may", src.value.may)
+                obj.addProperty("jun", src.value.jun)
+                obj.addProperty("jul", src.value.jul)
+                obj.addProperty("aug", src.value.aug)
+                obj.addProperty("sep", src.value.sep)
+                obj.addProperty("oct", src.value.oct)
+                obj.addProperty("nov", src.value.nov)
+                obj.addProperty("dec", src.value.dec)
+            }
+            null -> {}
+        }
+        return obj
+    }
+
 }

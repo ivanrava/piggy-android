@@ -67,7 +67,8 @@
     <string name="card_edit_hint">Touch the image to edit</string>
     <string name="children_categories">%1$d children categories</string>
     <string name="button_add_category">Add category</string>
-    <string name="virtual_switch_hint">Show this category in the written reports</string>
+    <string name="button_update_category">Update category</string>
+    <string name="virtual_switch_hint">Hide this category in the written reports</string>
     <string name="category_picker_no_selection">No category selected</string>
     <string name="hint_long_press_to_clear">%1$s.\nLong press to clear selection.</string>
     <string name="december">December</string>

@@ -70,6 +70,7 @@ class CategoryPicker(
     fun setCategory(category: Category) {
         categoryName.text = category.name
         categoryIcon.loadIconify(category.icon, categoryName.currentTextColor)
+        listeners.forEach { it(category) }
     }
 
     fun setOnSelectedCategoryListener(listener: (category: Category?) -> Unit) {

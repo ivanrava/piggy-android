@@ -8,8 +8,13 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Budget
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.BudgetDeserializer
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryType
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.CategoryRequest
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddCategoryBinding
@@ -24,13 +29,16 @@ class AddCategoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // Initialize binding and view model
         binding = FragmentAddCategoryBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this, AddCategoryViewModel.Factory(
             TokenRepository(requireContext())
         ))[AddCategoryViewModel::class.java]
 
+        // Set default initial values
         binding.toggleCategoryType.check(R.id.button_income)
 
+        // Set listeners / observers
         binding.pickerIcon.setOnSelectedIconListener {
             viewModel.icon.value = it
         }
@@ -68,7 +76,7 @@ class AddCategoryFragment : Fragment() {
             viewModel.parent.value = it
 
             if (it != null) {
-                if (it.type == "in") {
+                if (it.type() == CategoryType.IN) {
                     binding.buttonIncome.visibility = View.VISIBLE
                     binding.buttonOutcome.visibility = View.GONE
                     binding.toggleCategoryType.check(R.id.button_income)
@@ -100,6 +108,46 @@ class AddCategoryFragment : Fragment() {
                     binding.inputBudgetOverall.visibility = View.VISIBLE
                     binding.gridMonths.visibility = View.GONE
                 }
+            }
+        }
+
+        // Set initial values from editable (if present)
+        val categoryStr = arguments?.getString("category")
+        categoryStr.let {
+            val category = GsonBuilder().registerTypeAdapter(CategoryBudget::class.java, BudgetDeserializer()).create().fromJson(it, Category::class.java)
+
+            binding.addTitle.text = requireContext().getString(R.string.button_update_category)
+            binding.buttonAdd.text = requireContext().getString(R.string.button_update_category)
+            binding.editName.setText(category.name)
+            binding.pickerIcon.loadIconify(category.icon)
+            if (category.parent != null) {
+                binding.pickerCategory.setCategory(category.parent!!)
+                binding.switchVirtual.isChecked = category.virtual
+                binding.chipMonthlyFixed.visibility = View.GONE
+                when (category.budget) {
+                    is CategoryBudget.Monthly -> {
+                        binding.chipsBudgetType.check(R.id.chip_monthly_custom)
+                        val budget: Budget = (category.budget as CategoryBudget.Monthly).value
+                        binding.editJan.setText(budget.jan)
+                        binding.editFeb.setText(budget.feb)
+                        binding.editMar.setText(budget.mar)
+                        binding.editApr.setText(budget.apr)
+                        binding.editMay.setText(budget.may)
+                        binding.editJun.setText(budget.jun)
+                        binding.editJul.setText(budget.jul)
+                        binding.editAug.setText(budget.aug)
+                        binding.editSep.setText(budget.sep)
+                        binding.editOct.setText(budget.oct)
+                        binding.editNov.setText(budget.nov)
+                        binding.editDec.setText(budget.dec)
+                    }
+                    is CategoryBudget.Yearly -> {
+                        binding.chipsBudgetType.check(R.id.chip_yearly_fixed)
+                        binding.editBudgetOverall.setText(category.budget.value.toString())
+                    }
+                }
+            } else {
+                binding.toggleCategoryType.check(if (category.type() == CategoryType.IN) R.id.button_income else R.id.button_outcome)
             }
         }
 
