@@ -24,7 +24,11 @@ class BeneficiariesFragment : CRUDFragment<Beneficiary, BeneficiaryAdapter.Benef
         val manager = GridLayoutManager(activity, SPAN_COUNT)
         binding.listBeneficiaries.layoutManager = manager
 
-        val adapter = BeneficiaryAdapter()
+        val adapter = BeneficiaryAdapter(object : OnBeneficiaryClickListener {
+            override fun onBeneficiaryClick(beneficiary: Beneficiary) {
+                ShowBeneficiaryBottomSheet(beneficiary, parentFragmentManager).show()
+            }
+        })
         setup(
             list = binding.listBeneficiaries,
             adapter = adapter,

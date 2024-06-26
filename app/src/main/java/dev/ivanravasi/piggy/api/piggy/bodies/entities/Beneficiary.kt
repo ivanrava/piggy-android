@@ -13,4 +13,14 @@ data class Beneficiary(
     val createdAt: String,
     @SerializedName("transactions")
     val transactions: List<String>
-)
+) {
+    fun type(): String {
+        return if (img.startsWith("https://logo.clearbit.com")) {
+            "Company"
+        } else if (img == "bottts") {
+            "People"
+        } else {
+            "Generic"
+        }
+    }
+}
