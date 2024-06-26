@@ -9,7 +9,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/category_icon"
+        android:id="@+id/property_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,28 +18,34 @@
         android:layout_height="48dp" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/category_name"
+        android:id="@+id/property_name"
         style="@style/fragment_title"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/category_icon"
+        app:layout_constraintStart_toEndOf="@id/property_icon"
+        app:layout_constraintEnd_toStartOf="@id/btn_update"
         android:layout_marginStart="8dp"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        tools:text="Category name" />
+        android:ellipsize="end"
+        android:maxLines="1"
+        tools:text="Property name" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/category_type"
+        android:id="@+id/property_description"
         android:fontFamily="@font/inter_bold"
-        app:layout_constraintTop_toBottomOf="@id/category_name"
-        app:layout_constraintStart_toEndOf="@id/category_icon"
+        app:layout_constraintTop_toBottomOf="@id/property_name"
+        app:layout_constraintStart_toEndOf="@id/property_icon"
+        app:layout_constraintEnd_toStartOf="@id/btn_update"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginStart="8dp"
         android:alpha="0.6"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        tools:text="INCOME" />
+        android:ellipsize="end"
+        android:maxLines="2"
+        tools:text="Property description" />
 
     <Button
         app:layout_constraintTop_toTopOf="parent"
@@ -49,7 +55,7 @@
         android:id="@+id/btn_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="Delete this category"
+        android:contentDescription="Delete this property"
         app:icon="@drawable/ic_delete_24"
         />
 
@@ -61,7 +67,7 @@
         android:id="@+id/btn_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="Edit this category"
+        android:contentDescription="Edit this property"
         app:icon="@drawable/ic_icon_24"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

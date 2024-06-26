@@ -17,7 +17,15 @@ class PropertiesFragment : CRUDFragment<Property, PropertyAdapter.PropertyViewHo
         val binding = FragmentPropertiesBinding.inflate(inflater, container, false)
         val viewModel = PropertiesViewModel(TokenRepository(requireContext()))
 
-        val adapter = PropertyAdapter()
+        val adapter = PropertyAdapter(object : OnPropertyClickListener {
+            override fun onPropertyClick(property: Property) {
+                ShowPropertyBottomSheet(property, parentFragmentManager, {
+
+                }, {
+
+                }).show()
+            }
+        })
         setup(
             list = binding.listProperties,
             adapter = adapter,
