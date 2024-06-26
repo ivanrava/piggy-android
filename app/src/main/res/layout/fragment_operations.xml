@@ -24,6 +24,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/title_card"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:strokeWidth="0dp"
         app:cardElevation="2dp"
@@ -40,6 +41,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 tools:text="Polizza Investimenti Poste"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:fontFamily="@font/inter_bold"
                 android:ellipsize="end"
