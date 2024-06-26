@@ -51,6 +51,7 @@
     <string name="button_add_account">Add account</string>
     <string name="color_picker_description">Open color picker</string>
     <string name="button_add_beneficiary">Add beneficiary</string>
+    <string name="button_update_beneficiary">Update beneficiary</string>
     <string name="domain_hint">Company domain</string>
     <string name="type_people">People</string>
     <string name="type_companies">Companies</string>

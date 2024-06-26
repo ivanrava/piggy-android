@@ -66,6 +66,9 @@ class AddBeneficiaryFragment : Fragment() {
             if (beneficiary.type() == BeneficiaryType.COMPANY && !beneficiary.isWithoutRemoteImg()) {
                 binding.editDomain.setText(beneficiary.img)
             }
+
+            binding.buttonAdd.text = requireContext().getString(R.string.button_update_beneficiary)
+            binding.addTitle.text = requireContext().getString(R.string.button_update_beneficiary)
         }
 
         binding.buttonAdd.setOnClickListener {
