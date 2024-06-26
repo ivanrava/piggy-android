@@ -75,9 +75,23 @@ class CategoryAdapter(
         }
 
         private fun calculateBudgetBarPercentage(category: Category): Float {
+            fun safeDivision(over: Double, under: Double): Float {
+                return if (under.toInt() == 0 && over > 0) {
+                    1f
+                } else {
+                    (over / under).toFloat()
+                }
+            }
+
             return when (category.budget) {
-                is CategoryBudget.Monthly -> (category.expenditures.currentMonthValue() / (category.budget as CategoryBudget.Monthly).value.currentMonthValue()).toFloat()
-                is CategoryBudget.Yearly -> (category.expenditures.sum() / (category.budget as CategoryBudget.Yearly).value.toDouble()).toFloat()
+                is CategoryBudget.Monthly -> safeDivision(
+                    category.expenditures.currentMonthValue(),
+                    (category.budget as CategoryBudget.Monthly).value.currentMonthValue()
+                )
+                is CategoryBudget.Yearly -> safeDivision(
+                    category.expenditures.sum(),
+                    (category.budget as CategoryBudget.Yearly).value.toDouble()
+                )
             }
         }
 
