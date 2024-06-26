@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import coil.load
+import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.dicebear.loadAvatar
 import dev.ivanravasi.piggy.api.dicebear.loadBeneficiary
-import dev.ivanravasi.piggy.api.dicebear.loadFallback
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.BeneficiaryType
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.BeneficiaryRequest
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddBeneficiaryBinding
@@ -25,11 +26,16 @@ class AddBeneficiaryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // Initialize binding and view model
         binding = FragmentAddBeneficiaryBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(this, AddBeneficiaryViewModel.Factory(
             TokenRepository(requireContext()),
         ))[AddBeneficiaryViewModel::class.java]
 
+        // Set default initial values
+        binding.beneficiaryType.check(R.id.people)
+
+        // Set listeners / observers
         viewModel.errors.observe(viewLifecycleOwner) {
             binding.inputName.error = it.name.first()
             binding.inputDomain.error = it.img.first()
@@ -44,7 +50,23 @@ class AddBeneficiaryFragment : Fragment() {
         binding.editDomain.afterTextChangedDebounced {
             updateBeneficiaryFrontend()
         }
-        binding.beneficiaryType.check(R.id.people)
+
+        // Set initial values from editable (if present)
+        val beneficiaryStr = arguments?.getString("beneficiary")
+        beneficiaryStr.let {
+            val beneficiary = GsonBuilder().create().fromJson(it, Beneficiary::class.java)
+
+            binding.beneficiaryType.check(when (beneficiary.type()) {
+                BeneficiaryType.PEOPLE -> R.id.people
+                BeneficiaryType.COMPANY -> R.id.companies
+                BeneficiaryType.GENERIC -> R.id.generic
+            })
+
+            binding.editName.setText(beneficiary.name)
+            if (beneficiary.type() == BeneficiaryType.COMPANY) {
+                binding.editDomain.setText(beneficiary.img)
+            }
+        }
 
         binding.buttonAdd.setOnClickListener {
             val request = BeneficiaryRequest(
