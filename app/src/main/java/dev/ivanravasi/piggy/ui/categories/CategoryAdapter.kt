@@ -52,15 +52,20 @@ class CategoryAdapter(
                     binding.root.context.getString(R.string.children_categories, category.children.count())
                 binding.children.adapter = adapterChildren
                 adapterChildren.submitList(null)
-                binding.cardCategory.setOnClickListener {
+                binding.btnShowChildren.setOnClickListener {
                     adapterChildren.submitList(if (isOpened) null else category.children.map {
                         it.parent = category
                         return@map it
                     })
+                    binding.btnShowChildren.icon = AppCompatResources.getDrawable(
+                        binding.root.context,
+                        if (isOpened) R.drawable.ic_collapse_open_24 else R.drawable.ic_collapse_close_24
+                    )
                     isOpened = !isOpened
                 }
                 binding.budgetBar.visibility = View.INVISIBLE
             } else {
+                binding.btnShowChildren.visibility = View.GONE
                 binding.cardCategory.setCardBackgroundColor(binding.root.context.getColor(R.color.md_theme_surfaceContainer))
                 setBudgetText(binding.categoryDescription, category)
                 binding.children.adapter = null
