@@ -51,5 +51,6 @@ class IconPickerView(
 
     fun loadIconify(icon: String) {
         loadIconify(icon, iconColor)
+        listeners.forEach { it(icon) }
     }
 }

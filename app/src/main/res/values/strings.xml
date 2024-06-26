@@ -37,6 +37,7 @@
     <string name="button_add_property">Add property</string>
     <string name="name_hint">Name</string>
     <string name="title_new_property">New property</string>
+    <string name="update_property">Update property</string>
     <string name="banner_no_accounts">No accounts to show</string>
     <string name="banner_no_beneficiaries">No beneficiaries to show</string>
     <string name="banner_no_categories">No categories to show</string>

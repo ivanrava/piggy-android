@@ -4,6 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import com.google.gson.GsonBuilder
+import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentPropertiesBinding
@@ -20,9 +24,11 @@ class PropertiesFragment : CRUDFragment<Property, PropertyAdapter.PropertyViewHo
         val adapter = PropertyAdapter(object : OnPropertyClickListener {
             override fun onPropertyClick(property: Property) {
                 ShowPropertyBottomSheet(property, parentFragmentManager, {
-
+                    val bundle = Bundle()
+                    bundle.putString("property", GsonBuilder().create().toJson(property))
+                    findNavController().navigate(R.id.navigation_add_property, bundle)
                 }, {
-
+                    Toast.makeText(context, property.name, Toast.LENGTH_LONG).show()
                 }).show()
             }
         })

@@ -2,12 +2,14 @@ package dev.ivanravasi.piggy.ui.properties
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyRequest
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddPropertyBinding
@@ -18,9 +20,11 @@ class AddPropertyFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // Initialize binding and view model
         val binding = FragmentAddPropertyBinding.inflate(inflater, container, false)
         val viewModel = AddPropertyViewModel(TokenRepository(requireContext()))
 
+        // Set listeners / observers
         binding.pickerIcon.setOnSelectedIconListener {
             viewModel.icon.value = it
         }
@@ -33,6 +37,20 @@ class AddPropertyFragment : Fragment() {
                 binding.pickerIcon.setError()
                 binding.pickerIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.md_theme_error))
             }
+        }
+
+        val propertyStr = arguments?.getString("property")
+        propertyStr.let {
+            val property = GsonBuilder().create().fromJson(it, Property::class.java)
+
+            binding.editName.setText(property.name)
+            binding.pickerIcon.loadIconify(property.icon)
+
+            binding.buttonAdd.text = requireContext().getString(R.string.update_property)
+            binding.addTitle.text = requireContext().getString(R.string.update_property)
+
+            binding.editInitialValue.setText(property.initialValue)
+            binding.editDescription.setText(property.description)
         }
 
         binding.buttonAdd.setOnClickListener {
