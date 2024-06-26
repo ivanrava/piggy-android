@@ -10,6 +10,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Operation
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentOperationsBinding
 import dev.ivanravasi.piggy.ui.accountTextColor
+import dev.ivanravasi.piggy.ui.accounts.ShowAccountBottomSheet
 import dev.ivanravasi.piggy.ui.common.CRUDFragment
 import dev.ivanravasi.piggy.ui.setCurrency
 
@@ -52,6 +53,14 @@ class OperationsFragment : CRUDFragment<Operation, OperationAdapter.OperationVie
             binding.accountType.setTextColor(textColor)
             binding.total.setTextColor(textColor)
             binding.titleCard.visibility = View.VISIBLE
+
+            binding.titleCard.setOnClickListener { _ ->
+                ShowAccountBottomSheet(it, parentFragmentManager, {
+
+                }, {
+
+                }).show()
+            }
         }
 
         return binding.root
