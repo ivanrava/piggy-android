@@ -23,6 +23,11 @@ data class Beneficiary(
             BeneficiaryType.GENERIC
         }
     }
+
+    fun isWithoutRemoteImg(): Boolean {
+        assert(type() == BeneficiaryType.COMPANY)
+        return img == "https://logo.clearbit.com/"
+    }
 }
 
 enum class BeneficiaryType {

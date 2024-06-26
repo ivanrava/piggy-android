@@ -63,7 +63,7 @@ class AddBeneficiaryFragment : Fragment() {
             })
 
             binding.editName.setText(beneficiary.name)
-            if (beneficiary.type() == BeneficiaryType.COMPANY) {
+            if (beneficiary.type() == BeneficiaryType.COMPANY && !beneficiary.isWithoutRemoteImg()) {
                 binding.editDomain.setText(beneficiary.img)
             }
         }
