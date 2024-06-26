@@ -35,4 +35,11 @@ data class Account(
     val inTransfers: List<Transfer>,
     @SerializedName("out_transfers")
     val outTransfers: List<Transfer>,
-)
+) {
+    fun total(): Double {
+        return initialBalance.toDouble() +
+                transactions.sumOf { it.amount.toDouble() * if (it.category.type() == CategoryType.OUT) -1 else 1 } +
+                inTransfers.sumOf { it.amount.toDouble() } -
+                outTransfers.sumOf { it.amount.toDouble() }
+    }
+}

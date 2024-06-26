@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Operation
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.ui.common.IndexApiViewModel
@@ -13,10 +14,10 @@ class OperationsViewModel(
     tokenRepository: TokenRepository,
     private val accountId: Long
 ) : IndexApiViewModel<Operation>(tokenRepository) {
-    private val _accountName = MutableLiveData<String>().apply {
-        value = ""
+    private val _account = MutableLiveData<Account>().apply {
+        value = null
     }
-    val accountName: LiveData<String> = _accountName
+    val account: LiveData<Account> = _account
 
     init {
         viewModelScope.launch {
@@ -33,7 +34,7 @@ class OperationsViewModel(
                 _objList.value =
                     (response.body()!!.data.transactions + response.body()!!.data.inTransfers + response.body()!!.data.outTransfers)
                         .sortedByDescending { it.rawDate() }
-                _accountName.value = response.body()!!.data.name
+                _account.value = response.body()!!.data
             } catch (e: Exception) {
                 e.localizedMessage?.let { Log.i("message", it) }
             }
