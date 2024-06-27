@@ -36,10 +36,17 @@ data class Property(
         @SerializedName("notes")
         val notes: String?,
         @SerializedName("type")
-        val type: String,
+        private val type: String,
         @SerializedName("value")
         val value: String,
         @SerializedName("created_at")
         val createdAt: String,
-    )
+    ) {
+        fun type(): CategoryType {
+            return when(type) {
+                "in" -> CategoryType.IN
+                else -> CategoryType.OUT
+            }
+        }
+    }
 }

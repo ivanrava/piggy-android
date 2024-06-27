@@ -28,6 +28,10 @@ class ShowPropertyBottomSheet(
         binding.propertyDescription.text = property.description
         binding.propertyIcon.loadIconify(property.icon, binding.propertyName.currentTextColor)
 
+        val adapter = VariationAdapter()
+        binding.listVariations.adapter = adapter
+        adapter.submitList(property.variations)
+
         binding.btnUpdate.setOnClickListener {
             dismiss()
             onUpdate(property)
