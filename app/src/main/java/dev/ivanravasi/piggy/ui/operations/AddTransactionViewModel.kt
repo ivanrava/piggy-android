@@ -53,7 +53,6 @@ class AddTransactionViewModel(
             val res = piggyApi.beneficiaries("Bearer ${tokenRepository.getToken()}")
             if (res.isSuccessful) {
                 _beneficiaries.value = res.body()!!.data
-                beneficiary.value = _beneficiaries.value!!.firstOrNull()
             }
         } catch (e: Exception) {
             Log.e("transactions.beneficiaries", e.toString())
@@ -65,7 +64,6 @@ class AddTransactionViewModel(
             val res = piggyApi.categoryLeaves("Bearer ${tokenRepository.getToken()}")
             if (res.isSuccessful) {
                 _categories.value = res.body()!!.data
-                category.value = _categories.value!!.firstOrNull()
             }
         } catch (e: Exception) {
             Log.e("transactions.categories", e.toString())
@@ -76,8 +74,15 @@ class AddTransactionViewModel(
     private suspend fun getAccount() {
         try {
             val response = piggyApi.account("Bearer ${tokenRepository.getToken()}", accountId)
-            if (response.isSuccessful)
+            if (response.isSuccessful) {
                 _account.value = response.body()!!.data
+                val mostFrequentTransaction = _account.value!!.transactions
+                    .groupBy { it.beneficiary.name + it.category.name }
+                    .values.maxBy { it.count() }
+                    .firstOrNull()
+                beneficiary.value = mostFrequentTransaction?.beneficiary
+                category.value = mostFrequentTransaction?.category
+            }
         } catch (e: Exception) {
             e.localizedMessage?.let { Log.i("message", it) }
         }

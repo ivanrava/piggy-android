@@ -84,7 +84,7 @@ class AddTransactionFragment : Fragment() {
         binding.editDate.setToday()
 
         val transactionStr = arguments?.getString("transaction")
-        transactionStr.let {
+        transactionStr?.let {
             val transaction = GsonBuilder()
                 .registerTypeAdapter(CategoryBudget::class.java, BudgetDeserializer())
                 .create()
