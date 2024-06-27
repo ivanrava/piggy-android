@@ -36,7 +36,7 @@ class ShowCategoryBottomSheet(
         for (pair in category.fills()) {
             val budgetBar = BudgetBarView(binding.layoutBudget.context, null)
             budgetBar.setTypeColor(category.type())
-            budgetBar.setPercentage(pair.first, pair.second, height = 8f, paddingVertical = 16, showIfEmpty = true)
+            budgetBar.setPercentage(pair.first, pair.second, height = 8f, paddingVertical = 16, showLabels = true)
             binding.layoutBudget.addView(budgetBar)
         }
 

@@ -62,7 +62,7 @@ class CategoryAdapter(
                     )
                     isOpened = !isOpened
                 }
-                binding.budgetBar.visibility = View.INVISIBLE
+                binding.budgetBar.hide()
             } else {
                 binding.btnShowChildren.visibility = View.GONE
                 binding.cardCategory.setCardBackgroundColor(binding.root.context.getColor(R.color.md_theme_surfaceContainer))
@@ -75,7 +75,6 @@ class CategoryAdapter(
                     binding.budgetBar.setPercentage(
                         category.budgetCurrentFill(),
                         category.budgetMaximumFill(),
-                        showIfEmpty = true
                     )
                 } else {
                     binding.categoryDescription.text = category.parent!!.name

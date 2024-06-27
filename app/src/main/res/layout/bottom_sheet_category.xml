@@ -22,8 +22,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/category_icon"
         app:layout_constraintBottom_toTopOf="@id/category_type"
-        android:layout_marginStart="8dp"
-        android:layout_width="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/btn_update"
+        android:layout_marginHorizontal="8dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         tools:text="Category name" />
