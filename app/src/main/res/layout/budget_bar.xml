@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:background="@drawable/budget_bar_mask"
+    android:clipToOutline="true">
+    <View
+        android:id="@+id/budget_bar_fg"
+        android:layout_weight="0.5"
+        android:layout_height="4dp"
+        android:layout_width="0dp"
+        tools:background="@drawable/budget_bar_outcome"
+        />
+    <View
+        android:id="@+id/budget_bar_bg"
+        android:layout_weight="0.5"
+        android:layout_height="4dp"
+        android:layout_width="0dp"
+        tools:background="@drawable/budget_bar_outcome"
+        android:alpha="0.3"
+        />
+</LinearLayout>

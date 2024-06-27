@@ -33,6 +33,13 @@ class ShowCategoryBottomSheet(
         }.uppercase()
         binding.categoryIcon.loadIconify(category.icon, binding.categoryName.currentTextColor)
 
+        for (pair in category.fills()) {
+            val budgetBar = BudgetBarView(binding.layoutBudget.context, null)
+            budgetBar.setTypeColor(category.type())
+            budgetBar.setPercentage(pair.first, pair.second, height = 8f, paddingVertical = 16, showIfEmpty = true)
+            binding.layoutBudget.addView(budgetBar)
+        }
+
         binding.btnUpdate.setOnClickListener {
             dismiss()
             onUpdate(category)

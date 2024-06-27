@@ -43,9 +43,9 @@ data class Budget(
         return SimpleDateFormat("MMM", Locale.UK).format(Calendar.getInstance().time).lowercase()
     }
 
-    fun currentMonthValue(): Double {
+    fun monthValue(month: String = currentMonthName()): Double {
         val value = Budget::class.memberProperties
-            .first { it.name == currentMonthName() }
+            .first { it.name == month }
             .also { it.isAccessible = true }
             .getter(this)
         return (value as String).toDouble()

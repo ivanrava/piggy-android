@@ -62,6 +62,36 @@ data class Category(
             else -> CategoryType.OUT
         }
     }
+
+    fun budgetCurrentFill(): Double {
+        return when (budget!!) {
+            is CategoryBudget.Monthly -> expenditures!!.monthValue()
+            is CategoryBudget.Yearly -> expenditures!!.sum()
+        }
+    }
+
+    fun budgetMaximumFill(): Double {
+        return when (budget!!) {
+            is CategoryBudget.Monthly -> (budget as CategoryBudget.Monthly).value.monthValue()
+            is CategoryBudget.Yearly -> (budget as CategoryBudget.Yearly).value.toDouble()
+        }
+    }
+
+    fun fills(): List<Pair<Double, Double>> {
+        val fills = mutableListOf<Pair<Double, Double>>()
+        // TODO: maybe replace with reflection
+        when (budget) {
+            is CategoryBudget.Yearly -> fills.add(Pair(expenditures!!.sum(), (budget as CategoryBudget.Yearly).value.toDouble()))
+            is CategoryBudget.Monthly -> {
+                for (month in listOf("jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec")) {
+                    fills.add(Pair(expenditures!!.monthValue(month), (budget as CategoryBudget.Monthly).value.monthValue(month)))
+                }
+            }
+            null -> {} // Therefore list stays empty
+        }
+        return fills
+    }
+
 }
 
 enum class CategoryType {
