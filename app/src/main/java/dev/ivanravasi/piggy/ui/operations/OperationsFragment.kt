@@ -5,7 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.google.gson.GsonBuilder
+import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.iconify.loadIconify
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.BudgetSerializer
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Operation
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentOperationsBinding
@@ -45,7 +50,7 @@ class OperationsFragment : CRUDFragment<Operation, OperationAdapter.OperationVie
             binding.title.text = "Operations"
             binding.accountName.text = it.name
             binding.accountType.text = it.type
-            binding.total.setCurrency(it.total())
+            binding.total.setCurrency(it.balance.toDouble())
             binding.titleCard.setCardBackgroundColor(Color.parseColor(it.color))
             val textColor = accountTextColor(requireContext(), it.color.substring(1))
             binding.accountName.setTextColor(textColor)
@@ -56,7 +61,13 @@ class OperationsFragment : CRUDFragment<Operation, OperationAdapter.OperationVie
 
             binding.titleCard.setOnClickListener { _ ->
                 ShowAccountBottomSheet(it, parentFragmentManager, {
-
+                    val bundle = Bundle()
+                    bundle.putString("account", GsonBuilder()
+                        .registerTypeAdapter(CategoryBudget::class.java, BudgetSerializer())
+                        .create()
+                        .toJson(it)
+                    )
+                    findNavController().navigate(R.id.navigation_add_account, bundle)
                 }, {
 
                 }).show()

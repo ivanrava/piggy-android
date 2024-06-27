@@ -1,6 +1,7 @@
 package dev.ivanravasi.piggy.ui.accounts
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.google.gson.GsonBuilder
+import com.skydoves.colorpickerview.ColorEnvelope
 import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.BudgetDeserializer
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.AccountRequest
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddAccountBinding
@@ -28,13 +34,10 @@ class AddAccountFragment : Fragment() {
             ContextCompat.getColor(requireContext(), R.color.md_theme_primary)
         ))[AddAccountViewModel::class.java]
 
+        binding.editOpening.setToday()
+
         binding.pickerIcon.setOnSelectedIconListener {
             viewModel.icon.value = it
-        }
-        viewModel.icon.observe(viewLifecycleOwner) {
-            if (it != null) {
-                binding.pickerIcon.loadIconify(it)
-            }
         }
 
         viewModel.errors.observe(viewLifecycleOwner) {
@@ -53,7 +56,6 @@ class AddAccountFragment : Fragment() {
             (binding.editAccountType as? MaterialAutoCompleteTextView)?.setSimpleItems(it.map { it.type }.toTypedArray())
         }
 
-        binding.editOpening.setToday()
 
         binding.pickerColor.setOnClickListener {
             ColorPickerDialog().show(requireContext()) {
@@ -63,6 +65,23 @@ class AddAccountFragment : Fragment() {
         viewModel.color.observe(viewLifecycleOwner) {
             binding.pickerColor.backgroundTintList = ColorStateList.valueOf(it.color)
             binding.pickerColor.iconTint = ColorStateList.valueOf(accountTextColor(requireContext(), it.hexCode))
+        }
+
+        val accountStr = arguments?.getString("account")
+        accountStr.let {
+            val account = GsonBuilder()
+                .registerTypeAdapter(CategoryBudget::class.java, BudgetDeserializer())
+                .create()
+                .fromJson(it, Account::class.java)
+
+            binding.editName.setText(account.name)
+            binding.editAccountType.setText(account.type)
+            binding.editOpening.setText(account.opening)
+            binding.editClosing.setText(account.closing)
+            binding.editInitialBalance.setText(account.initialBalance)
+            binding.editDescription.setText(account.description)
+            binding.pickerIcon.loadIconify(account.icon)
+            viewModel.color.value = ColorEnvelope(Color.parseColor(account.color))
         }
 
         binding.buttonAdd.setOnClickListener {
