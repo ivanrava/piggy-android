@@ -114,7 +114,9 @@ class AddCategoryFragment : Fragment() {
         // Set initial values from editable (if present)
         val categoryStr = arguments?.getString("category")
         categoryStr.let {
-            val category = GsonBuilder().registerTypeAdapter(CategoryBudget::class.java, BudgetDeserializer()).create().fromJson(it, Category::class.java)
+            val category = GsonBuilder()
+                .registerTypeAdapter(CategoryBudget::class.java, BudgetDeserializer())
+                .create().fromJson(it, Category::class.java)
 
             binding.addTitle.text = requireContext().getString(R.string.button_update_category)
             binding.buttonAdd.text = requireContext().getString(R.string.button_update_category)
@@ -124,7 +126,7 @@ class AddCategoryFragment : Fragment() {
                 binding.pickerCategory.setCategory(category.parent!!)
                 binding.switchVirtual.isChecked = category.virtual
                 binding.chipMonthlyFixed.visibility = View.GONE
-                when (category.budget) {
+                when (category.budget!!) {
                     is CategoryBudget.Monthly -> {
                         binding.chipsBudgetType.check(R.id.chip_monthly_custom)
                         val budget: Budget = (category.budget as CategoryBudget.Monthly).value
@@ -143,7 +145,7 @@ class AddCategoryFragment : Fragment() {
                     }
                     is CategoryBudget.Yearly -> {
                         binding.chipsBudgetType.check(R.id.chip_yearly_fixed)
-                        binding.editBudgetOverall.setText(category.budget.value.toString())
+                        binding.editBudgetOverall.setText(category.budget!!.value.toString())
                     }
                 }
             } else {

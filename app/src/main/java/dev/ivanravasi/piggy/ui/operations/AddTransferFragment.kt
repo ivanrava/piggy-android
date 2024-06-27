@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transfer
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransferRequest
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddTransferBinding
@@ -64,6 +66,19 @@ class AddTransferFragment : Fragment() {
         }
 
         binding.editDate.setToday()
+
+        val transferStr = arguments?.getString("transfer")
+        transferStr.let {
+            val transfer = GsonBuilder().create().fromJson(it, Transfer::class.java)
+            viewModel.toAccount.value = transfer.from
+
+            binding.editDate.setText(transfer.date)
+            binding.editAmount.setText(transfer.amount)
+            binding.editNotes.setText(transfer.notes)
+
+            binding.buttonAdd.text = requireContext().getString(R.string.update_transfer)
+            binding.addTitle.text = requireContext().getString(R.string.update_transfer)
+        }
 
         binding.buttonAdd.setOnClickListener {
             val request = TransferRequest(

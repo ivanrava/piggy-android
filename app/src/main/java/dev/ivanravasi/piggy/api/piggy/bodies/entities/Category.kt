@@ -52,9 +52,9 @@ data class Category(
     @SerializedName("children")
     @Exclude var children: List<Category>,
     @SerializedName("expenditures")
-    var expenditures: Budget,
+    var expenditures: Budget?,
     @SerializedName("budget")
-    var budget: CategoryBudget<*>
+    var budget: CategoryBudget<*>?
 ) {
     fun type(): CategoryType {
         return when (type) {

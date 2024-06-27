@@ -69,15 +69,20 @@ class CategoryAdapter(
             } else {
                 binding.btnShowChildren.visibility = View.GONE
                 binding.cardCategory.setCardBackgroundColor(binding.root.context.getColor(R.color.md_theme_surfaceContainer))
-                setBudgetText(binding.categoryDescription, category)
                 binding.children.adapter = null
-                binding.budgetBar.visibility = View.VISIBLE
-                binding.budgetBar.background = AppCompatResources.getDrawable(
-                    binding.root.context,
-                    if (category.type() == CategoryType.IN) R.drawable.budget_bar_income else R.drawable.budget_bar_outcome
-                )
-                binding.budgetBarBack.background = binding.budgetBar.background
-                setBudgetBarPercentage(calculateBudgetBarPercentage(category))
+
+                if (category.budget != null && category.expenditures != null) {
+                    setBudgetText(binding.categoryDescription, category)
+                    binding.budgetBar.visibility = View.VISIBLE
+                    binding.budgetBar.background = AppCompatResources.getDrawable(
+                        binding.root.context,
+                        if (category.type() == CategoryType.IN) R.drawable.budget_bar_income else R.drawable.budget_bar_outcome
+                    )
+                    binding.budgetBarBack.background = binding.budgetBar.background
+                    setBudgetBarPercentage(calculateBudgetBarPercentage(category))
+                } else {
+                    binding.categoryDescription.text = category.parent!!.name
+                }
             }
             binding.cardCategory.setOnClickListener {
                 listener.onCategoryClick(category)
@@ -93,13 +98,13 @@ class CategoryAdapter(
                 }
             }
 
-            return when (category.budget) {
+            return when (category.budget!!) {
                 is CategoryBudget.Monthly -> safeDivision(
-                    category.expenditures.currentMonthValue(),
+                    category.expenditures!!.currentMonthValue(),
                     (category.budget as CategoryBudget.Monthly).value.currentMonthValue()
                 )
                 is CategoryBudget.Yearly -> safeDivision(
-                    category.expenditures.sum(),
+                    category.expenditures!!.sum(),
                     (category.budget as CategoryBudget.Yearly).value.toDouble()
                 )
             }
@@ -119,9 +124,9 @@ class CategoryAdapter(
         }
 
         private fun setBudgetText(categoryDescription: MaterialTextView, category: Category) {
-            categoryDescription.text = when (category.budget) {
-                is CategoryBudget.Monthly -> "Monthly. This month: ${category.expenditures.currentMonthValue().toCurrency()} / ${(category.budget as CategoryBudget.Monthly).value.currentMonthValue().toCurrency()}"
-                is CategoryBudget.Yearly -> "Yearly: ${category.expenditures.sum().toCurrency()} / ${(category.budget as CategoryBudget.Yearly).value.toDouble().toCurrency()}"
+            categoryDescription.text = when (category.budget!!) {
+                is CategoryBudget.Monthly -> "Monthly. This month: ${category.expenditures!!.currentMonthValue().toCurrency()} / ${(category.budget as CategoryBudget.Monthly).value.currentMonthValue().toCurrency()}"
+                is CategoryBudget.Yearly -> "Yearly: ${category.expenditures!!.sum().toCurrency()} / ${(category.budget as CategoryBudget.Yearly).value.toDouble().toCurrency()}"
             }
             if (categoryDescription.text.endsWith(" ${0.0.toCurrency()} / ${0.0.toCurrency()}")) {
                 categoryDescription.setTextColor(ColorUtils.setAlphaComponent(categoryDescription.currentTextColor, 128))

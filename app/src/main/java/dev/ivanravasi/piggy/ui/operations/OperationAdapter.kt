@@ -21,7 +21,10 @@ import dev.ivanravasi.piggy.ui.setAccount
 import dev.ivanravasi.piggy.ui.setCurrency
 import dev.ivanravasi.piggy.ui.setDate
 
-class OperationAdapter: ListAdapter<Operation, OperationAdapter.OperationViewHolder>(OperationDiffCallback()) {
+class OperationAdapter(
+    private val onTransactionClicked: (transaction: Transaction) -> Unit,
+    private val onTransferClicked: (transfer: Transfer) -> Unit,
+): ListAdapter<Operation, OperationAdapter.OperationViewHolder>(OperationDiffCallback()) {
     override fun onBindViewHolder(holder: OperationViewHolder, position: Int) {
         val operation = getItem(position)
         holder.bind(operation)
@@ -29,9 +32,9 @@ class OperationAdapter: ListAdapter<Operation, OperationAdapter.OperationViewHol
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OperationViewHolder {
         return if (viewType == OperationType.TRANSACTION.ordinal)
-            TransactionViewHolder.from(parent)
+            TransactionViewHolder.from(parent, onTransactionClicked)
         else
-            TransferViewHolder.from(parent)
+            TransferViewHolder.from(parent, onTransferClicked)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -43,7 +46,8 @@ class OperationAdapter: ListAdapter<Operation, OperationAdapter.OperationViewHol
     }
 
     class TransactionViewHolder private constructor(
-        private val binding: ListItemTransactionBinding
+        private val binding: ListItemTransactionBinding,
+        private val onTransactionClicked: (transaction: Transaction) -> Unit
     ): OperationViewHolder(root = binding.root) {
         private fun bind(transaction: Transaction) {
             binding.cardBeneficiary.beneficiaryImg.loadBeneficiary(img = transaction.beneficiary.img, seed = transaction.beneficiary.name)
@@ -59,13 +63,17 @@ class OperationAdapter: ListAdapter<Operation, OperationAdapter.OperationViewHol
 
             binding.value.setCurrency(transaction.amount.toDouble() * if (transaction.category.type() == CategoryType.OUT) -1 else 1, true)
             binding.date.setDate(transaction.date)
+
+            binding.root.setOnClickListener {
+                onTransactionClicked(transaction)
+            }
         }
 
         companion object {
-            fun from(parent: ViewGroup): TransactionViewHolder {
+            fun from(parent: ViewGroup, onOperationClicked: (transaction: Transaction) -> Unit): TransactionViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ListItemTransactionBinding.inflate(layoutInflater, parent, false)
-                return TransactionViewHolder(binding)
+                return TransactionViewHolder(binding, onOperationClicked)
             }
         }
 
@@ -75,7 +83,8 @@ class OperationAdapter: ListAdapter<Operation, OperationAdapter.OperationViewHol
     }
 
     class TransferViewHolder private constructor(
-        private val binding: ListItemTransferBinding
+        private val binding: ListItemTransferBinding,
+        private val onTransferClicked: (transfer: Transfer) -> Unit
     ): OperationViewHolder(root = binding.root) {
         private fun bind(transfer: Transfer) {
             if (transfer.to != null)
@@ -87,14 +96,18 @@ class OperationAdapter: ListAdapter<Operation, OperationAdapter.OperationViewHol
 
             binding.value.setCurrency(transfer.amount.toDouble() * if (transfer.to != null) -1 else 1, true)
             binding.date.setDate(transfer.date)
+
+            binding.root.setOnClickListener {
+                onTransferClicked(transfer)
+            }
         }
 
         companion object {
-            fun from(parent: ViewGroup): TransferViewHolder {
+            fun from(parent: ViewGroup, onOperationClicked: (transfer: Transfer) -> Unit): TransferViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ListItemTransferBinding.inflate(layoutInflater, parent, false)
                 parent.findFragment<OperationsFragment>().findNavController()
-                return TransferViewHolder(binding)
+                return TransferViewHolder(binding, onOperationClicked)
             }
         }
 

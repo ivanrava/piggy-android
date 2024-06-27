@@ -58,10 +58,12 @@
     <string name="type_companies">Companies</string>
     <string name="type_generic">Generic</string>
     <string name="title_new_transaction">New transaction</string>
+    <string name="update_transaction">Update transaction</string>
     <string name="value_hint">Value</string>
     <string name="button_add_transaction">Add transaction</string>
     <string name="title_new_transfer">New transfer</string>
     <string name="button_add_transfer">Add transfer</string>
+    <string name="update_transfer">Update transfer</string>
     <string name="type_to">Give to...</string>
     <string name="type_from">Take from...</string>
     <string name="checked">Have you already checked the transaction?</string>

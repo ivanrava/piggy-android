@@ -6,16 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.GsonBuilder
+import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.dicebear.loadBeneficiary
-import dev.ivanravasi.piggy.api.iconify.loadIconify
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
-import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.BudgetDeserializer
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transaction
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransactionRequest
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddTransactionBinding
 import dev.ivanravasi.piggy.ui.backWithSnackbar
 import dev.ivanravasi.piggy.ui.beneficiaries.OnBeneficiaryClickListener
-import dev.ivanravasi.piggy.ui.categories.OnCategoryClickListener
 
 
 class AddTransactionFragment : Fragment() {
@@ -80,6 +82,23 @@ class AddTransactionFragment : Fragment() {
         }
 
         binding.editDate.setToday()
+
+        val transactionStr = arguments?.getString("transaction")
+        transactionStr.let {
+            val transaction = GsonBuilder()
+                .registerTypeAdapter(CategoryBudget::class.java, BudgetDeserializer())
+                .create()
+                .fromJson(it, Transaction::class.java)
+            viewModel.beneficiary.value = transaction.beneficiary
+            viewModel.category.value = transaction.category
+
+            binding.editDate.setText(transaction.date)
+            binding.editAmount.setText(transaction.amount)
+            binding.editNotes.setText(transaction.notes)
+
+            binding.buttonAdd.text = requireContext().getString(R.string.update_transaction)
+            binding.addTitle.text = requireContext().getString(R.string.update_transaction)
+        }
 
         binding.buttonAdd.setOnClickListener {
             val request = TransactionRequest(

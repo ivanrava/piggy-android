@@ -20,7 +20,17 @@ import dev.ivanravasi.piggy.ui.common.CRUDFragment
 import dev.ivanravasi.piggy.ui.setCurrency
 
 class OperationsFragment : CRUDFragment<Operation, OperationAdapter.OperationViewHolder>() {
-    private val adapter = OperationAdapter()
+    private val adapter = OperationAdapter({
+        val bundle = requireArguments()
+        bundle.putString("transaction", GsonBuilder()
+            .registerTypeAdapter(CategoryBudget::class.java, BudgetSerializer())
+            .create().toJson(it))
+        findNavController().navigate(R.id.navigation_add_transaction, bundle)
+    }, {
+        val bundle = requireArguments()
+        bundle.putString("transfer", GsonBuilder().create().toJson(it))
+        findNavController().navigate(R.id.navigation_add_transfer, bundle)
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
