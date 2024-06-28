@@ -9,10 +9,7 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/chart_title"
         tools:text="Chart title"
-        android:fontFamily="@font/inter_light"
-        android:textSize="18sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        style="@style/chart_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chart_list"

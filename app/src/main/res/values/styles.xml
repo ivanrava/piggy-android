@@ -87,4 +87,13 @@
         <item name="column1">@style/OutLineStyle</item>
         <item name="column2">@style/InLineStyle</item>
     </style>
+
+    <style name="chart_title">
+        <item name="android:fontFamily">@font/inter_light</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+    </style>
 </resources>
