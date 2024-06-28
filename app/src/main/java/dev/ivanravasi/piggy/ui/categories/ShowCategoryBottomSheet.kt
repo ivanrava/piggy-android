@@ -12,6 +12,9 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryType
 import dev.ivanravasi.piggy.databinding.BottomSheetCategoryBinding
 
+val MONTHS = listOf("January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December")
+
 class ShowCategoryBottomSheet(
     private val category: Category,
     private val fragmentManager: FragmentManager,
@@ -34,10 +37,12 @@ class ShowCategoryBottomSheet(
         binding.categoryIcon.loadIconify(category.icon, binding.categoryName.currentTextColor)
 
         val budgetFillPairs = category.fills()
-        for (pair in budgetFillPairs) {
+        category.fills().forEachIndexed { index, pair ->
             val budgetBar = BudgetBarView(binding.layoutBudget.context, null)
             budgetBar.setTypeColor(category.type())
-            budgetBar.setPercentage(pair.first, pair.second, height = 8f, paddingVertical = 16, showLabels = true)
+            budgetBar.setPercentage(pair.first, pair.second, height = 8f, paddingVertical = 2, showLabels = true)
+            if (category.fills().count() > 1)
+                budgetBar.setMonth(MONTHS[index])
             binding.layoutBudget.addView(budgetBar)
         }
         if (budgetFillPairs.isEmpty())

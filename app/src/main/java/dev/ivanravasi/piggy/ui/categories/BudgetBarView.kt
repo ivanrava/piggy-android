@@ -21,6 +21,7 @@ class BudgetBarView(
     private val currentFill: MaterialTextView
     private val maxFill: MaterialTextView
     private val budgetBarMask: LinearLayout
+    private val monthText: MaterialTextView
 
     init {
         inflate(context, R.layout.budget_bar, this)
@@ -28,6 +29,7 @@ class BudgetBarView(
         bg = findViewById(R.id.budget_bar_bg)
         currentFill = findViewById(R.id.current_fill)
         maxFill = findViewById(R.id.max_fill)
+        monthText = findViewById(R.id.month)
 
         budgetBarMask = findViewById(R.id.budget_bar_mask)
         budgetBarMask.clipToOutline = true
@@ -90,5 +92,10 @@ class BudgetBarView(
         currentFill.visibility = View.GONE
         maxFill.visibility = View.GONE
         budgetBarMask.setPadding(0)
+    }
+
+    fun setMonth(month: String) {
+        monthText.text = month
+        monthText.visibility = View.VISIBLE
     }
 }
