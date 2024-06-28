@@ -1,6 +1,5 @@
 package dev.ivanravasi.piggy.ui.operations
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -22,23 +21,19 @@ class OperationsViewModel(
     init {
         viewModelScope.launch {
             hydrateApiClient()
+            _isLoading.value = true
             getOperations()
+            _isLoading.value = false
         }
     }
 
-    private fun getOperations() {
-        viewModelScope.launch {
-            _isLoading.value = true
-            try {
-                val response = piggyApi.account("Bearer ${tokenRepository.getToken()}", accountId)
-                _objList.value =
-                    (response.body()!!.data.transactions + response.body()!!.data.inTransfers + response.body()!!.data.outTransfers)
-                        .sortedByDescending { it.rawDate() }
-                _account.value = response.body()!!.data
-            } catch (e: Exception) {
-                e.localizedMessage?.let { Log.i("message", it) }
-            }
-            _isLoading.value = false
+    private suspend fun getOperations() {
+        tryApiRequest("operations") {
+            val response = piggyApi.account("Bearer ${tokenRepository.getToken()}", accountId)
+            _objList.value =
+                (response.body()!!.data.transactions + response.body()!!.data.inTransfers + response.body()!!.data.outTransfers)
+                    .sortedByDescending { it.rawDate() }
+            _account.value = response.body()!!.data
         }
     }
 }

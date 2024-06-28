@@ -1,6 +1,5 @@
 package dev.ivanravasi.piggy.ui.accounts
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.data.TokenRepository
@@ -20,11 +19,9 @@ class AccountsViewModel(
     }
 
     private suspend fun getAccounts() {
-        try {
+        tryApiRequest("accounts") {
             val response = piggyApi.accounts("Bearer ${tokenRepository.getToken()}")
             _objList.value = response.body()!!.data.sortedBy { it.name }
-        } catch (e: Exception) {
-            Log.e("accounts", e.toString())
         }
     }
 }

@@ -1,6 +1,7 @@
 package dev.ivanravasi.piggy.ui.common
 
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,10 @@ open class CRUDFragment<T, Q : ViewHolder?>: Fragment() {
                 noDataView.visibility = View.VISIBLE
             }
             onUpdateList(it)
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
         }
     }
 }

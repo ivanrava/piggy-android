@@ -1,6 +1,5 @@
 package dev.ivanravasi.piggy.ui.operations
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -49,30 +48,26 @@ class AddTransactionViewModel(
     }
 
     private suspend fun getBeneficiaries() {
-        try {
+        tryApiRequest("transactions.beneficiaries") {
             val res = piggyApi.beneficiaries("Bearer ${tokenRepository.getToken()}")
             if (res.isSuccessful) {
                 _beneficiaries.value = res.body()!!.data
             }
-        } catch (e: Exception) {
-            Log.e("transactions.beneficiaries", e.toString())
         }
     }
 
     private suspend fun getCategories() {
-        try {
+        tryApiRequest("transactions.categories") {
             val res = piggyApi.categoryLeaves("Bearer ${tokenRepository.getToken()}")
             if (res.isSuccessful) {
                 _categories.value = res.body()!!.data
             }
-        } catch (e: Exception) {
-            Log.e("transactions.categories", e.toString())
         }
     }
 
     // TODO: try to avoid this call by grabbing the object from the previous fragment
     private suspend fun getAccount() {
-        try {
+        tryApiRequest("transactions.account") {
             val response = piggyApi.account("Bearer ${tokenRepository.getToken()}", accountId)
             if (response.isSuccessful) {
                 _account.value = response.body()!!.data
@@ -83,8 +78,6 @@ class AddTransactionViewModel(
                 beneficiary.value = mostFrequentTransaction?.beneficiary
                 category.value = mostFrequentTransaction?.category
             }
-        } catch (e: Exception) {
-            e.localizedMessage?.let { Log.i("message", it) }
         }
     }
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dev.ivanravasi.piggy.databinding.BottomSheetIconPickerBinding
@@ -34,6 +35,9 @@ class IconPickerBottomSheet(val color: Int, val onIconClickListener: OnIconClick
 
         binding.editSearch.afterTextChangedDebounced {
             viewModel.queryIcons(it)
+        }
+        viewModel.error.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
         }
         viewModel.icons.observe(viewLifecycleOwner) {
             adapter.submitList(it)

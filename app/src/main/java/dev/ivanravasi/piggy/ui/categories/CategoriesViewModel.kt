@@ -1,6 +1,5 @@
 package dev.ivanravasi.piggy.ui.categories
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.data.TokenRepository
@@ -21,16 +20,14 @@ class CategoriesViewModel(
     }
 
     private suspend fun getCategoryTrees() {
-        try {
+        tryApiRequest("categories") {
             val response = piggyApi.categoryTrees("Bearer ${tokenRepository.getToken()}")
             _objList.value = response.body()!!.data.sortedBy { it.name }
-        } catch (e: Exception) {
-            Log.e("categories", e.toString())
         }
     }
 
     private suspend fun getBudgets() {
-        try {
+        tryApiRequest("budget") {
             // TODO: parametrize with current year
             val response = piggyApi.budget("Bearer ${tokenRepository.getToken()}", 2024)
             if (response.isSuccessful) {
@@ -44,8 +41,6 @@ class CategoriesViewModel(
                     parent
                 }
             }
-        } catch (e: Exception) {
-            Log.e("budget", e.toString())
         }
     }
 }

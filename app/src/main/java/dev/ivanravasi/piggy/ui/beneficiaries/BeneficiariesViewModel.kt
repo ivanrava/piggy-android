@@ -13,20 +13,16 @@ class BeneficiariesViewModel(
     init {
         viewModelScope.launch {
             hydrateApiClient()
+            _isLoading.value = true
             getBeneficiaries()
+            _isLoading.value = false
         }
     }
 
-    private fun getBeneficiaries() {
-        viewModelScope.launch {
-            _isLoading.value = true
-            try {
-                val response = piggyApi.beneficiaries("Bearer ${tokenRepository.getToken()}")
-                _objList.value = response.body()!!.data
-            } catch (e: Exception) {
-//                Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
-            }
-            _isLoading.value = false
+    private suspend fun getBeneficiaries() {
+        tryApiRequest("beneficiaries") {
+            val response = piggyApi.beneficiaries("Bearer ${tokenRepository.getToken()}")
+            _objList.value = response.body()!!.data
         }
     }
 }

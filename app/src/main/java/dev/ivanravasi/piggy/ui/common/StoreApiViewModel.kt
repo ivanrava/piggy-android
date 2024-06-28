@@ -1,6 +1,5 @@
 package dev.ivanravasi.piggy.ui.common
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -29,7 +28,7 @@ abstract class StoreApiViewModel<Entity, Request, Errors>(
             return
         viewModelScope.launch {
             _isLoading.value = true
-            try {
+            tryApiRequest("store") {
                 val response = request(request)
                 if (response.isSuccessful) {
                     onSuccess()
@@ -37,8 +36,6 @@ abstract class StoreApiViewModel<Entity, Request, Errors>(
                     val errorString = response.errorBody()!!.string()
                     _errors.value = loadErrors(errorString)
                 }
-            } catch (e: Exception) {
-                Log.e("store", e.toString())
             }
             _isLoading.value = false
         }

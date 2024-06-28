@@ -1,6 +1,5 @@
 package dev.ivanravasi.piggy.ui.properties
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.data.TokenRepository
@@ -20,11 +19,9 @@ class PropertiesViewModel(
     }
 
     private suspend fun getProperties() {
-        try {
+        tryApiRequest("properties") {
             val response = piggyApi.properties("Bearer ${tokenRepository.getToken()}")
             _objList.value = response.body()!!.data
-        } catch (e: Exception) {
-            Log.e("properties", e.toString())
         }
     }
 }

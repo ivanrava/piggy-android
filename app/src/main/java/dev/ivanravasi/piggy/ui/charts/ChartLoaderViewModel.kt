@@ -1,6 +1,5 @@
 package dev.ivanravasi.piggy.ui.charts
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -40,7 +39,7 @@ class ChartLoaderViewModel(
     }
 
     private suspend fun requestStats(chart: Chart) {
-        try {
+        tryApiRequest("chart_stat") {
             val response = if (chart.filter == "all") {
                 piggyApi.stats(
                     "Bearer ${tokenRepository.getToken()}",
@@ -64,8 +63,6 @@ class ChartLoaderViewModel(
                 )
             }
             _stats.value = response.body()!!
-        } catch (e: Exception) {
-            Log.e("stats", e.toString())
         }
     }
 
@@ -80,38 +77,32 @@ class ChartLoaderViewModel(
     }
 
     private suspend fun getAccount(accountId: Long) {
-        try {
+        tryApiRequest("chart_stats_account") {
             val response = piggyApi.account(
                 "Bearer ${tokenRepository.getToken()}",
                 accountId
             )
             _chartName.value = response.body()!!.data.name
-        } catch (e: Exception) {
-            Log.e("stats", e.toString())
         }
     }
 
     private suspend fun getCategory(categoryId: Long) {
-        try {
+        tryApiRequest("chart_stats_category") {
             val response = piggyApi.category(
                 "Bearer ${tokenRepository.getToken()}",
                 categoryId
             )
             _chartName.value = response.body()!!.data.name
-        } catch (e: Exception) {
-            Log.e("stats", e.toString())
         }
     }
 
     private suspend fun getBeneficiary(beneficiaryId: Long) {
-        try {
+        tryApiRequest("chart_stats_beneficiary") {
             val response = piggyApi.beneficiary(
                 "Bearer ${tokenRepository.getToken()}",
                 beneficiaryId
             )
             _chartName.value = response.body()!!.data.name
-        } catch (e: Exception) {
-            Log.e("stats", e.toString())
         }
     }
 

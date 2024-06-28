@@ -35,11 +35,10 @@ class AddCategoryViewModel(
     }
 
     private suspend fun rootCategories() {
-        try {
+        tryApiRequest("categories_root") {
             val res = piggyApi.categoryTrees("Bearer ${tokenRepository.getToken()}")
             if (res.isSuccessful)
                 _rootCategories.value = res.body()!!.data
-        } catch (e: Exception) {
         }
     }
 

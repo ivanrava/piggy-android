@@ -32,16 +32,17 @@ class AddAccountViewModel(
     init {
         viewModelScope.launch {
             hydrateApiClient()
-            accountTypes()
+            _isLoading.value = true
+            getAccountTypes()
+            _isLoading.value = false
         }
     }
 
-    private suspend fun accountTypes() {
-        try {
+    private suspend fun getAccountTypes() {
+        tryApiRequest("account_types") {
             val res = piggyApi.accountTypes("Bearer ${tokenRepository.getToken()}")
             if (res.isSuccessful)
                 _accountTypes.value = res.body()!!
-        } catch (e: Exception) {
         }
     }
 

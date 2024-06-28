@@ -1,6 +1,5 @@
 package dev.ivanravasi.piggy.ui.operations
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -43,25 +42,21 @@ class AddTransferViewModel(
     }
 
     private suspend fun getAccounts() {
-        try {
+        tryApiRequest("transactions.accounts") {
             val res = piggyApi.accounts("Bearer ${tokenRepository.getToken()}")
             if (res.isSuccessful) {
                 _accounts.value = res.body()!!.data.filter { it.id != accountId }.sortedBy { it.name }
                 toAccount.value = accounts.value!!.first()
             }
-        } catch (e: Exception) {
-            Log.e("transactions.accounts", e.toString())
         }
     }
 
     // TODO: try to avoid this call by grabbing the object from the previous fragment
     private suspend fun getAccount() {
-        try {
+        tryApiRequest("transactions.account") {
             val response = piggyApi.account("Bearer ${tokenRepository.getToken()}", accountId)
             if (response.isSuccessful)
                 _fromAccount.value = response.body()!!.data
-        } catch (e: Exception) {
-            e.localizedMessage?.let { Log.i("message", it) }
         }
     }
 

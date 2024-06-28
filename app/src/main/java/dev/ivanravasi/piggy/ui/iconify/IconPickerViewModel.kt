@@ -1,5 +1,6 @@
 package dev.ivanravasi.piggy.ui.iconify
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,6 +18,9 @@ class IconPickerViewModel: ViewModel() {
     }
     val icons: LiveData<List<String>> = _icons
 
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> = _error
+
     fun queryIcons(query: String) {
         _isLoading.value = true
         viewModelScope.launch {
@@ -25,7 +29,8 @@ class IconPickerViewModel: ViewModel() {
                 val fetchedIcons = res.body()!!.icons
                 _icons.value = fetchedIcons
             } catch (e: Exception) {
-//                Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
+                _error.value = "An error has been encountered while searching for icons. Please contact the app developer."
+                Log.e("iconify", e.toString())
             }
         }
         _isLoading.value = false

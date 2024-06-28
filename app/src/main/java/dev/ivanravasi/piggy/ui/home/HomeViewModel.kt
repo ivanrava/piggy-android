@@ -1,6 +1,5 @@
 package dev.ivanravasi.piggy.ui.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -31,20 +30,16 @@ class HomeViewModel(
     }
 
     private suspend fun getAccounts() {
-        try {
+        tryApiRequest("home_accounts") {
             val response = piggyApi.accounts("Bearer ${tokenRepository.getToken()}")
             _accounts.value = response.body()!!.data.sortedBy { it.lastUpdate }
-        } catch (e: Exception) {
-            Log.e("accounts", e.toString())
         }
     }
 
     private suspend fun getFavoriteCharts() {
-        try {
+        tryApiRequest("home_favorite_charts") {
             val response = piggyApi.chartsFavorites("Bearer ${tokenRepository.getToken()}")
             _favoriteCharts.value = response.body()!!.data.filter { it.kind != "pie" }
-        } catch (e: Exception) {
-            Log.e("accounts", e.toString())
         }
     }
 }
