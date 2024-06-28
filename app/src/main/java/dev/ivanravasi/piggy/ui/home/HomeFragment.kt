@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
         val viewModel = HomeViewModel(tokenRepository)
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding.buttonLogout.setOnClickListener {
+        binding.btnLogout.setOnClickListener {
             revokeToken()
         }
 

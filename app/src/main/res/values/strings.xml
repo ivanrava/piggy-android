@@ -93,4 +93,5 @@
     <string name="subtitle_budget">Budget</string>
     <string name="subtitle_recent_accounts">Recent accounts</string>
     <string name="description_show_children_categories">Show children categories</string>
+    <string name="logout">Logout</string>
 </resources>
