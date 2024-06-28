@@ -90,7 +90,7 @@ fun Fragment.backWithSnackbar(viewRef: View, message: String) {
         viewRef,
         message,
         Snackbar.LENGTH_SHORT
-    ).setAnchorView(R.id.bottom_bar)
+    ).setAnchorView(R.id.nav_view)
         .show()
     findNavController().popBackStack()
 }
