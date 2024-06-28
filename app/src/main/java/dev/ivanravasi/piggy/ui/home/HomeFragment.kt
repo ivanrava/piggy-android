@@ -52,7 +52,6 @@ class HomeFragment : Fragment() {
 
         val chartAdapter = ChartAdapter()
         binding.listCharts.adapter = chartAdapter
-        binding.listCharts.isNestedScrollingEnabled = false
         viewModel.favoriteCharts.observe(viewLifecycleOwner) {
             chartAdapter.submitList(it)
         }
