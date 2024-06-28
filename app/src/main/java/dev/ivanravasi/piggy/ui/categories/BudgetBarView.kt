@@ -66,6 +66,7 @@ class BudgetBarView(
     }
 
     private fun safeDivision(over: Double, under: Double): Float {
+        alpha = 1f
         return if (under.toInt() == 0 && over > 0) {
             1f
         } else if (under.toInt() == 0 && over.toInt() == 0) {
