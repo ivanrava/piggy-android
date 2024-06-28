@@ -83,6 +83,9 @@ class MainActivity : AppCompatActivity() {
             if (currentId == R.id.navigation_operations) {
                 binding.fabTransaction.show()
                 binding.fabTransfer.show()
+            } else {
+                binding.fabTransaction.hide()
+                binding.fabTransfer.hide()
             }
         } else {
             binding.fabTransaction.hide()
