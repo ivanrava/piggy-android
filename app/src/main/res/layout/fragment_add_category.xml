@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="@dimen/fragment_padding"
+    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.google.android.material.textview.MaterialTextView
@@ -23,7 +24,7 @@
         app:layout_constraintTop_toBottomOf="@id/add_title"
         app:singleSelection="true"
         app:selectionRequired="true"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.button.MaterialButton
             style="?attr/materialButtonOutlinedStyle"
@@ -47,43 +48,59 @@
             />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/subtitle_parent"
+        android:text="Parent category (optional)"
+        style="@style/fragment_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/parent_banner"
+        android:fontFamily="@font/inter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="If you do not specify a parent category, then the new category will be treated as a new root category."/>
+
     <dev.ivanravasi.piggy.ui.common.CategoryPicker
         android:id="@+id/picker_category"
-        app:layout_constraintTop_toBottomOf="@id/toggle_category_type"
-        app:layout_constraintBottom_toTopOf="@id/input_name"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/picker_icon"
-        app:layout_constraintTop_toBottomOf="@id/picker_category"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        style="@style/text_input_layout"
-        app:endIconDrawable="@drawable/ic_text_24"
-        app:endIconMode="custom">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_name"
-            android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_name"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/picker_icon"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:hint="@string/name_hint"
-            android:inputType="text"
-            android:paddingBottom="@dimen/vseparation_fields" />
-    </com.google.android.material.textfield.TextInputLayout>
+            style="@style/text_input_layout"
+            app:endIconDrawable="@drawable/ic_text_24"
+            app:endIconMode="custom">
 
-    <dev.ivanravasi.piggy.ui.iconify.IconPickerView
-        android:id="@+id/picker_icon"
-        app:layout_constraintStart_toEndOf="@id/input_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/input_name"
-        android:src="@drawable/ic_icon_24"
-        app:layout_constraintDimensionRatio="w,1:1"
-        style="@style/icon_picker_baseline" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="@string/name_hint"
+                android:inputType="text"
+                android:paddingBottom="@dimen/vseparation_fields" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <dev.ivanravasi.piggy.ui.iconify.IconPickerView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/picker_icon"
+            app:layout_constraintStart_toEndOf="@id/input_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_icon_24"
+            app:layout_constraintDimensionRatio="w,1:1"
+            style="@style/icon_picker_baseline" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.materialswitch.MaterialSwitch
         android:id="@+id/switch_virtual"
@@ -289,6 +306,7 @@
         app:layout_constraintTop_toBottomOf="@id/layout_budget"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginVertical="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="true"
@@ -297,4 +315,4 @@
         android:textColor="@color/md_theme_onPrimary"
         style="@style/button_submit" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

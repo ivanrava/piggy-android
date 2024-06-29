@@ -59,6 +59,7 @@
         <item name="android:textSize">22sp</item>
         <item name="android:fontFamily">@font/inter_light</item>
         <item name="android:visibility">gone</item>
+        <item name="android:alpha">0.8</item>
     </style>
 
     <style name="icon_picker_baseline">
