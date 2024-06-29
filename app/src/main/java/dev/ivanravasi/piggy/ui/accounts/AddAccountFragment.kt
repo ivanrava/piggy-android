@@ -68,7 +68,7 @@ class AddAccountFragment : Fragment() {
         }
 
         val accountStr = arguments?.getString("account")
-        accountStr.let {
+        accountStr?.let {
             val account = GsonBuilder()
                 .registerTypeAdapter(CategoryBudget::class.java, BudgetDeserializer())
                 .create()

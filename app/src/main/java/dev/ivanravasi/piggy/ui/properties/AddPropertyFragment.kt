@@ -40,7 +40,7 @@ class AddPropertyFragment : Fragment() {
         }
 
         val propertyStr = arguments?.getString("property")
-        propertyStr.let {
+        propertyStr?.let {
             val property = GsonBuilder().create().fromJson(it, Property::class.java)
 
             binding.editName.setText(property.name)

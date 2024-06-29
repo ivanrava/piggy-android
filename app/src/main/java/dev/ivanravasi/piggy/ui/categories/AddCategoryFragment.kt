@@ -113,7 +113,7 @@ class AddCategoryFragment : Fragment() {
 
         // Set initial values from editable (if present)
         val categoryStr = arguments?.getString("category")
-        categoryStr.let {
+        categoryStr?.let {
             val category = GsonBuilder()
                 .registerTypeAdapter(CategoryBudget::class.java, BudgetDeserializer())
                 .create().fromJson(it, Category::class.java)

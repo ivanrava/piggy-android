@@ -68,7 +68,7 @@ class AddTransferFragment : Fragment() {
         binding.editDate.setToday()
 
         val transferStr = arguments?.getString("transfer")
-        transferStr.let {
+        transferStr?.let {
             val transfer = GsonBuilder().create().fromJson(it, Transfer::class.java)
             viewModel.toAccount.value = transfer.from
 

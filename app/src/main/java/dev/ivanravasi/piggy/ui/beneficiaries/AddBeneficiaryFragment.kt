@@ -53,7 +53,7 @@ class AddBeneficiaryFragment : Fragment() {
 
         // Set initial values from editable (if present)
         val beneficiaryStr = arguments?.getString("beneficiary")
-        beneficiaryStr.let {
+        beneficiaryStr?.let {
             val beneficiary = GsonBuilder().create().fromJson(it, Beneficiary::class.java)
 
             binding.beneficiaryType.check(when (beneficiary.type()) {
