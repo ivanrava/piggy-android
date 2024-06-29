@@ -1,46 +1,26 @@
 package dev.ivanravasi.piggy.ui.iconify
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import dev.ivanravasi.piggy.databinding.BottomSheetIconPickerBinding
-import dev.ivanravasi.piggy.ui.afterTextChangedDebounced
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import dev.ivanravasi.piggy.ui.common.SearchPickerBottomSheet
 
-class IconPickerBottomSheet(val color: Int, val onIconClickListener: OnIconClickListener) : BottomSheetDialogFragment() {
+class IconPickerBottomSheet(
+    val color: Int,
+    val onIconClickListener: OnIconClickListener
+) : SearchPickerBottomSheet<String, IconAdapter.IconifyIconViewHolder>() {
     private val SPAN_COUNT = 6
+    private lateinit var viewModel: IconPickerViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val binding = BottomSheetIconPickerBinding.inflate(inflater, container, false)
-        val viewModel = IconPickerViewModel()
+    override fun createHook() {
+        viewModel = IconPickerViewModel()
 
-        binding.loadingProgress.hide()
-
-        val manager = GridLayoutManager(activity, SPAN_COUNT)
-        binding.gridIcons.layoutManager = manager
-        val adapter = IconAdapter(color, object : OnIconClickListener {
-            override fun onIconClick(icon: String) {
-                onIconClickListener.onIconClick(icon)
-                dismiss()
-            }
-        })
-        binding.gridIcons.adapter = adapter
-
-        binding.editSearch.afterTextChangedDebounced {
-            viewModel.queryIcons(it)
-        }
         viewModel.error.observe(viewLifecycleOwner) {
             Toast.makeText(context, it, Toast.LENGTH_LONG).show()
         }
         viewModel.icons.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+            submitListOrNoData(it)
         }
         viewModel.isLoading.observe(viewLifecycleOwner) {
             if (it)
@@ -48,7 +28,23 @@ class IconPickerBottomSheet(val color: Int, val onIconClickListener: OnIconClick
             else
                 binding.loadingProgress.hide()
         }
+    }
 
-        return binding.root
+    override fun buildAdapter(): ListAdapter<String, IconAdapter.IconifyIconViewHolder> {
+        return IconAdapter(color, object : OnIconClickListener {
+            override fun onIconClick(icon: String) {
+                onIconClickListener.onIconClick(icon)
+                dismiss()
+            }
+        })
+    }
+
+    override fun buildLayoutManager(): RecyclerView.LayoutManager {
+        return GridLayoutManager(activity, SPAN_COUNT)
+    }
+
+    override fun performFiltering(term: String): List<String> {
+        viewModel.queryIcons(term)
+        return viewModel.icons.value!!
     }
 }

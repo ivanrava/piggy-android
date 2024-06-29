@@ -1,45 +1,35 @@
 package dev.ivanravasi.piggy.ui.operations
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
-import dev.ivanravasi.piggy.databinding.BottomSheetIconPickerBinding
 import dev.ivanravasi.piggy.ui.accounts.AccountAdapter
 import dev.ivanravasi.piggy.ui.accounts.OnAccountClickListener
-import dev.ivanravasi.piggy.ui.afterTextChangedDebounced
+import dev.ivanravasi.piggy.ui.common.SearchPickerBottomSheet
 
 class AccountBottomSheet(
     val accounts: List<Account>,
     val onAccountClickListener: OnAccountClickListener
-) : BottomSheetDialogFragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val binding = BottomSheetIconPickerBinding.inflate(inflater, container, false)
+) : SearchPickerBottomSheet<Account, AccountAdapter.AccountViewHolder>() {
+    override fun createHook() {
+        submitListOrNoData(accounts)
+    }
 
-        binding.loadingProgress.hide()
-
-        binding.gridIcons.layoutManager = LinearLayoutManager(context)
-        val adapter = AccountAdapter(object : OnAccountClickListener {
+    override fun buildAdapter(): ListAdapter<Account, AccountAdapter.AccountViewHolder> {
+        return AccountAdapter(object : OnAccountClickListener {
             override fun onAccountClick(account: Account) {
                 onAccountClickListener.onAccountClick(account)
                 dismiss()
             }
         })
-        binding.gridIcons.adapter = adapter
+    }
 
-        adapter.submitList(accounts)
+    override fun buildLayoutManager(): RecyclerView.LayoutManager {
+        return LinearLayoutManager(context)
+    }
 
-        binding.editSearch.afterTextChangedDebounced {
-            adapter.submitList(accounts.filter { account -> account.name.lowercase().contains(it.lowercase()) })
-        }
-
-        return binding.root
+    override fun performFiltering(term: String): List<Account> {
+        return accounts.filter { account -> account.name.lowercase().contains(term.lowercase()) }
     }
 }

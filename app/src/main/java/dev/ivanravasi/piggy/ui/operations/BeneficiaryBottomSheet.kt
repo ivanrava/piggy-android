@@ -1,48 +1,39 @@
 package dev.ivanravasi.piggy.ui.operations
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
-import dev.ivanravasi.piggy.databinding.BottomSheetIconPickerBinding
-import dev.ivanravasi.piggy.ui.afterTextChangedDebounced
 import dev.ivanravasi.piggy.ui.beneficiaries.BeneficiaryAdapter
 import dev.ivanravasi.piggy.ui.beneficiaries.OnBeneficiaryClickListener
+import dev.ivanravasi.piggy.ui.common.SearchPickerBottomSheet
 
 class BeneficiaryBottomSheet(
     val beneficiaries: List<Beneficiary>,
     val onBeneficiaryClickListener: OnBeneficiaryClickListener
-) : BottomSheetDialogFragment() {
+) : SearchPickerBottomSheet<Beneficiary, BeneficiaryAdapter.BeneficiaryViewHolder>() {
     private val SPAN_COUNT = 6
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val binding = BottomSheetIconPickerBinding.inflate(inflater, container, false)
+    override fun createHook() {
+        submitListOrNoData(beneficiaries)
+    }
 
-        binding.loadingProgress.hide()
-
-        val manager = GridLayoutManager(activity, SPAN_COUNT)
-        binding.gridIcons.layoutManager = manager
-        val adapter = BeneficiaryAdapter(object : OnBeneficiaryClickListener {
+    override fun buildAdapter(): ListAdapter<Beneficiary, BeneficiaryAdapter.BeneficiaryViewHolder> {
+        return BeneficiaryAdapter(object : OnBeneficiaryClickListener {
             override fun onBeneficiaryClick(beneficiary: Beneficiary) {
                 onBeneficiaryClickListener.onBeneficiaryClick(beneficiary)
                 dismiss()
             }
         })
-        binding.gridIcons.adapter = adapter
+    }
 
-        adapter.submitList(beneficiaries)
+    override fun buildLayoutManager(): RecyclerView.LayoutManager {
+        return GridLayoutManager(activity, SPAN_COUNT)
+    }
 
-        binding.editSearch.afterTextChangedDebounced {
-            adapter.submitList(beneficiaries.filter { beneficiary -> beneficiary.name.lowercase().contains(it.lowercase()) })
+    override fun performFiltering(term: String): List<Beneficiary> {
+        return beneficiaries.filter { beneficiary ->
+            beneficiary.name.lowercase().contains(term.lowercase())
         }
-
-        return binding.root
     }
 }
