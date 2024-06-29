@@ -21,6 +21,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransactionRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransferRequest
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
@@ -135,4 +136,8 @@ interface PiggyApi {
         @Query("interval") interval: String,
         @Query("stat") stat: String
     ): Response<List<Stat>>
+
+    @Headers("Accept: application/json")
+    @DELETE("/api/{resources}/{id}")
+    suspend fun delete(@Header("Authorization") authHeader: String, @Path("id") id: Long, @Path("resources") resources: String)
 }

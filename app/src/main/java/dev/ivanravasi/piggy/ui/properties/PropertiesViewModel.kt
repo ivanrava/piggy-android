@@ -12,9 +12,7 @@ class PropertiesViewModel(
     init {
         viewModelScope.launch {
             hydrateApiClient()
-            _isLoading.value = true
-            getProperties()
-            _isLoading.value = false
+            refreshContents()
         }
     }
 
@@ -23,5 +21,11 @@ class PropertiesViewModel(
             val response = piggyApi.properties("Bearer ${tokenRepository.getToken()}")
             _objList.value = response.body()!!.data
         }
+    }
+
+    override suspend fun refreshContents() {
+        _isLoading.value = true
+        getProperties()
+        _isLoading.value = false
     }
 }

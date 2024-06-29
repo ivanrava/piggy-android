@@ -21,9 +21,7 @@ class OperationsViewModel(
     init {
         viewModelScope.launch {
             hydrateApiClient()
-            _isLoading.value = true
-            getOperations()
-            _isLoading.value = false
+            refreshContents()
         }
     }
 
@@ -35,5 +33,11 @@ class OperationsViewModel(
                     .sortedByDescending { it.rawDate() }
             _account.value = response.body()!!.data
         }
+    }
+
+    override suspend fun refreshContents() {
+        _isLoading.value = true
+        getOperations()
+        _isLoading.value = false
     }
 }

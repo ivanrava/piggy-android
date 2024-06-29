@@ -12,9 +12,7 @@ class AccountsViewModel(
     init {
         viewModelScope.launch {
             hydrateApiClient()
-            _isLoading.value = true
-            getAccounts()
-            _isLoading.value = false
+            refreshContents()
         }
     }
 
@@ -23,5 +21,11 @@ class AccountsViewModel(
             val response = piggyApi.accounts("Bearer ${tokenRepository.getToken()}")
             _objList.value = response.body()!!.data.sortedBy { it.name }
         }
+    }
+
+    override suspend fun refreshContents() {
+        _isLoading.value = true
+        getAccounts()
+        _isLoading.value = false
     }
 }

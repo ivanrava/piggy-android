@@ -13,9 +13,7 @@ class BeneficiariesViewModel(
     init {
         viewModelScope.launch {
             hydrateApiClient()
-            _isLoading.value = true
-            getBeneficiaries()
-            _isLoading.value = false
+            refreshContents()
         }
     }
 
@@ -24,5 +22,11 @@ class BeneficiariesViewModel(
             val response = piggyApi.beneficiaries("Bearer ${tokenRepository.getToken()}")
             _objList.value = response.body()!!.data
         }
+    }
+
+    override suspend fun refreshContents() {
+        _isLoading.value = true
+        getBeneficiaries()
+        _isLoading.value = false
     }
 }

@@ -12,10 +12,7 @@ class CategoriesViewModel(
     init {
         viewModelScope.launch {
             hydrateApiClient()
-            _isLoading.value = true
-            getCategoryTrees()
-            getBudgets()
-            _isLoading.value = false
+            refreshContents()
         }
     }
 
@@ -42,5 +39,12 @@ class CategoriesViewModel(
                 }
             }
         }
+    }
+
+    override suspend fun refreshContents() {
+        _isLoading.value = true
+        getCategoryTrees()
+        getBudgets()
+        _isLoading.value = false
     }
 }
