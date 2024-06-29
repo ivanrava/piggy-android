@@ -9,13 +9,19 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 abstract class StoreApiViewModel<Entity, Request, Errors>(
-    tokenRepository: TokenRepository,
-    private val emptyErrors: Errors,
+    tokenRepository: TokenRepository
 ): ApiViewModel(tokenRepository) {
     protected val _isLoading = MutableLiveData<Boolean>().apply { value = true }
     val isLoading: LiveData<Boolean> = _isLoading
-    protected val _errors = MutableLiveData<Errors>().apply { value = emptyErrors }
+    protected val _errors = MutableLiveData<Errors>().apply { value = emptyErrorsProvider() }
     val errors: LiveData<Errors> = _errors
+
+    private fun validateWrapper(request: Request): Boolean {
+        _errors.value = emptyErrorsProvider()
+        return validate(request)
+    }
+
+    abstract fun emptyErrorsProvider(): Errors
 
     abstract fun validate(request: Request): Boolean
 
@@ -24,7 +30,7 @@ abstract class StoreApiViewModel<Entity, Request, Errors>(
     abstract suspend fun request(request: Request): Response<ObjectResponse<Entity>>
 
     fun submit(request: Request, onSuccess: () -> Unit) {
-        if (!validate(request))
+        if (!validateWrapper(request))
             return
         viewModelScope.launch {
             _isLoading.value = true

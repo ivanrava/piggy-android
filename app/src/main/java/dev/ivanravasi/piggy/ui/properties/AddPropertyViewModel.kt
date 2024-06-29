@@ -15,8 +15,12 @@ import retrofit2.Response
 class AddPropertyViewModel(
     private val tokenRepository: TokenRepository
 ) : StoreApiViewModel<Property, PropertyRequest, PropertyValidationError.Errors>(
-    tokenRepository, PropertyValidationError.Errors()
+    tokenRepository
 ) {
+    override fun emptyErrorsProvider(): PropertyValidationError.Errors {
+        return PropertyValidationError.Errors()
+    }
+
     val icon = MutableLiveData<String?>().apply { value = null }
 
     init {

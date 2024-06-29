@@ -16,9 +16,12 @@ import retrofit2.Response
 class AddBeneficiaryViewModel(
     private val tokenRepository: TokenRepository
 ) : StoreApiViewModel<Beneficiary, BeneficiaryRequest, BeneficiaryValidationError.Errors>(
-    tokenRepository,
-    BeneficiaryValidationError.Errors()
+    tokenRepository
 ) {
+    override fun emptyErrorsProvider(): BeneficiaryValidationError.Errors {
+        return BeneficiaryValidationError.Errors()
+    }
+
     init {
         viewModelScope.launch {
             hydrateApiClient()

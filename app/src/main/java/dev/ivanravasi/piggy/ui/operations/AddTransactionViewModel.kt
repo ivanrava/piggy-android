@@ -22,9 +22,12 @@ class AddTransactionViewModel(
     private val tokenRepository: TokenRepository,
     private val accountId: Long
 ) : StoreApiViewModel<Transaction, TransactionRequest, TransactionValidationError.Errors>(
-    tokenRepository,
-    TransactionValidationError.Errors()
+    tokenRepository
 ) {
+    override fun emptyErrorsProvider(): TransactionValidationError.Errors {
+        return TransactionValidationError.Errors()
+    }
+
     private val _beneficiaries = MutableLiveData<List<Beneficiary>>().apply { value = emptyList() }
     val beneficiaries: LiveData<List<Beneficiary>> = _beneficiaries
     private val _categories = MutableLiveData<List<Category>>().apply { value = emptyList() }

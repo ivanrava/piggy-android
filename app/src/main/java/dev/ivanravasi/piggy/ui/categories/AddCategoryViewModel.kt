@@ -18,9 +18,12 @@ import retrofit2.Response
 class AddCategoryViewModel(
     private val tokenRepository: TokenRepository
 ) : StoreApiViewModel<Category, CategoryRequest, CategoryValidationError.Errors>(
-    tokenRepository,
-    CategoryValidationError.Errors()
+    tokenRepository
 ) {
+    override fun emptyErrorsProvider(): CategoryValidationError.Errors {
+        return CategoryValidationError.Errors()
+    }
+
     val icon = MutableLiveData<String?>().apply { value = null }
     private val _rootCategories = MutableLiveData<List<Category>>().apply { value = emptyList() }
     val rootCategories: LiveData<List<Category>> = _rootCategories

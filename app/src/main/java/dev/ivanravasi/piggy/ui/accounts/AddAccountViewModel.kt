@@ -21,9 +21,13 @@ class AddAccountViewModel(
     private val tokenRepository: TokenRepository,
     private val startingColor: Int
 ) : StoreApiViewModel<Account, AccountRequest, AccountValidationError.Errors>(
-    tokenRepository,
-    AccountValidationError.Errors()
+    tokenRepository
 ) {
+    override fun emptyErrorsProvider(): AccountValidationError.Errors {
+        return AccountValidationError.Errors()
+    }
+
+
     val icon = MutableLiveData<String?>().apply { value = null }
     val color = MutableLiveData<ColorEnvelope>().apply { value = ColorEnvelope(startingColor) }
     private val _accountTypes = MutableLiveData<List<AccountType>>().apply { value = emptyList() }

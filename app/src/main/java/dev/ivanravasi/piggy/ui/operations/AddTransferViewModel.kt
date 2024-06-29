@@ -20,9 +20,12 @@ class AddTransferViewModel(
     private val tokenRepository: TokenRepository,
     private val accountId: Long
 ) : StoreApiViewModel<Transfer, TransferRequest, TransferValidationError.Errors>(
-    tokenRepository,
-    TransferValidationError.Errors()
+    tokenRepository
 ) {
+    override fun emptyErrorsProvider(): TransferValidationError.Errors {
+        return TransferValidationError.Errors()
+    }
+
     private val _accounts = MutableLiveData<List<Account>>().apply { value = emptyList() }
     val accounts: LiveData<List<Account>> = _accounts
 
