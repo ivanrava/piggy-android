@@ -81,7 +81,14 @@ class AddTransferViewModel(
         return Gson().fromJson(errors, TransferValidationError::class.java).errors
     }
 
-    override suspend fun request(request: TransferRequest): Response<ObjectResponse<Transfer>> {
+    override suspend fun updateRequest(
+        request: TransferRequest,
+        resourceId: Long
+    ): Response<ObjectResponse<Transfer>> {
+        return piggyApi.transferUpdate("Bearer ${tokenRepository.getToken()}", request, resourceId)
+    }
+
+    override suspend fun storeRequest(request: TransferRequest): Response<ObjectResponse<Transfer>> {
         return piggyApi.transferAdd("Bearer ${tokenRepository.getToken()}", request)
     }
 }

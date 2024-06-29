@@ -97,7 +97,14 @@ class AddCategoryViewModel(
         return Gson().fromJson(errors, CategoryValidationError::class.java).errors
     }
 
-    override suspend fun request(request: CategoryRequest): Response<ObjectResponse<Category>> {
+    override suspend fun updateRequest(
+        request: CategoryRequest,
+        resourceId: Long
+    ): Response<ObjectResponse<Category>> {
+        return piggyApi.categoryUpdate("Bearer ${tokenRepository.getToken()}", request, resourceId)
+    }
+
+    override suspend fun storeRequest(request: CategoryRequest): Response<ObjectResponse<Category>> {
         return piggyApi.categoryAdd("Bearer ${tokenRepository.getToken()}", request)
     }
 }

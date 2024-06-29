@@ -113,7 +113,14 @@ class AddTransactionViewModel(
         return Gson().fromJson(errors, TransactionValidationError::class.java).errors
     }
 
-    override suspend fun request(request: TransactionRequest): Response<ObjectResponse<Transaction>> {
+    override suspend fun updateRequest(
+        request: TransactionRequest,
+        resourceId: Long
+    ): Response<ObjectResponse<Transaction>> {
+        return piggyApi.transactionUpdate("Bearer ${tokenRepository.getToken()}", request, resourceId)
+    }
+
+    override suspend fun storeRequest(request: TransactionRequest): Response<ObjectResponse<Transaction>> {
         return piggyApi.transactionAdd("Bearer ${tokenRepository.getToken()}", request)
     }
 }

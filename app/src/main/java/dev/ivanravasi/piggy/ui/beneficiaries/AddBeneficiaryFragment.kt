@@ -20,6 +20,7 @@ import dev.ivanravasi.piggy.ui.backWithSnackbar
 
 
 class AddBeneficiaryFragment : Fragment() {
+    private var beneficiaryToUpdate: Beneficiary? = null
     private lateinit var binding: FragmentAddBeneficiaryBinding
 
     override fun onCreateView(
@@ -54,17 +55,17 @@ class AddBeneficiaryFragment : Fragment() {
         // Set initial values from editable (if present)
         val beneficiaryStr = arguments?.getString("beneficiary")
         beneficiaryStr?.let {
-            val beneficiary = GsonBuilder().create().fromJson(it, Beneficiary::class.java)
+            beneficiaryToUpdate = GsonBuilder().create().fromJson(it, Beneficiary::class.java)
 
-            binding.beneficiaryType.check(when (beneficiary.type()) {
+            binding.beneficiaryType.check(when (beneficiaryToUpdate!!.type()) {
                 BeneficiaryType.PEOPLE -> R.id.people
                 BeneficiaryType.COMPANY -> R.id.companies
                 BeneficiaryType.GENERIC -> R.id.generic
             })
 
-            binding.editName.setText(beneficiary.name)
-            if (beneficiary.type() == BeneficiaryType.COMPANY && !beneficiary.isWithoutRemoteImg()) {
-                binding.editDomain.setText(beneficiary.img)
+            binding.editName.setText(beneficiaryToUpdate!!.name)
+            if (beneficiaryToUpdate!!.type() == BeneficiaryType.COMPANY && !beneficiaryToUpdate!!.isWithoutRemoteImg()) {
+                binding.editDomain.setText(beneficiaryToUpdate!!.img)
             }
 
             binding.buttonAdd.text = requireContext().getString(R.string.button_update_beneficiary)
@@ -81,8 +82,14 @@ class AddBeneficiaryFragment : Fragment() {
                     else -> null
                 }
             )
-            viewModel.submit(request) {
-                backWithSnackbar(binding.buttonAdd, "Beneficiary added successfully")
+            if (beneficiaryToUpdate == null) {
+                viewModel.submit(request) {
+                    backWithSnackbar(binding.buttonAdd, "Beneficiary added successfully")
+                }
+            } else {
+                viewModel.update(request, beneficiaryToUpdate!!.id) {
+                    backWithSnackbar(binding.buttonAdd, "Beneficiary ${request.name} updated successfully")
+                }
             }
         }
 

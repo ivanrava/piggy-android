@@ -72,7 +72,14 @@ class AddAccountViewModel(
         return Gson().fromJson(errors, AccountValidationError::class.java).errors
     }
 
-    override suspend fun request(request: AccountRequest): Response<ObjectResponse<Account>> {
+    override suspend fun updateRequest(
+        request: AccountRequest,
+        resourceId: Long
+    ): Response<ObjectResponse<Account>> {
+        return piggyApi.accountUpdate("Bearer ${tokenRepository.getToken()}", request, resourceId)
+    }
+
+    override suspend fun storeRequest(request: AccountRequest): Response<ObjectResponse<Account>> {
         return piggyApi.accountAdd("Bearer ${tokenRepository.getToken()}", request)
     }
 }

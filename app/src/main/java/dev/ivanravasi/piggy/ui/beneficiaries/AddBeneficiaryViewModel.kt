@@ -42,7 +42,14 @@ class AddBeneficiaryViewModel(
         return Gson().fromJson(errors, BeneficiaryValidationError::class.java).errors
     }
 
-    override suspend fun request(request: BeneficiaryRequest): Response<ObjectResponse<Beneficiary>> {
+    override suspend fun updateRequest(
+        request: BeneficiaryRequest,
+        resourceId: Long
+    ): Response<ObjectResponse<Beneficiary>> {
+        return piggyApi.beneficiaryUpdate("Bearer ${tokenRepository.getToken()}", request, resourceId)
+    }
+
+    override suspend fun storeRequest(request: BeneficiaryRequest): Response<ObjectResponse<Beneficiary>> {
         return piggyApi.beneficiaryAdd("Bearer ${tokenRepository.getToken()}", request)
     }
 }

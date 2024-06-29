@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.GsonBuilder
@@ -20,6 +19,7 @@ import dev.ivanravasi.piggy.ui.setAccount
 
 
 class AddTransferFragment : Fragment() {
+    private var transferToUpdate: Transfer? = null
     private lateinit var binding: FragmentAddTransferBinding
     private lateinit var viewModel: AddTransferViewModel
 
@@ -75,12 +75,12 @@ class AddTransferFragment : Fragment() {
 
         val transferStr = arguments?.getString("transfer")
         transferStr?.let {
-            val transfer = GsonBuilder().create().fromJson(it, Transfer::class.java)
-            viewModel.toAccount.value = transfer.from
+            transferToUpdate = GsonBuilder().create().fromJson(it, Transfer::class.java)
+            viewModel.toAccount.value = transferToUpdate!!.from
 
-            binding.editDate.setText(transfer.date)
-            binding.editAmount.setText(transfer.amount)
-            binding.editNotes.setText(transfer.notes)
+            binding.editDate.setText(transferToUpdate!!.date)
+            binding.editAmount.setText(transferToUpdate!!.amount)
+            binding.editNotes.setText(transferToUpdate!!.notes)
 
             binding.buttonAdd.text = requireContext().getString(R.string.update_transfer)
             binding.addTitle.text = requireContext().getString(R.string.update_transfer)
@@ -95,8 +95,14 @@ class AddTransferFragment : Fragment() {
                 binding.editNotes.text.toString(),
                 binding.switchChecked.isChecked,
             )
-            viewModel.submit(request) {
-                backWithSnackbar(binding.buttonAdd, "Transfer added successfully")
+            if (transferToUpdate == null) {
+                viewModel.submit(request) {
+                    backWithSnackbar(binding.buttonAdd, "Transfer added successfully")
+                }
+            } else {
+                viewModel.update(request, transferToUpdate!!.id) {
+                    backWithSnackbar(binding.buttonAdd, "Transfer updated successfully")
+                }
             }
         }
 

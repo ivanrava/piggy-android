@@ -24,6 +24,8 @@ import dev.ivanravasi.piggy.ui.backWithSnackbar
 
 
 class AddAccountFragment : Fragment() {
+    private var accountToUpdate: Account? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,7 +58,6 @@ class AddAccountFragment : Fragment() {
             (binding.editAccountType as? MaterialAutoCompleteTextView)?.setSimpleItems(it.map { it.type }.toTypedArray())
         }
 
-
         binding.pickerColor.setOnClickListener {
             ColorPickerDialog().show(requireContext()) {
                 viewModel.color.value = it
@@ -69,19 +70,19 @@ class AddAccountFragment : Fragment() {
 
         val accountStr = arguments?.getString("account")
         accountStr?.let {
-            val account = GsonBuilder()
+            accountToUpdate = GsonBuilder()
                 .registerTypeAdapter(CategoryBudget::class.java, BudgetDeserializer())
                 .create()
                 .fromJson(it, Account::class.java)
 
-            binding.editName.setText(account.name)
-            binding.editAccountType.setText(account.type)
-            binding.editOpening.setText(account.opening)
-            binding.editClosing.setText(account.closing)
-            binding.editInitialBalance.setText(account.initialBalance)
-            binding.editDescription.setText(account.description)
-            binding.pickerIcon.loadIconify(account.icon)
-            viewModel.color.value = ColorEnvelope(Color.parseColor(account.color))
+            binding.editName.setText(accountToUpdate!!.name)
+            binding.editAccountType.setText(accountToUpdate!!.type)
+            binding.editOpening.setText(accountToUpdate!!.opening)
+            binding.editClosing.setText(accountToUpdate!!.closing)
+            binding.editInitialBalance.setText(accountToUpdate!!.initialBalance)
+            binding.editDescription.setText(accountToUpdate!!.description)
+            binding.pickerIcon.loadIconify(accountToUpdate!!.icon)
+            viewModel.color.value = ColorEnvelope(Color.parseColor(accountToUpdate!!.color))
 
             binding.buttonAdd.text = requireContext().getString(R.string.update_account)
             binding.addTitle.text = requireContext().getString(R.string.update_account)
@@ -103,8 +104,14 @@ class AddAccountFragment : Fragment() {
                 binding.editDescription.text.toString(),
                 viewModel.accountTypes.value?.find { it.type == binding.editAccountType.text.toString() }?.id!!
             )
-            viewModel.submit(request) {
-                backWithSnackbar(binding.buttonAdd, "Account added successfully")
+            if (accountToUpdate == null) {
+                viewModel.submit(request) {
+                    backWithSnackbar(binding.buttonAdd, "Account added successfully")
+                }
+            } else {
+                viewModel.update(request, accountToUpdate!!.id) {
+                    backWithSnackbar(binding.buttonAdd, "Account updated ${request.name} successfully")
+                }
             }
         }
 

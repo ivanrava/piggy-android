@@ -42,7 +42,11 @@ class AddPropertyViewModel(
         return Gson().fromJson(errors, PropertyValidationError::class.java).errors
     }
 
-    override suspend fun request(request: PropertyRequest): Response<ObjectResponse<Property>> {
+    override suspend fun updateRequest(request: PropertyRequest, resourceId: Long): Response<ObjectResponse<Property>> {
+        return piggyApi.propertyUpdate("Bearer ${tokenRepository.getToken()}", request, resourceId)
+    }
+
+    override suspend fun storeRequest(request: PropertyRequest): Response<ObjectResponse<Property>> {
         return piggyApi.propertyAdd("Bearer ${tokenRepository.getToken()}", request)
     }
 }

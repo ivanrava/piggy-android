@@ -27,6 +27,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -48,12 +49,20 @@ interface PiggyApi {
     suspend fun propertyAdd(@Header("Authorization") authHeader: String, @Body propertyBody: PropertyRequest): Response<ObjectResponse<Property>>
 
     @Headers("Accept: application/json")
+    @PUT("/api/properties/{id}")
+    suspend fun propertyUpdate(@Header("Authorization") authHeader: String, @Body propertyBody: PropertyRequest, @Path("id") propertyId: Long): Response<ObjectResponse<Property>>
+
+    @Headers("Accept: application/json")
     @GET("/api/beneficiaries")
     suspend fun beneficiaries(@Header("Authorization") authHeader: String): Response<ListResponse<Beneficiary>>
 
     @Headers("Accept: application/json")
     @POST("/api/beneficiaries")
     suspend fun beneficiaryAdd(@Header("Authorization") authHeader: String, @Body beneficiaryBody: BeneficiaryRequest): Response<ObjectResponse<Beneficiary>>
+
+    @Headers("Accept: application/json")
+    @PUT("/api/beneficiaries/{id}")
+    suspend fun beneficiaryUpdate(@Header("Authorization") authHeader: String, @Body beneficiaryBody: BeneficiaryRequest, @Path("id") beneficiaryId: Long): Response<ObjectResponse<Beneficiary>>
 
     @Headers("Accept: application/json")
     @GET("/api/categories/root")
@@ -68,6 +77,10 @@ interface PiggyApi {
     suspend fun categoryAdd(@Header("Authorization") authHeader: String, @Body categoryBody: CategoryRequest): Response<ObjectResponse<Category>>
 
     @Headers("Accept: application/json")
+    @PUT("/api/categories/{id}")
+    suspend fun categoryUpdate(@Header("Authorization") authHeader: String, @Body categoryBody: CategoryRequest, @Path("id") categoryId: Long): Response<ObjectResponse<Category>>
+
+    @Headers("Accept: application/json")
     @GET("/api/account_types")
     suspend fun accountTypes(@Header("Authorization") authHeader: String): Response<List<AccountType>>
 
@@ -78,6 +91,10 @@ interface PiggyApi {
     @Headers("Accept: application/json")
     @POST("/api/accounts")
     suspend fun accountAdd(@Header("Authorization") authHeader: String, @Body accountBody: AccountRequest): Response<ObjectResponse<Account>>
+
+    @Headers("Accept: application/json")
+    @PUT("/api/accounts/{id}")
+    suspend fun accountUpdate(@Header("Authorization") authHeader: String, @Body accountBody: AccountRequest, @Path("id") accountId: Long): Response<ObjectResponse<Account>>
 
     @Headers("Accept: application/json")
     @GET("/api/accounts/{id}")
@@ -96,8 +113,16 @@ interface PiggyApi {
     suspend fun transactionAdd(@Header("Authorization") authHeader: String, @Body transactionBody: TransactionRequest): Response<ObjectResponse<Transaction>>
 
     @Headers("Accept: application/json")
+    @PUT("/api/transactions/{id}")
+    suspend fun transactionUpdate(@Header("Authorization") authHeader: String, @Body transactionBody: TransactionRequest, @Path("id") transactionId: Long): Response<ObjectResponse<Transaction>>
+
+    @Headers("Accept: application/json")
     @POST("/api/transfers")
     suspend fun transferAdd(@Header("Authorization") authHeader: String, @Body transferBody: TransferRequest): Response<ObjectResponse<Transfer>>
+
+    @Headers("Accept: application/json")
+    @PUT("/api/transfers/{id}")
+    suspend fun transferUpdate(@Header("Authorization") authHeader: String, @Body transferBody: TransferRequest, @Path("id") transferId: Long): Response<ObjectResponse<Transfer>>
 
     @Headers("Accept: application/json")
     @POST("/api/properties/{id}/variations")

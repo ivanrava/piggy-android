@@ -22,6 +22,7 @@ import dev.ivanravasi.piggy.ui.backWithSnackbar
 
 
 class AddCategoryFragment : Fragment() {
+    private var categoryToUpdate: Category? = null
     private lateinit var binding: FragmentAddCategoryBinding
     private lateinit var viewModel: AddCategoryViewModel
 
@@ -109,22 +110,22 @@ class AddCategoryFragment : Fragment() {
         // Set initial values from editable (if present)
         val categoryStr = arguments?.getString("category")
         categoryStr?.let {
-            val category = GsonBuilder()
+            categoryToUpdate = GsonBuilder()
                 .registerTypeAdapter(CategoryBudget::class.java, BudgetDeserializer())
                 .create().fromJson(it, Category::class.java)
 
             binding.addTitle.text = requireContext().getString(R.string.button_update_category)
             binding.buttonAdd.text = requireContext().getString(R.string.button_update_category)
-            binding.editName.setText(category.name)
-            binding.pickerIcon.loadIconify(category.icon)
-            if (category.parent != null) {
-                binding.pickerCategory.setCategory(category.parent!!)
-                binding.switchVirtual.isChecked = category.virtual
+            binding.editName.setText(categoryToUpdate!!.name)
+            binding.pickerIcon.loadIconify(categoryToUpdate!!.icon)
+            if (categoryToUpdate!!.parent != null) {
+                binding.pickerCategory.setCategory(categoryToUpdate!!.parent!!)
+                binding.switchVirtual.isChecked = categoryToUpdate!!.virtual
                 binding.chipMonthlyFixed.visibility = View.GONE
-                when (category.budget!!) {
+                when (categoryToUpdate!!.budget!!) {
                     is CategoryBudget.Monthly -> {
                         binding.chipsBudgetType.check(R.id.chip_monthly_custom)
-                        val budget: Budget = (category.budget as CategoryBudget.Monthly).value
+                        val budget: Budget = (categoryToUpdate!!.budget as CategoryBudget.Monthly).value
                         binding.editJan.setText(budget.jan)
                         binding.editFeb.setText(budget.feb)
                         binding.editMar.setText(budget.mar)
@@ -140,11 +141,11 @@ class AddCategoryFragment : Fragment() {
                     }
                     is CategoryBudget.Yearly -> {
                         binding.chipsBudgetType.check(R.id.chip_yearly_fixed)
-                        binding.editBudgetOverall.setText(category.budget!!.value.toString())
+                        binding.editBudgetOverall.setText(categoryToUpdate!!.budget!!.value.toString())
                     }
                 }
             } else {
-                binding.toggleCategoryType.check(if (category.type() == CategoryType.IN) R.id.button_income else R.id.button_outcome)
+                binding.toggleCategoryType.check(if (categoryToUpdate!!.type() == CategoryType.IN) R.id.button_income else R.id.button_outcome)
             }
         }
 
@@ -162,8 +163,14 @@ class AddCategoryFragment : Fragment() {
                 getOverallBudgetForRequest(),
                 buildBudgetForRequest()
             )
-            viewModel.submit(request) {
-                backWithSnackbar(binding.buttonAdd, "Category added successfully")
+            if (categoryToUpdate == null) {
+                viewModel.submit(request) {
+                    backWithSnackbar(binding.buttonAdd, "Category added successfully")
+                }
+            } else {
+                viewModel.update(request, categoryToUpdate!!.id) {
+                    backWithSnackbar(binding.buttonAdd, "Category ${request.name} updated successfully")
+                }
             }
         }
 

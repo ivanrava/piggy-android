@@ -28,7 +28,15 @@ class VariationViewModel(
         return Gson().fromJson(errors, PropertyVariationValidationError::class.java).errors
     }
 
-    override suspend fun request(request: PropertyVariationRequest): Response<ObjectResponse<Property.PropertyVariation>> {
+    override suspend fun updateRequest(
+        request: PropertyVariationRequest,
+        resourceId: Long
+    ): Response<ObjectResponse<Property.PropertyVariation>> {
+        // TODO: implement
+        return piggyApi.variationAdd("Bearer ${tokenRepository.getToken()}", request.propertyId, request)
+    }
+
+    override suspend fun storeRequest(request: PropertyVariationRequest): Response<ObjectResponse<Property.PropertyVariation>> {
         return piggyApi.variationAdd("Bearer ${tokenRepository.getToken()}", request.propertyId, request)
     }
 

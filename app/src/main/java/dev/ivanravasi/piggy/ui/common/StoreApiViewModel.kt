@@ -28,7 +28,8 @@ abstract class StoreApiViewModel<Entity, Request, Errors>(
 
     abstract fun loadErrors(errors: String): Errors
 
-    abstract suspend fun request(request: Request): Response<ObjectResponse<Entity>>
+    abstract suspend fun storeRequest(request: Request): Response<ObjectResponse<Entity>>
+    abstract suspend fun updateRequest(request: Request, resourceId: Long): Response<ObjectResponse<Entity>>
 
     fun submit(request: Request, onSuccess: () -> Unit) {
         if (!validateWrapper(request))
@@ -36,12 +37,31 @@ abstract class StoreApiViewModel<Entity, Request, Errors>(
         viewModelScope.launch {
             _isLoading.value = true
             tryApiRequest("store") {
-                val response = request(request)
+                val response = storeRequest(request)
                 if (response.isSuccessful) {
                     onSuccess()
                 } else {
                     val errorString = response.errorBody()!!.string()
                     Log.e("store_errors", errorString)
+                    _errors.value = loadErrors(errorString)
+                }
+            }
+            _isLoading.value = false
+        }
+    }
+
+    fun update(request: Request, resourceId: Long, onSuccess: () -> Unit) {
+        if (!validateWrapper(request))
+            return
+        viewModelScope.launch {
+            _isLoading.value = true
+            tryApiRequest("update") {
+                val response = updateRequest(request, resourceId)
+                if (response.isSuccessful) {
+                    onSuccess()
+                } else {
+                    val errorString = response.errorBody()!!.string()
+                    Log.e("update_errors", errorString)
                     _errors.value = loadErrors(errorString)
                 }
             }

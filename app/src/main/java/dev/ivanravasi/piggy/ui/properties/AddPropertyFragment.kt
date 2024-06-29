@@ -16,6 +16,8 @@ import dev.ivanravasi.piggy.databinding.FragmentAddPropertyBinding
 import dev.ivanravasi.piggy.ui.backWithSnackbar
 
 class AddPropertyFragment : Fragment() {
+    private var propertyToUpdate: Property? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,13 +43,13 @@ class AddPropertyFragment : Fragment() {
 
         val propertyStr = arguments?.getString("property")
         propertyStr?.let {
-            val property = GsonBuilder().create().fromJson(it, Property::class.java)
+            propertyToUpdate = GsonBuilder().create().fromJson(it, Property::class.java)
 
-            binding.editName.setText(property.name)
-            binding.pickerIcon.loadIconify(property.icon)
+            binding.editName.setText(propertyToUpdate!!.name)
+            binding.pickerIcon.loadIconify(propertyToUpdate!!.icon)
 
-            binding.editInitialValue.setText(property.initialValue)
-            binding.editDescription.setText(property.description)
+            binding.editInitialValue.setText(propertyToUpdate!!.initialValue)
+            binding.editDescription.setText(propertyToUpdate!!.description)
 
             binding.buttonAdd.text = requireContext().getString(R.string.update_property)
             binding.addTitle.text = requireContext().getString(R.string.update_property)
@@ -60,8 +62,14 @@ class AddPropertyFragment : Fragment() {
                 binding.editInitialValue.text.toString(),
                 binding.editDescription.text.toString()
             )
-            viewModel.submit(request) {
-                backWithSnackbar(binding.buttonAdd, "Property added successfully")
+            if (propertyToUpdate == null) {
+                viewModel.submit(request) {
+                    backWithSnackbar(binding.buttonAdd, "Property added successfully")
+                }
+            } else {
+                viewModel.update(request, propertyToUpdate!!.id) {
+                    backWithSnackbar(binding.buttonAdd, "Property ${request.name} updated successfully")
+                }
             }
         }
 

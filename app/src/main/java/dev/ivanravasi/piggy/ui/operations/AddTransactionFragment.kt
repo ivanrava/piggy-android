@@ -22,6 +22,7 @@ import dev.ivanravasi.piggy.ui.beneficiaries.OnBeneficiaryClickListener
 
 
 class AddTransactionFragment : Fragment() {
+    private var transactionToUpdate: Transaction? = null
     private lateinit var binding: FragmentAddTransactionBinding
     private lateinit var defaultCardStrokeColor: ColorStateList
 
@@ -92,16 +93,16 @@ class AddTransactionFragment : Fragment() {
 
         val transactionStr = arguments?.getString("transaction")
         transactionStr?.let {
-            val transaction = GsonBuilder()
+            transactionToUpdate = GsonBuilder()
                 .registerTypeAdapter(CategoryBudget::class.java, BudgetDeserializer())
                 .create()
                 .fromJson(it, Transaction::class.java)
-            viewModel.beneficiary.value = transaction.beneficiary
-            viewModel.category.value = transaction.category
+            viewModel.beneficiary.value = transactionToUpdate!!.beneficiary
+            viewModel.category.value = transactionToUpdate!!.category
 
-            binding.editDate.setText(transaction.date)
-            binding.editAmount.setText(transaction.amount)
-            binding.editNotes.setText(transaction.notes)
+            binding.editDate.setText(transactionToUpdate!!.date)
+            binding.editAmount.setText(transactionToUpdate!!.amount)
+            binding.editNotes.setText(transactionToUpdate!!.notes)
 
             binding.buttonAdd.text = requireContext().getString(R.string.update_transaction)
             binding.addTitle.text = requireContext().getString(R.string.update_transaction)
@@ -127,8 +128,14 @@ class AddTransactionFragment : Fragment() {
                 binding.editAmount.text.toString(),
                 binding.editNotes.text.toString(),
             )
-            viewModel.submit(request) {
-                backWithSnackbar(binding.buttonAdd, "Transaction added successfully")
+            if (transactionToUpdate == null) {
+                viewModel.submit(request) {
+                    backWithSnackbar(binding.buttonAdd, "Transaction added successfully")
+                }
+            } else {
+                viewModel.update(request, transactionToUpdate!!.id) {
+                    backWithSnackbar(binding.buttonAdd, "Transaction updated successfully")
+                }
             }
         }
 
