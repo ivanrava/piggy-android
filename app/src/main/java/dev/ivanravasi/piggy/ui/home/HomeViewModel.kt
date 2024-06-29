@@ -1,8 +1,13 @@
 package dev.ivanravasi.piggy.ui.home
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.RetrofitClient
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Chart
 import dev.ivanravasi.piggy.data.TokenRepository
@@ -40,6 +45,24 @@ class HomeViewModel(
         tryApiRequest("home_favorite_charts") {
             val response = piggyApi.chartsFavorites("Bearer ${tokenRepository.getToken()}")
             _favoriteCharts.value = response.body()!!.data.filter { it.kind != "pie" }
+        }
+    }
+
+    fun revokeToken(onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            val domain = tokenRepository.getDomain()!!
+            val token = tokenRepository.getToken()!!
+            val piggyApi = RetrofitClient.getPiggyInstance(domain)
+            tryApiRequest("logout") {
+                val response = piggyApi.revoke("Bearer $token")
+                if (response.isSuccessful) {
+                    tokenRepository.deleteToken()
+                    onSuccess()
+                } else {
+                    _error.value = "Error ${response.code()}. Please contact the app developer."
+                    Log.e("logout", response.code().toString())
+                }
+            }
         }
     }
 }

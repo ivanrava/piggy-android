@@ -21,7 +21,7 @@ open class ApiViewModel(
     private val ERROR_NETWORK_TIMEOUT_MESSAGE = "There was a timeout in your request. Please try again."
     private val ERROR_GENERIC_MESSAGE = "Unexpected error. Please contact the app developer."
 
-    private val _error = MutableLiveData<String>().apply { value = "" }
+    protected val _error = MutableLiveData<String>().apply { value = "" }
     val error: LiveData<String> = _error
 
     protected suspend fun tryApiRequest(logTag: String, block: suspend () -> Unit) {

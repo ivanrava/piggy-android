@@ -6,18 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import dev.ivanravasi.piggy.R
-import dev.ivanravasi.piggy.api.RetrofitClient
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentHomeBinding
 import dev.ivanravasi.piggy.ui.accounts.AccountAdapter
 import dev.ivanravasi.piggy.ui.accounts.OnAccountClickListener
 import dev.ivanravasi.piggy.ui.charts.ChartAdapter
-import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
     private lateinit var navController: NavController
@@ -35,7 +32,29 @@ class HomeFragment : Fragment() {
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         binding.btnLogout.setOnClickListener {
-            revokeToken()
+            viewModel.revokeToken {
+                navController.navigate(R.id.authActivity)
+            }
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.loadingProgress.visibility = View.VISIBLE
+
+                binding.subtitleRecentAccounts.visibility = View.GONE
+                binding.listRecentAccounts.visibility = View.GONE
+                binding.listCharts.visibility = View.GONE
+            } else {
+                binding.loadingProgress.visibility = View.GONE
+
+                binding.subtitleRecentAccounts.visibility = View.VISIBLE
+                binding.listRecentAccounts.visibility = View.VISIBLE
+                binding.listCharts.visibility = View.VISIBLE
+            }
         }
 
         val adapter = AccountAdapter(object : OnAccountClickListener {
@@ -57,28 +76,5 @@ class HomeFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    private fun revokeToken() {
-        lifecycleScope.launch {
-            val domain = tokenRepository.getDomain()!!
-            val token = tokenRepository.getToken()!!
-            val piggyApi = RetrofitClient.getPiggyInstance(domain)
-            try {
-                val response = piggyApi.revoke("Bearer $token")
-                if (response.isSuccessful) {
-                    tokenRepository.deleteToken()
-                    navController.navigate(R.id.authActivity)
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Error ${response.code()}. Please contact the app developer.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            } catch (e: Exception) {
-                Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
-            }
-        }
     }
 }
