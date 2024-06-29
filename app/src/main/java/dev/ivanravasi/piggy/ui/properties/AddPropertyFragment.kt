@@ -51,6 +51,9 @@ class AddPropertyFragment : Fragment() {
 
             binding.editInitialValue.setText(property.initialValue)
             binding.editDescription.setText(property.description)
+
+            binding.buttonAdd.text = requireContext().getString(R.string.update_property)
+            binding.addTitle.text = requireContext().getString(R.string.update_property)
         }
 
         binding.buttonAdd.setOnClickListener {

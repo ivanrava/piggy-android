@@ -98,4 +98,5 @@
     <string name="parent_category_optional_explanation">If you do not specify a parent category, then the new category will be treated as a new root category.</string>
     <string name="nodata_bottom_sheet_search">There is nothing here!</string>
     <string name="search">Search...</string>
+    <string name="update_account">Update account</string>
 </resources>

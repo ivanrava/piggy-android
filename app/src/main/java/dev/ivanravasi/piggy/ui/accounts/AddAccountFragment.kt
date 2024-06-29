@@ -82,6 +82,9 @@ class AddAccountFragment : Fragment() {
             binding.editDescription.setText(account.description)
             binding.pickerIcon.loadIconify(account.icon)
             viewModel.color.value = ColorEnvelope(Color.parseColor(account.color))
+
+            binding.buttonAdd.text = requireContext().getString(R.string.update_account)
+            binding.addTitle.text = requireContext().getString(R.string.update_account)
         }
 
         binding.buttonAdd.setOnClickListener {
