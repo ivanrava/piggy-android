@@ -27,7 +27,7 @@ class VariationAdapter: ListAdapter<Property.PropertyVariation, VariationAdapter
         fun bind(variation: Property.PropertyVariation) {
             binding.amount.setCurrency(variation.amount.toDouble() * if (variation.type() == CategoryType.IN) 1 else -1, true)
             binding.value.setCurrency(variation.value.toDouble())
-            binding.notes.text = variation.notes
+            binding.notes.text = variation.notes?.ifEmpty { "\"No description\"" } ?: "\"No description\""
             binding.date.setDate(variation.date)
         }
 

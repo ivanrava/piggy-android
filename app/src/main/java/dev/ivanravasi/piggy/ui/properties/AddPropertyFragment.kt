@@ -46,9 +46,6 @@ class AddPropertyFragment : Fragment() {
             binding.editName.setText(property.name)
             binding.pickerIcon.loadIconify(property.icon)
 
-            binding.buttonAdd.text = requireContext().getString(R.string.update_property)
-            binding.addTitle.text = requireContext().getString(R.string.update_property)
-
             binding.editInitialValue.setText(property.initialValue)
             binding.editDescription.setText(property.description)
 
