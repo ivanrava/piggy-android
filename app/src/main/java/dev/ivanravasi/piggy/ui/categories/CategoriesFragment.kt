@@ -33,12 +33,13 @@ class CategoriesFragment : CRUDFragment<Category, CategoryAdapter.CategoryViewHo
             }).show()
         }
     })
+    private lateinit var binding: FragmentCategoriesBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+        binding = FragmentCategoriesBinding.inflate(inflater, container, false)
         val viewModel = CategoriesViewModel(TokenRepository(requireContext()))
 
         setup(
@@ -65,6 +66,12 @@ class CategoriesFragment : CRUDFragment<Category, CategoryAdapter.CategoryViewHo
             R.id.button_outcome -> categories.filter { category -> category.type() == CategoryType.OUT }
             else -> categories
         }
-        adapter.submitList(list)
+        if (list.isEmpty()) {
+            adapter.submitList(list)
+            binding.nodata.visibility = View.VISIBLE
+        } else {
+            binding.nodata.visibility = View.GONE
+            adapter.submitList(list)
+        }
     }
 }
