@@ -86,13 +86,17 @@ private fun CardAccountBinding.setAccount(
 }
 
 fun Fragment.backWithSnackbar(viewRef: View, message: String) {
+    makeSnackbar(viewRef, message)
+    findNavController().popBackStack()
+}
+
+fun makeSnackbar(viewRef: View, message: String) {
     Snackbar.make(
         viewRef,
         message,
         Snackbar.LENGTH_SHORT
     ).setAnchorView(R.id.coordinator_layout)
         .show()
-    findNavController().popBackStack()
 }
 
 fun TextView.afterTextChangedDebounced(afterTextChanged: (String) -> Unit) {

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.gson.GsonBuilder
@@ -17,8 +16,10 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryType
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentCategoriesBinding
 import dev.ivanravasi.piggy.ui.common.CRUDFragment
+import dev.ivanravasi.piggy.ui.makeSnackbar
 
 class CategoriesFragment : CRUDFragment<Category, CategoryAdapter.CategoryViewHolder>() {
+    private lateinit var viewModel: CategoriesViewModel
     private val adapter = CategoryAdapter(object : OnCategoryClickListener {
         override fun onCategoryClick(category: Category) {
             ShowCategoryBottomSheet(category, parentFragmentManager, {
@@ -29,7 +30,8 @@ class CategoriesFragment : CRUDFragment<Category, CategoryAdapter.CategoryViewHo
                     .create().toJson(category))
                 findNavController().navigate(R.id.navigation_add_category, bundle)
             }, {
-                Toast.makeText(context, category.name, Toast.LENGTH_LONG).show()
+                viewModel.delete(category.id, "categories")
+                makeSnackbar(binding.root, "Category \"${category.name}\" deleted successfully")
             }).show()
         }
     })
@@ -40,7 +42,7 @@ class CategoriesFragment : CRUDFragment<Category, CategoryAdapter.CategoryViewHo
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCategoriesBinding.inflate(inflater, container, false)
-        val viewModel = CategoriesViewModel(TokenRepository(requireContext()))
+        viewModel = CategoriesViewModel(TokenRepository(requireContext()))
 
         setup(
             list = binding.listCategories,
