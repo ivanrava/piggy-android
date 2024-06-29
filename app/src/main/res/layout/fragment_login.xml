@@ -69,15 +69,6 @@
             android:paddingBottom="@dimen/vseparation_fields" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.materialswitch.MaterialSwitch
-        android:id="@+id/switch_remember"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/switch_padding_start"
-        android:paddingEnd="@dimen/switch_padding_end"
-        android:text="@string/remember_credentials" />
-
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_sign_in"
         android:layout_width="match_parent"

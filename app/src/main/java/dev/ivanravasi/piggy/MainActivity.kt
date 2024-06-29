@@ -98,12 +98,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        lifecycleScope.launch {
-            if (!tokenRepository.shouldRemember())
-                tokenRepository.deleteToken()
-        }
-    }
 }
