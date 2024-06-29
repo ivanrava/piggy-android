@@ -85,6 +85,7 @@ class AddAccountFragment : Fragment() {
         }
 
         binding.buttonAdd.setOnClickListener {
+            binding.editAccountType.error = null
             if (binding.editAccountType.text.isEmpty()) {
                 binding.editAccountType.error = "You need to specify an account type"
                 return@setOnClickListener
@@ -92,7 +93,7 @@ class AddAccountFragment : Fragment() {
             val request = AccountRequest(
                 binding.editName.text.toString(),
                 viewModel.icon.value,
-                "#${viewModel.color.value?.hexCode}",
+                "#${viewModel.color.value!!.hexCode.substring(2)}",
                 binding.editOpening.date(),
                 binding.editClosing.date(),
                 binding.editInitialBalance.text.toString(),
