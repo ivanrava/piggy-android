@@ -25,7 +25,8 @@ class CategoryAdapter(
         override fun onCategoryClick(category: Category) {
             TODO("Not yet implemented")
         }
-    }
+    },
+    private val noChildren: Boolean = false
 ): ListAdapter<Category, CategoryAdapter.CategoryViewHolder>(CategoryDiffCallback()) {
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val category = getItem(position)
@@ -33,12 +34,13 @@ class CategoryAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-        return CategoryViewHolder.from(parent, categoryClickListener)
+        return CategoryViewHolder.from(parent, categoryClickListener, noChildren)
     }
 
     class CategoryViewHolder private constructor(
         private val binding: ListItemCategoryBinding,
-        private val listener: OnCategoryClickListener
+        private val listener: OnCategoryClickListener,
+        private val noChildren: Boolean
     ): RecyclerView.ViewHolder(binding.root) {
         private val adapterChildren = CategoryAdapter(listener)
         private var isOpened: Boolean = false
@@ -51,6 +53,10 @@ class CategoryAdapter(
                     binding.root.context.getString(R.string.children_categories, category.children.count())
                 binding.children.adapter = adapterChildren
                 adapterChildren.submitList(null)
+
+                if (noChildren)
+                    binding.btnShowChildren.visibility = View.GONE
+
                 binding.btnShowChildren.isEnabled = category.children.isNotEmpty()
                 binding.btnShowChildren.setOnClickListener {
                     adapterChildren.submitList(if (isOpened) null else category.children.map {
@@ -78,6 +84,7 @@ class CategoryAdapter(
                         category.budgetMaximumFill(),
                     )
                 } else {
+                    binding.budgetBar.hide()
                     binding.categoryDescription.text = category.parent!!.name
                 }
             }
@@ -97,10 +104,10 @@ class CategoryAdapter(
         }
 
         companion object {
-            fun from(parent: ViewGroup, listener: OnCategoryClickListener): CategoryViewHolder {
+            fun from(parent: ViewGroup, listener: OnCategoryClickListener, noChildren: Boolean): CategoryViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ListItemCategoryBinding.inflate(layoutInflater, parent, false)
-                return CategoryViewHolder(binding, listener)
+                return CategoryViewHolder(binding, listener, noChildren)
             }
         }
     }

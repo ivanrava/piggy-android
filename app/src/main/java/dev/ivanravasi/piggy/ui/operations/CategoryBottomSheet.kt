@@ -31,7 +31,7 @@ class CategoryBottomSheet(
                 onCategoryClickListener.onCategoryClick(category)
                 dismiss()
             }
-        })
+        }, true)
         binding.gridIcons.adapter = adapter
 
         adapter.submitList(categories)
