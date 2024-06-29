@@ -16,7 +16,9 @@ import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentOperationsBinding
 import dev.ivanravasi.piggy.ui.accountTextColor
 import dev.ivanravasi.piggy.ui.accounts.ShowAccountBottomSheet
+import dev.ivanravasi.piggy.ui.backWithSnackbar
 import dev.ivanravasi.piggy.ui.common.CRUDFragment
+import dev.ivanravasi.piggy.ui.makeSnackbar
 import dev.ivanravasi.piggy.ui.setCurrency
 
 class OperationsFragment : CRUDFragment<Operation, OperationAdapter.OperationViewHolder>() {
@@ -79,7 +81,8 @@ class OperationsFragment : CRUDFragment<Operation, OperationAdapter.OperationVie
                     )
                     findNavController().navigate(R.id.navigation_add_account, bundle)
                 }, {
-
+                    viewModel.delete(it.id, "accounts")
+                    backWithSnackbar(binding.root, "Account \"${it.name}\" deleted successfully")
                 }).show()
             }
         }

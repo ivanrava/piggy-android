@@ -13,6 +13,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentBeneficiariesBinding
 import dev.ivanravasi.piggy.ui.common.CRUDFragment
+import dev.ivanravasi.piggy.ui.makeSnackbar
 
 private const val SPAN_COUNT = 5
 
@@ -35,7 +36,8 @@ class BeneficiariesFragment : CRUDFragment<Beneficiary, BeneficiaryAdapter.Benef
                     bundle.putString("beneficiary", GsonBuilder().create().toJson(beneficiary))
                     findNavController().navigate(R.id.navigation_add_beneficiary, bundle)
                 }, {
-                    Toast.makeText(context, beneficiary.name, Toast.LENGTH_LONG).show()
+                    viewModel.delete(it.id, "beneficiaries")
+                    makeSnackbar(binding.root, "Beneficiary \"${it.name}\" deleted successfully")
                 }).show()
             }
         })

@@ -12,6 +12,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentPropertiesBinding
 import dev.ivanravasi.piggy.ui.common.CRUDFragment
+import dev.ivanravasi.piggy.ui.makeSnackbar
 
 class PropertiesFragment : CRUDFragment<Property, PropertyAdapter.PropertyViewHolder>() {
     override fun onCreateView(
@@ -28,7 +29,8 @@ class PropertiesFragment : CRUDFragment<Property, PropertyAdapter.PropertyViewHo
                     bundle.putString("property", GsonBuilder().create().toJson(property))
                     findNavController().navigate(R.id.navigation_add_property, bundle)
                 }, {
-                    Toast.makeText(context, property.name, Toast.LENGTH_LONG).show()
+                    viewModel.delete(it.id, "properties")
+                    makeSnackbar(binding.root, "Property \"${it.name}\" deleted successfully")
                 }).show()
             }
         })
