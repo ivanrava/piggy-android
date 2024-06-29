@@ -1,5 +1,6 @@
 package dev.ivanravasi.piggy.ui.operations
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ import dev.ivanravasi.piggy.ui.beneficiaries.OnBeneficiaryClickListener
 
 class AddTransactionFragment : Fragment() {
     private lateinit var binding: FragmentAddTransactionBinding
+    private lateinit var defaultCardStrokeColor: ColorStateList
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +35,8 @@ class AddTransactionFragment : Fragment() {
             // FIXME: rename to account_id
             requireArguments().getLong("id")
         ))[AddTransactionViewModel::class.java]
+
+        defaultCardStrokeColor = binding.cardBeneficiary.beneficiaryCard.strokeColorStateList!!
 
         viewModel.errors.observe(viewLifecycleOwner) {
             binding.inputDate.error = it.date.first()
@@ -50,6 +54,7 @@ class AddTransactionFragment : Fragment() {
         viewModel.beneficiary.observe(viewLifecycleOwner) {
             if (it != null) {
                 setBeneficiary(it)
+                binding.cardBeneficiary.beneficiaryCard.setStrokeColor(defaultCardStrokeColor)
             } else {
                 binding.beneficiaryName.text = "No beneficiary selected"
             }
@@ -103,6 +108,16 @@ class AddTransactionFragment : Fragment() {
         }
 
         binding.buttonAdd.setOnClickListener {
+            binding.cardBeneficiary.beneficiaryCard.setStrokeColor(defaultCardStrokeColor)
+            binding.pickCategory.setError(null)
+            if (viewModel.beneficiary.value == null) {
+                binding.cardBeneficiary.beneficiaryCard.setStrokeColor(ColorStateList.valueOf(requireContext().getColor(R.color.md_theme_error)))
+                return@setOnClickListener
+            }
+            if (viewModel.category.value == null) {
+                binding.pickCategory.setError("Category could not be empty")
+                return@setOnClickListener
+            }
             val request = TransactionRequest(
                 requireArguments().getLong("id"),
                 viewModel.beneficiary.value!!,

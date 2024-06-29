@@ -1,6 +1,7 @@
 package dev.ivanravasi.piggy.ui.common
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentActivity
@@ -26,12 +27,16 @@ class CategoryPicker(
     private val listeners: MutableList<(category: Category?) -> Unit> = mutableListOf()
     private var categories: List<Category> = emptyList()
 
+    private val defaultCardStrokeColor: ColorStateList
+
     init {
         inflate(context, R.layout.pick_category, this)
         categoryName = findViewById(R.id.category_name)
         categoryIcon = findViewById(R.id.category_icon)
         categoryHint = findViewById(R.id.category_edit_hint)
         card = findViewById(R.id.card_category)
+
+        defaultCardStrokeColor = card.strokeColorStateList!!
 
         categoryName.text = context.getString(R.string.category_picker_no_selection)
 
@@ -70,6 +75,7 @@ class CategoryPicker(
     fun setCategory(category: Category) {
         categoryName.text = category.name
         categoryIcon.loadIconify(category.icon, categoryName.currentTextColor)
+        setError(null)
     }
 
     fun setOnSelectedCategoryListener(listener: (category: Category?) -> Unit) {
@@ -82,5 +88,12 @@ class CategoryPicker(
 
     fun disableDeselection() {
         card.isLongClickable = false
+    }
+
+    fun setError(message: String?) {
+        if (message != null)
+            card.setStrokeColor(ColorStateList.valueOf(context.getColor(R.color.md_theme_error)))
+        else
+            card.setStrokeColor(defaultCardStrokeColor)
     }
 }
