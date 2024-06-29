@@ -22,12 +22,13 @@ class AccountsFragment : CRUDFragment<Account, AccountAdapter.AccountViewHolder>
             navController.navigate(R.id.navigation_operations, bundle)
         }
     })
+    private lateinit var binding: FragmentAccountsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentAccountsBinding.inflate(inflater, container, false)
+        binding = FragmentAccountsBinding.inflate(inflater, container, false)
         val viewModel = AccountsViewModel(TokenRepository(requireContext()))
         navController = findNavController()
 
@@ -57,6 +58,14 @@ class AccountsFragment : CRUDFragment<Account, AccountAdapter.AccountViewHolder>
             R.id.chip_investments to "Investments"
         )
         val types = selections.map { chipId -> idType[chipId] }
-        adapter.submitList(accounts.filter { account -> account.type in types })
+        val accountsToShow = accounts.filter { account -> account.type in types }
+
+        if (accountsToShow.isEmpty()) {
+            adapter.submitList(accountsToShow)
+            binding.nodata.visibility = View.VISIBLE
+        } else {
+            binding.nodata.visibility = View.GONE
+            adapter.submitList(accountsToShow)
+        }
     }
 }
