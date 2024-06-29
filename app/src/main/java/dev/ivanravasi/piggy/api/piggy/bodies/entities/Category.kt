@@ -79,6 +79,9 @@ data class Category(
 
     fun fills(): List<Pair<Double, Double>> {
         val fills = mutableListOf<Pair<Double, Double>>()
+        if (parentCategoryId == null)
+            return fills
+
         // TODO: maybe replace with reflection
         when (budget) {
             is CategoryBudget.Yearly -> fills.add(Pair(expenditures!!.sum(), (budget as CategoryBudget.Yearly).value.toDouble()))
