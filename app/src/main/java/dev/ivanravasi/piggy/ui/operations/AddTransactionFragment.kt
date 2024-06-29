@@ -50,6 +50,8 @@ class AddTransactionFragment : Fragment() {
         viewModel.beneficiary.observe(viewLifecycleOwner) {
             if (it != null) {
                 setBeneficiary(it)
+            } else {
+                binding.beneficiaryName.text = "No beneficiary selected"
             }
         }
         viewModel.category.observe(viewLifecycleOwner) {
