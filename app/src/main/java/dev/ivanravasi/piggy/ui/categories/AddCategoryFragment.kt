@@ -42,11 +42,6 @@ class AddCategoryFragment : Fragment() {
         binding.pickerIcon.setOnSelectedIconListener {
             viewModel.icon.value = it
         }
-        viewModel.icon.observe(viewLifecycleOwner) {
-            if (it != null) {
-                binding.pickerIcon.loadIconify(it)
-            }
-        }
 
         viewModel.errors.observe(viewLifecycleOwner) {
             binding.inputName.error = it.name.first()
