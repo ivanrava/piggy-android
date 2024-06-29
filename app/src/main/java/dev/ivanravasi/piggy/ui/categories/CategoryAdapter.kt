@@ -51,6 +51,8 @@ class CategoryAdapter(
                     binding.root.context.getString(R.string.children_categories, category.children.count())
                 binding.children.adapter = adapterChildren
                 adapterChildren.submitList(null)
+                if (category.children.isEmpty())
+                    binding.btnShowChildren.isEnabled = false
                 binding.btnShowChildren.setOnClickListener {
                     adapterChildren.submitList(if (isOpened) null else category.children.map {
                         it.parent = category
