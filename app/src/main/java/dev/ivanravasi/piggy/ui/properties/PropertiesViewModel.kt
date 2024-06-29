@@ -28,4 +28,12 @@ class PropertiesViewModel(
         getProperties()
         _isLoading.value = false
     }
+
+    fun refreshAll() {
+        viewModelScope.launch {
+            _isLoading.value = true
+            getProperties()
+            _isLoading.value = false
+        }
+    }
 }

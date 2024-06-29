@@ -7,8 +7,8 @@ import androidx.fragment.app.findFragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.iconify.loadIconify
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryType
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.databinding.ListItemPropertyBinding
 import dev.ivanravasi.piggy.ui.setCurrency
@@ -18,11 +18,12 @@ interface OnPropertyClickListener {
 }
 
 class PropertyAdapter(
-    private val propertyClickListener: OnPropertyClickListener
+    private val propertyClickListener: OnPropertyClickListener,
+    private val onVariationAdded: () -> Unit
 ): ListAdapter<Property, PropertyAdapter.PropertyViewHolder>(PropertyDiffCallback()) {
     override fun onBindViewHolder(holder: PropertyViewHolder, position: Int) {
         val property = getItem(position)
-        holder.bind(property, propertyClickListener)
+        holder.bind(property, propertyClickListener, onVariationAdded)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
@@ -32,7 +33,7 @@ class PropertyAdapter(
     class PropertyViewHolder private constructor(
         private val binding: ListItemPropertyBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(property: Property, listener: OnPropertyClickListener) {
+        fun bind(property: Property, listener: OnPropertyClickListener, onVariationAdded: () -> Unit) {
             binding.propertyIcon.loadIconify(property.icon, binding.propertyName.currentTextColor)
             binding.propertyName.text = property.name
             binding.propertyDescription.text = property.description
@@ -45,11 +46,15 @@ class PropertyAdapter(
             }
 
             binding.btnPlus.setOnClickListener {
-                val variationBottomSheet = VariationBottomSheet(R.string.title_increment, binding.root.findFragment<PropertiesFragment>().parentFragmentManager)
+                val variationBottomSheet = VariationBottomSheet(property.id, CategoryType.IN, binding.root.findFragment<PropertiesFragment>().parentFragmentManager) {
+                    onVariationAdded()
+                }
                 variationBottomSheet.show()
             }
             binding.btnMinus.setOnClickListener {
-                val variationBottomSheet = VariationBottomSheet(R.string.title_decrement, binding.root.findFragment<PropertiesFragment>().parentFragmentManager)
+                val variationBottomSheet = VariationBottomSheet(property.id, CategoryType.OUT, binding.root.findFragment<PropertiesFragment>().parentFragmentManager) {
+                    onVariationAdded()
+                }
                 variationBottomSheet.show()
             }
         }

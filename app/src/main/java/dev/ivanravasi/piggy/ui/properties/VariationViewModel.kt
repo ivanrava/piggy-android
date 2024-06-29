@@ -1,11 +1,38 @@
 package dev.ivanravasi.piggy.ui.properties
 
+import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
+import dev.ivanravasi.piggy.api.piggy.bodies.errors.PropertyVariationValidationError
+import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyVariationRequest
 import dev.ivanravasi.piggy.data.TokenRepository
-import dev.ivanravasi.piggy.ui.common.ApiViewModel
+import dev.ivanravasi.piggy.ui.common.StoreApiViewModel
+import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class VariationViewModel(
-    tokenRepository: TokenRepository
-): ApiViewModel(tokenRepository) {
+    private val tokenRepository: TokenRepository
+): StoreApiViewModel<Property.PropertyVariation, PropertyVariationRequest, PropertyVariationValidationError.Errors>(tokenRepository) {
+    init {
+        viewModelScope.launch {
+            hydrateApiClient()
+        }
+    }
 
+    override fun emptyErrorsProvider(): PropertyVariationValidationError.Errors {
+        return PropertyVariationValidationError.Errors()
+    }
 
+    override fun loadErrors(errors: String): PropertyVariationValidationError.Errors {
+        return Gson().fromJson(errors, PropertyVariationValidationError::class.java).errors
+    }
+
+    override suspend fun request(request: PropertyVariationRequest): Response<ObjectResponse<Property.PropertyVariation>> {
+        return piggyApi.variationAdd("Bearer ${tokenRepository.getToken()}", request.propertyId, request)
+    }
+
+    override fun validate(request: PropertyVariationRequest): Boolean {
+        return true
+    }
 }

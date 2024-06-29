@@ -17,6 +17,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.AccountRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.BeneficiaryRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.CategoryRequest
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyVariationRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransactionRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransferRequest
 import retrofit2.Response
@@ -97,6 +98,10 @@ interface PiggyApi {
     @Headers("Accept: application/json")
     @POST("/api/transfers")
     suspend fun transferAdd(@Header("Authorization") authHeader: String, @Body transferBody: TransferRequest): Response<ObjectResponse<Transfer>>
+
+    @Headers("Accept: application/json")
+    @POST("/api/properties/{id}/variations")
+    suspend fun variationAdd(@Header("Authorization") authHeader: String, @Path("id") id: Long, @Body variationBody: PropertyVariationRequest): Response<ObjectResponse<Property.PropertyVariation>>
 
     @Headers("Accept: application/json")
     @GET("/api/budget")

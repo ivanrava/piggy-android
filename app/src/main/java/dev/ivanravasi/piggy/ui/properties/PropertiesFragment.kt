@@ -33,7 +33,10 @@ class PropertiesFragment : CRUDFragment<Property, PropertyAdapter.PropertyViewHo
                     makeSnackbar(binding.root, "Property \"${it.name}\" deleted successfully")
                 }).show()
             }
-        })
+        }) {
+            makeSnackbar(binding.root, "Property variation added successfully")
+            viewModel.refreshAll()
+        }
         setup(
             list = binding.listProperties,
             adapter = adapter,

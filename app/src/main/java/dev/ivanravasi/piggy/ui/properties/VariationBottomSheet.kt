@@ -6,12 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryType
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyVariationRequest
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.BottomSheetPropertyVariationBinding
 
 class VariationBottomSheet(
-    private val titleResource: Int,
-    private val fragmentManager: FragmentManager
+    private val propertyId: Long,
+    private val type: CategoryType,
+    private val fragmentManager: FragmentManager,
+    private val onSuccess: () -> Unit = {}
 ) : BottomSheetDialogFragment() {
     private lateinit var viewModel: VariationViewModel
 
@@ -24,8 +29,25 @@ class VariationBottomSheet(
 
         viewModel = VariationViewModel(TokenRepository(requireContext()))
 
-        binding.variationTitle.text = getString(titleResource)
+        binding.variationTitle.text = getString(when (type) {
+            CategoryType.IN -> R.string.title_increment
+            CategoryType.OUT -> R.string.title_decrement
+        })
         binding.editDate.setToday()
+
+        binding.buttonAdd.setOnClickListener {
+            val request = PropertyVariationRequest(
+                propertyId,
+                binding.editDate.date(),
+                type.textual,
+                binding.editAmount.text.toString(),
+                binding.editNotes.text.toString()
+            )
+            viewModel.submit(request) {
+                dismiss()
+                onSuccess()
+            }
+        }
 
         return binding.root
     }

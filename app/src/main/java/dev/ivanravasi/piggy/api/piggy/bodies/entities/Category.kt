@@ -97,8 +97,8 @@ data class Category(
 
 }
 
-enum class CategoryType {
-    IN, OUT
+enum class CategoryType(val textual: String) {
+    IN("in"), OUT("out")
 }
 
 class BudgetDeserializer: JsonDeserializer<CategoryBudget<*>> {
