@@ -38,8 +38,14 @@ class CategoryBottomSheet(
 
         binding.editSearch.afterTextChangedDebounced {
             adapter.submitList(categories.filter { category ->
-                category.name.lowercase().contains(it.lowercase())
-                        || category.parent!!.name.lowercase().contains(it.lowercase())
+                if (category.name.lowercase().contains(it.lowercase())) {
+                    return@filter true
+                }
+                category.parent?.let { parent ->
+                    if (parent.name.lowercase().contains(it.lowercase()))
+                        return@filter true
+                }
+                return@filter false
             })
         }
 
