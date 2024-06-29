@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.GsonBuilder
@@ -42,7 +43,12 @@ class AddTransferFragment : Fragment() {
             binding.buttonAdd.isEnabled = !it
 
             if (it) binding.loadingProgress.show()
-            else binding.loadingProgress.hide()
+            else {
+                binding.loadingProgress.hide()
+                if (viewModel.toAccount.value == null) {
+                    backWithSnackbar(binding.root, "You do not have any other accounts to make a transfer with!")
+                }
+            }
         }
 
         binding.toggleTransferType.check(R.id.button_outcome)
