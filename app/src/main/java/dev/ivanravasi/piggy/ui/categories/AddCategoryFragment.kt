@@ -149,9 +149,13 @@ class AddCategoryFragment : Fragment() {
         }
 
         binding.buttonAdd.setOnClickListener {
+            if (binding.chipsBudgetType.checkedChipId == R.id.chip_monthly_fixed && !viewModel.validateBudgetFixed(getOverallBudgetForRequest())) {
+                return@setOnClickListener
+            }
+
             val request = CategoryRequest(
                 binding.editName.text.toString(),
-                viewModel.icon.value!!,
+                viewModel.icon.value,
                 selectedType(),
                 viewModel.parent.value?.id,
                 binding.switchVirtual.isChecked,
@@ -190,33 +194,33 @@ class AddCategoryFragment : Fragment() {
 
         if (binding.chipsBudgetType.checkedChipId == R.id.chip_monthly_fixed)
             return Budget(
-                binding.editBudgetOverall.toString(),
-                binding.editBudgetOverall.toString(),
-                binding.editBudgetOverall.toString(),
-                binding.editBudgetOverall.toString(),
-                binding.editBudgetOverall.toString(),
-                binding.editBudgetOverall.toString(),
-                binding.editBudgetOverall.toString(),
-                binding.editBudgetOverall.toString(),
-                binding.editBudgetOverall.toString(),
-                binding.editBudgetOverall.toString(),
-                binding.editBudgetOverall.toString(),
-                binding.editBudgetOverall.toString(),
+                binding.editBudgetOverall.text.toString(),
+                binding.editBudgetOverall.text.toString(),
+                binding.editBudgetOverall.text.toString(),
+                binding.editBudgetOverall.text.toString(),
+                binding.editBudgetOverall.text.toString(),
+                binding.editBudgetOverall.text.toString(),
+                binding.editBudgetOverall.text.toString(),
+                binding.editBudgetOverall.text.toString(),
+                binding.editBudgetOverall.text.toString(),
+                binding.editBudgetOverall.text.toString(),
+                binding.editBudgetOverall.text.toString(),
+                binding.editBudgetOverall.text.toString(),
             )
 
         return Budget(
-            binding.editJan.toString(),
-            binding.editFeb.toString(),
-            binding.editMar.toString(),
-            binding.editApr.toString(),
-            binding.editMay.toString(),
-            binding.editJun.toString(),
-            binding.editJul.toString(),
-            binding.editAug.toString(),
-            binding.editSep.toString(),
-            binding.editOct.toString(),
-            binding.editNov.toString(),
-            binding.editDec.toString()
+            binding.editJan.text.toString(),
+            binding.editFeb.text.toString(),
+            binding.editMar.text.toString(),
+            binding.editApr.text.toString(),
+            binding.editMay.text.toString(),
+            binding.editJun.text.toString(),
+            binding.editJul.text.toString(),
+            binding.editAug.text.toString(),
+            binding.editSep.text.toString(),
+            binding.editOct.text.toString(),
+            binding.editNov.text.toString(),
+            binding.editDec.text.toString()
         )
     }
 }

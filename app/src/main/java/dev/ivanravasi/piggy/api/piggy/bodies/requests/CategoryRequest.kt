@@ -7,7 +7,7 @@ data class CategoryRequest(
     @SerializedName("name")
     var name: String,
     @SerializedName("icon")
-    var icon: String,
+    var icon: String?,
     @SerializedName("type")
     var type: String,
     @SerializedName("parent_category_id")
