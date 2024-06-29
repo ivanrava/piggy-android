@@ -22,24 +22,36 @@ import dev.ivanravasi.piggy.ui.makeSnackbar
 import dev.ivanravasi.piggy.ui.setCurrency
 
 class OperationsFragment : CRUDFragment<Operation, OperationAdapter.OperationViewHolder>() {
+    private lateinit var viewModel: OperationsViewModel
+    private lateinit var binding: FragmentOperationsBinding
     private val adapter = OperationAdapter({
-        val bundle = requireArguments()
-        bundle.putString("transaction", GsonBuilder()
-            .registerTypeAdapter(CategoryBudget::class.java, BudgetSerializer())
-            .create().toJson(it))
-        findNavController().navigate(R.id.navigation_add_transaction, bundle)
+        ShowTransactionBottomSheet(it, parentFragmentManager, {
+            val bundle = requireArguments()
+            bundle.putString("transaction", GsonBuilder()
+                .registerTypeAdapter(CategoryBudget::class.java, BudgetSerializer())
+                .create().toJson(it))
+            findNavController().navigate(R.id.navigation_add_transaction, bundle)
+        }, {
+            viewModel.delete(it.id, "transactions")
+            makeSnackbar(binding.root, "Transaction deleted successfully")
+        }).show()
     }, {
-        val bundle = requireArguments()
-        bundle.putString("transfer", GsonBuilder().create().toJson(it))
-        findNavController().navigate(R.id.navigation_add_transfer, bundle)
+        ShowTransferBottomSheet(viewModel.account.value!!, it, parentFragmentManager, {
+            val bundle = requireArguments()
+            bundle.putString("transfer", GsonBuilder().create().toJson(it))
+            findNavController().navigate(R.id.navigation_add_transfer, bundle)
+        }, {
+            viewModel.delete(it.id, "transfers")
+            makeSnackbar(binding.root, "Transfer deleted successfully")
+        }).show()
     })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentOperationsBinding.inflate(inflater, container, false)
-        val viewModel = OperationsViewModel(TokenRepository(requireContext()), requireArguments().getLong("id"))
+        binding = FragmentOperationsBinding.inflate(inflater, container, false)
+        viewModel = OperationsViewModel(TokenRepository(requireContext()), requireArguments().getLong("id"))
 
         binding.listOperations.adapter = adapter
         setup(

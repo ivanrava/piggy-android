@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/fragment_padding"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/beneficiary_name"
+        app:layout_constraintBottom_toBottomOf="@id/beneficiary_type"
+        android:id="@+id/card_beneficiary"
+        layout="@layout/card_beneficiary" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/beneficiary_name"
+        style="@style/fragment_title"
+        app:layout_constraintTop_toTopOf="@id/card_beneficiary"
+        app:layout_constraintStart_toEndOf="@id/card_beneficiary"
+        android:layout_marginStart="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        tools:text="Beneficiary name" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/beneficiary_type"
+        android:fontFamily="@font/inter_bold"
+        app:layout_constraintTop_toBottomOf="@id/beneficiary_name"
+        app:layout_constraintStart_toEndOf="@id/card_beneficiary"
+        android:layout_marginStart="8dp"
+        android:alpha="0.6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        tools:text="PEOPLE" />
+
+    <com.google.android.material.button.MaterialButton
+        app:layout_constraintTop_toTopOf="@id/beneficiary_name"
+        app:layout_constraintBottom_toBottomOf="@id/card_beneficiary"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="?attr/materialIconButtonFilledStyle"
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Delete this beneficiary"
+        app:icon="@drawable/ic_delete_24"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        app:layout_constraintTop_toTopOf="@id/beneficiary_name"
+        app:layout_constraintBottom_toBottomOf="@id/card_beneficiary"
+        app:layout_constraintEnd_toStartOf="@id/btn_delete"
+        style="?attr/materialIconButtonOutlinedStyle"
+        android:id="@+id/btn_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Edit this beneficiary"
+        app:icon="@drawable/ic_icon_24"
+        />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/category_icon"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        tools:src="@drawable/ic_logout_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/category_name"
+        app:layout_constraintBottom_toBottomOf="@id/category_name"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/category_name"
+        android:fontFamily="@font/inter"
+        app:layout_constraintTop_toTopOf="@id/amount"
+        app:layout_constraintStart_toEndOf="@id/category_icon"
+        android:layout_marginStart="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        tools:text="Category name" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/category_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/amount"
+        android:fontFamily="@font/inter"
+        android:alpha="0.8"
+        tools:text="28 dec 2020" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/amount"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_light"
+        android:textSize="32sp"
+        tools:textColor="@color/out_value"
+        tools:text="-42,42 €" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/notes"
+        android:fontFamily="@font/inter"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="I'm baby forage venmo sriracha salvia, occupy master cleanse cold-pressed flannel typewriter distillery sartorial chambray butcher blackbird spyplane."
+        app:layout_constraintTop_toBottomOf="@id/amount"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
