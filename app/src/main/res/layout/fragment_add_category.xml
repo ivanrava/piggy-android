@@ -78,6 +78,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/picker_icon"
+                android:layout_marginVertical="0dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 style="@style/text_input_layout"
