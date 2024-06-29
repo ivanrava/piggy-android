@@ -175,7 +175,10 @@ class AddCategoryFragment : Fragment() {
     }
 
     private fun getOverallBudgetForRequest(): String? {
-        if (viewModel.parent.value == null || binding.chipsBudgetType.checkedChipId != R.id.chip_yearly_fixed)
+        if (viewModel.parent.value == null)
+            return "0"
+
+        if (binding.chipsBudgetType.checkedChipId != R.id.chip_yearly_fixed)
             return null
 
         return binding.editBudgetOverall.text.toString()
