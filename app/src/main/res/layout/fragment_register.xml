@@ -18,6 +18,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/text_input_layout"
+        android:id="@+id/input_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:endIconDrawable="@drawable/ic_mail_24"
@@ -35,6 +36,25 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/text_input_layout"
+        android:id="@+id/input_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:endIconDrawable="@drawable/ic_beneficiaries_24"
+        app:endIconMode="custom">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/josefin_slab_semibold"
+            android:hint="@string/name_hint"
+            android:inputType="textEmailAddress"
+            android:paddingBottom="@dimen/vseparation_fields" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/text_input_layout"
+        android:id="@+id/input_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:passwordToggleEnabled="true">
@@ -51,6 +71,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/text_input_layout"
+        android:id="@+id/input_password_confirmation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -66,6 +87,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/text_input_layout"
+        android:id="@+id/input_instance_domain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:endIconDrawable="@drawable/ic_instance_24"

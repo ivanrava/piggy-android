@@ -19,6 +19,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.requests.BeneficiaryRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.CategoryRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.ChartRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyVariationRequest
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.RegisterRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransactionRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransferRequest
 import retrofit2.Response
@@ -40,6 +41,10 @@ interface PiggyApi {
     @Headers("Accept: application/json")
     @POST("/api/token/revoke")
     suspend fun revoke(@Header("Authorization") authHeader: String): Response<TokenResponse>
+
+    @Headers("Accept: application/json")
+    @POST("/api/token/register")
+    suspend fun register(@Body registerBody: RegisterRequest): Response<TokenResponse>
 
     @Headers("Accept: application/json")
     @GET("/api/properties")

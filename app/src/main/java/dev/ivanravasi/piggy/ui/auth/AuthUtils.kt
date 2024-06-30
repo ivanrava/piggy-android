@@ -1,5 +1,6 @@
 package dev.ivanravasi.piggy.ui.auth
 
+import android.os.Build
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 
@@ -8,5 +9,11 @@ object ViewUtils {
         val underlinedText = SpannableString(text)
         underlinedText.setSpan(UnderlineSpan(), 0, underlinedText.length, 0)
         return underlinedText
+    }
+}
+
+object ModelUtils {
+    fun deviceName(): String {
+        return Build.MANUFACTURER + " " + Build.MODEL
     }
 }
