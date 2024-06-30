@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Chart
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.ChartKind
+import dev.ivanravasi.piggy.ui.charts.toplist.TopListChartLoaderView
+import dev.ivanravasi.piggy.ui.charts.vico.VicoChartLoaderView
 
 class ChartAdapter: ListAdapter<Chart, ChartAdapter.ChartViewHolder>(ChartDiffCallback()) {
     override fun onBindViewHolder(holder: ChartViewHolder, position: Int) {

@@ -11,7 +11,7 @@ import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentAccountsBinding
-import dev.ivanravasi.piggy.ui.common.CRUDFragment
+import dev.ivanravasi.piggy.ui.common.fragments.CRUDFragment
 
 class AccountsFragment : CRUDFragment<Account, AccountAdapter.AccountViewHolder>() {
     private lateinit var navController: NavController

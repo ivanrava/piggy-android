@@ -11,14 +11,11 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Chart
-import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transaction
 import dev.ivanravasi.piggy.api.piggy.bodies.errors.ChartValidationError
-import dev.ivanravasi.piggy.api.piggy.bodies.errors.TransactionValidationError
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.ChartRequest
-import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransactionRequest
 import dev.ivanravasi.piggy.data.TokenRepository
-import dev.ivanravasi.piggy.ui.common.StoreApiViewModel
+import dev.ivanravasi.piggy.ui.common.viewmodels.StoreApiViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
