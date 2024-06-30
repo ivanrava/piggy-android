@@ -187,7 +187,7 @@
                 app:layout_constraintStart_toEndOf="@id/card_beneficiary"
                 app:layout_constraintTop_toBottomOf="@id/beneficiary_name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <dev.ivanravasi.piggy.ui.common.CategoryPicker
+        <dev.ivanravasi.piggy.ui.common.views.CategoryPicker
             tools:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

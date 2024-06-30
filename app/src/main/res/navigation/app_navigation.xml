@@ -27,7 +27,7 @@
         tools:layout="@layout/fragment_beneficiaries" />
     <fragment
         android:id="@+id/navigation_properties"
-        android:name="dev.ivanravasi.piggy.ui.properties.PropertiesFragment"
+        android:name="dev.ivanravasi.piggy.ui.properties.index.PropertiesFragment"
         android:label="fragment_properties"
         tools:layout="@layout/fragment_properties" />
     <activity
@@ -37,12 +37,12 @@
         tools:layout="@layout/activity_auth" />
     <fragment
         android:id="@+id/navigation_operations"
-        android:name="dev.ivanravasi.piggy.ui.operations.OperationsFragment"
+        android:name="dev.ivanravasi.piggy.ui.operations.index.OperationsFragment"
         android:label="fragment_operations"
         tools:layout="@layout/fragment_operations" />
     <fragment
         android:id="@+id/navigation_add_property"
-        android:name="dev.ivanravasi.piggy.ui.properties.AddPropertyFragment"
+        android:name="dev.ivanravasi.piggy.ui.properties.add.AddPropertyFragment"
         android:label="AddPropertyFragment" />
     <fragment
         android:id="@+id/navigation_add_account"
@@ -58,11 +58,11 @@
         android:label="AddBeneficiaryFragment" />
     <fragment
         android:id="@+id/navigation_add_transaction"
-        android:name="dev.ivanravasi.piggy.ui.operations.AddTransactionFragment"
+        android:name="dev.ivanravasi.piggy.ui.operations.add.AddTransactionFragment"
         android:label="AddTransactionFragment" />
     <fragment
         android:id="@+id/navigation_add_transfer"
-        android:name="dev.ivanravasi.piggy.ui.operations.AddTransferFragment"
+        android:name="dev.ivanravasi.piggy.ui.operations.add.AddTransferFragment"
         android:label="AddTransferFragment" />
     <fragment
         android:id="@+id/navigation_add_chart"

@@ -36,7 +36,7 @@
             android:paddingBottom="@dimen/vseparation_fields" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <dev.ivanravasi.piggy.ui.iconify.IconPickerView
+    <dev.ivanravasi.piggy.ui.common.iconify.IconPickerView
         android:id="@+id/picker_icon"
         app:layout_constraintStart_toEndOf="@id/input_name"
         app:layout_constraintEnd_toEndOf="parent"

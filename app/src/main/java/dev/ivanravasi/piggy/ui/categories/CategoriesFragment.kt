@@ -15,7 +15,8 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryType
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentCategoriesBinding
-import dev.ivanravasi.piggy.ui.common.CRUDFragment
+import dev.ivanravasi.piggy.ui.categories.dialogs.ShowCategoryBottomSheet
+import dev.ivanravasi.piggy.ui.common.fragments.CRUDFragment
 import dev.ivanravasi.piggy.ui.makeSnackbar
 
 class CategoriesFragment : CRUDFragment<Category, CategoryAdapter.CategoryViewHolder>() {

@@ -41,7 +41,7 @@
                 android:paddingBottom="@dimen/vseparation_fields" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <dev.ivanravasi.piggy.ui.iconify.IconPickerView
+        <dev.ivanravasi.piggy.ui.common.iconify.IconPickerView
             android:id="@+id/picker_icon"
             app:layout_constraintStart_toEndOf="@id/input_name"
             app:layout_constraintEnd_toStartOf="@id/picker_color"
@@ -92,7 +92,7 @@
         app:endIconDrawable="@drawable/ic_calendar_24"
         app:endIconMode="custom">
 
-        <dev.ivanravasi.piggy.ui.common.TextInputEditDate
+        <dev.ivanravasi.piggy.ui.common.views.TextInputEditDate
             android:id="@+id/edit_opening"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
         app:endIconDrawable="@drawable/ic_calendar_24"
         app:endIconMode="custom">
 
-        <dev.ivanravasi.piggy.ui.common.TextInputEditDate
+        <dev.ivanravasi.piggy.ui.common.views.TextInputEditDate
             android:id="@+id/edit_closing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -41,7 +41,7 @@
         app:endIconDrawable="@drawable/ic_calendar_24"
         app:endIconMode="custom">
 
-        <dev.ivanravasi.piggy.ui.common.TextInputEditDate
+        <dev.ivanravasi.piggy.ui.common.views.TextInputEditDate
             android:id="@+id/edit_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

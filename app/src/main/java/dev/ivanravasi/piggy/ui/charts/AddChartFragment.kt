@@ -18,8 +18,8 @@ import dev.ivanravasi.piggy.databinding.FragmentAddChartBinding
 import dev.ivanravasi.piggy.ui.accounts.OnAccountClickListener
 import dev.ivanravasi.piggy.ui.backWithSnackbar
 import dev.ivanravasi.piggy.ui.beneficiaries.OnBeneficiaryClickListener
-import dev.ivanravasi.piggy.ui.operations.AccountBottomSheet
-import dev.ivanravasi.piggy.ui.operations.BeneficiaryBottomSheet
+import dev.ivanravasi.piggy.ui.operations.index.dialogs.AccountBottomSheet
+import dev.ivanravasi.piggy.ui.operations.add.dialogs.SearchBeneficiaryBottomSheet
 import dev.ivanravasi.piggy.ui.setAccount
 
 
@@ -84,7 +84,7 @@ class AddChartFragment : Fragment() {
         binding.pickCategory.disableDeselection()
 
         binding.cardBeneficiary.beneficiaryImg.setOnClickListener {
-            BeneficiaryBottomSheet(viewModel.beneficiaries.value!!, object : OnBeneficiaryClickListener {
+            SearchBeneficiaryBottomSheet(viewModel.beneficiaries.value!!, object : OnBeneficiaryClickListener {
                 override fun onBeneficiaryClick(beneficiary: Beneficiary) {
                     viewModel.beneficiary.value = beneficiary
                 }

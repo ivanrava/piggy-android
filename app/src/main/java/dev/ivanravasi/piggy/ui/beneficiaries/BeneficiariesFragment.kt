@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.GsonBuilder
@@ -12,7 +11,8 @@ import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentBeneficiariesBinding
-import dev.ivanravasi.piggy.ui.common.CRUDFragment
+import dev.ivanravasi.piggy.ui.beneficiaries.dialogs.ShowBeneficiaryBottomSheet
+import dev.ivanravasi.piggy.ui.common.fragments.CRUDFragment
 import dev.ivanravasi.piggy.ui.makeSnackbar
 
 private const val SPAN_COUNT = 5

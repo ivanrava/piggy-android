@@ -10,7 +10,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.errors.BeneficiaryValidationError
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.BeneficiaryRequest
 import dev.ivanravasi.piggy.data.TokenRepository
-import dev.ivanravasi.piggy.ui.common.StoreApiViewModel
+import dev.ivanravasi.piggy.ui.common.viewmodels.StoreApiViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
 

@@ -1,18 +1,15 @@
 package dev.ivanravasi.piggy.ui.home
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.RetrofitClient
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Chart
 import dev.ivanravasi.piggy.data.TokenRepository
-import dev.ivanravasi.piggy.ui.common.ApiViewModel
+import dev.ivanravasi.piggy.ui.common.viewmodels.ApiViewModel
 import kotlinx.coroutines.launch
 
 class HomeViewModel(

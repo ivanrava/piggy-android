@@ -68,7 +68,7 @@
                 app:icon="@drawable/ic_collapse_open_24"
                 />
 
-            <dev.ivanravasi.piggy.ui.categories.BudgetBarView
+            <dev.ivanravasi.piggy.ui.categories.views.BudgetBarView
                 android:id="@+id/budget_bar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/category_description"

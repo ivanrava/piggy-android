@@ -21,6 +21,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.requests.AccountRequest
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddAccountBinding
 import dev.ivanravasi.piggy.ui.accountTextColor
+import dev.ivanravasi.piggy.ui.accounts.dialogs.ColorPickerDialog
 import dev.ivanravasi.piggy.ui.backWithSnackbar
 
 

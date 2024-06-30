@@ -61,7 +61,7 @@
         app:layout_constraintStart_toEndOf="@id/card_beneficiary"
         app:layout_constraintTop_toBottomOf="@id/beneficiary_name" />
 
-    <dev.ivanravasi.piggy.ui.common.CategoryPicker
+    <dev.ivanravasi.piggy.ui.common.views.CategoryPicker
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/card_beneficiary"
@@ -78,7 +78,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pick_category">
 
-        <dev.ivanravasi.piggy.ui.common.TextInputEditDate
+        <dev.ivanravasi.piggy.ui.common.views.TextInputEditDate
             android:id="@+id/edit_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
