@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         R.id.navigation_beneficiaries to R.id.navigation_add_beneficiary,
         R.id.navigation_categories to R.id.navigation_add_category,
         R.id.navigation_properties to R.id.navigation_add_property,
+        R.id.navigation_home to R.id.navigation_add_chart
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

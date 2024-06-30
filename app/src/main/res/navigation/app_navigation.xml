@@ -64,4 +64,8 @@
         android:id="@+id/navigation_add_transfer"
         android:name="dev.ivanravasi.piggy.ui.operations.AddTransferFragment"
         android:label="AddTransferFragment" />
+    <fragment
+        android:id="@+id/navigation_add_chart"
+        android:name="dev.ivanravasi.piggy.ui.charts.AddChartFragment"
+        android:label="AddChartFragment" />
 </navigation>

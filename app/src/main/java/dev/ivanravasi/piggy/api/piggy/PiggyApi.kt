@@ -17,6 +17,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.AccountRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.BeneficiaryRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.CategoryRequest
+import dev.ivanravasi.piggy.api.piggy.bodies.requests.ChartRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyVariationRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransactionRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransferRequest
@@ -135,6 +136,14 @@ interface PiggyApi {
     @Headers("Accept: application/json")
     @GET("/api/charts")
     suspend fun charts(@Header("Authorization") authHeader: String): Response<ListResponse<Chart>>
+
+    @Headers("Accept: application/json")
+    @POST("/api/charts")
+    suspend fun chartAdd(@Header("Authorization") authHeader: String, @Body chartBody: ChartRequest): Response<ObjectResponse<Chart>>
+
+    @Headers("Accept: application/json")
+    @PUT("/api/charts/{id}")
+    suspend fun chartUpdate(@Header("Authorization") authHeader: String, @Path("id") id: Long): Response<ObjectResponse<Chart>>
 
     @Headers("Accept: application/json")
     @GET("/api/charts/favorites")

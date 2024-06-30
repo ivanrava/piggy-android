@@ -31,7 +31,7 @@ abstract class StoreApiViewModel<Entity, Request, Errors>(
     abstract suspend fun storeRequest(request: Request): Response<ObjectResponse<Entity>>
     abstract suspend fun updateRequest(request: Request, resourceId: Long): Response<ObjectResponse<Entity>>
 
-    fun submit(request: Request, onSuccess: () -> Unit) {
+    fun submit(request: Request, onSuccess: (Response<ObjectResponse<Entity>>) -> Unit) {
         if (!validateWrapper(request))
             return
         viewModelScope.launch {
@@ -39,7 +39,7 @@ abstract class StoreApiViewModel<Entity, Request, Errors>(
             tryApiRequest("store") {
                 val response = storeRequest(request)
                 if (response.isSuccessful) {
-                    onSuccess()
+                    onSuccess(response)
                 } else {
                     val errorString = response.errorBody()!!.string()
                     Log.e("store_errors", errorString)
