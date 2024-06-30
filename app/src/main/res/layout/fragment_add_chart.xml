@@ -317,7 +317,5 @@
         android:layout_height="wrap_content"
         android:enabled="true"
         android:text="Add chart"
-        android:backgroundTint="@color/md_theme_primary"
-        android:textColor="@color/md_theme_onPrimary"
         style="@style/button_submit" />
 </LinearLayout>

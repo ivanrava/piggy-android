@@ -14,16 +14,16 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Chart
 import dev.ivanravasi.piggy.api.piggy.bodies.errors.ChartValidationError
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.ChartRequest
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.ui.common.viewmodels.StoreApiViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class AddChartViewModel(
-    private val tokenRepository: TokenRepository,
+    private val dataStoreRepository: DataStoreRepository,
     navController: NavController
 ) : StoreApiViewModel<Chart, ChartRequest, ChartValidationError.Errors>(
-    tokenRepository, navController
+    dataStoreRepository, navController
 ) {
     override fun emptyErrorsProvider(): ChartValidationError.Errors {
         return ChartValidationError.Errors()
@@ -54,7 +54,7 @@ class AddChartViewModel(
 
     private suspend fun getBeneficiaries() {
         tryApiRequest("charts.beneficiaries") {
-            val res = piggyApi.beneficiaries("Bearer ${tokenRepository.getToken()}")
+            val res = piggyApi.beneficiaries("Bearer ${dataStoreRepository.getToken()}")
             if (res.isSuccessful) {
                 _beneficiaries.value = res.body()!!.data
                 beneficiary.value = _beneficiaries.value!!.firstOrNull()
@@ -64,7 +64,7 @@ class AddChartViewModel(
 
     private suspend fun getCategories() {
         tryApiRequest("charts.categories") {
-            val res = piggyApi.categoryLeaves("Bearer ${tokenRepository.getToken()}")
+            val res = piggyApi.categoryLeaves("Bearer ${dataStoreRepository.getToken()}")
             if (res.isSuccessful) {
                 _categories.value = res.body()!!.data
                 category.value = _categories.value!!.firstOrNull()
@@ -75,7 +75,7 @@ class AddChartViewModel(
     // TODO: try to avoid this call by grabbing the object from the previous fragment
     private suspend fun getAccounts() {
         tryApiRequest("charts.accounts") {
-            val response = piggyApi.accounts("Bearer ${tokenRepository.getToken()}")
+            val response = piggyApi.accounts("Bearer ${dataStoreRepository.getToken()}")
             if (response.isSuccessful) {
                 _accounts.value = response.body()!!.data
                 account.value = _accounts.value!!.firstOrNull()
@@ -84,11 +84,11 @@ class AddChartViewModel(
     }
 
     class Factory(
-        private val tokenRepository: TokenRepository,
+        private val dataStoreRepository: DataStoreRepository,
         private val navController: NavController
     ): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AddChartViewModel(tokenRepository, navController) as T
+            return AddChartViewModel(dataStoreRepository, navController) as T
         }
     }
 
@@ -104,17 +104,17 @@ class AddChartViewModel(
         request: ChartRequest,
         resourceId: Long
     ): Response<ObjectResponse<Chart>> {
-        return piggyApi.chartAdd("Bearer ${tokenRepository.getToken()}", request)
+        return piggyApi.chartAdd("Bearer ${dataStoreRepository.getToken()}", request)
     }
 
     override suspend fun storeRequest(request: ChartRequest): Response<ObjectResponse<Chart>> {
-        return piggyApi.chartAdd("Bearer ${tokenRepository.getToken()}", request)
+        return piggyApi.chartAdd("Bearer ${dataStoreRepository.getToken()}", request)
     }
 
     fun favorite(chartId: Long) {
         viewModelScope.launch {
             tryApiRequest("favorite") {
-                piggyApi.chartUpdate("Bearer ${tokenRepository.getToken()}", chartId)
+                piggyApi.chartUpdate("Bearer ${dataStoreRepository.getToken()}", chartId)
             }
         }
     }

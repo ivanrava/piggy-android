@@ -13,17 +13,17 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.AccountType
 import dev.ivanravasi.piggy.api.piggy.bodies.errors.AccountValidationError
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.AccountRequest
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.ui.common.viewmodels.StoreApiViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class AddAccountViewModel(
-    private val tokenRepository: TokenRepository,
+    private val dataStoreRepository: DataStoreRepository,
     private val startingColor: Int,
     navController: NavController
 ) : StoreApiViewModel<Account, AccountRequest, AccountValidationError.Errors>(
-    tokenRepository, navController
+    dataStoreRepository, navController
 ) {
     override fun emptyErrorsProvider(): AccountValidationError.Errors {
         return AccountValidationError.Errors()
@@ -46,19 +46,19 @@ class AddAccountViewModel(
 
     private suspend fun getAccountTypes() {
         tryApiRequest("account_types") {
-            val res = piggyApi.accountTypes("Bearer ${tokenRepository.getToken()}")
+            val res = piggyApi.accountTypes("Bearer ${dataStoreRepository.getToken()}")
             if (res.isSuccessful)
                 _accountTypes.value = res.body()!!
         }
     }
 
     class Factory(
-        private val tokenRepository: TokenRepository,
+        private val dataStoreRepository: DataStoreRepository,
         private val startingColor: Int,
         private val navController: NavController
     ): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AddAccountViewModel(tokenRepository, startingColor, navController) as T
+            return AddAccountViewModel(dataStoreRepository, startingColor, navController) as T
         }
     }
 
@@ -79,10 +79,10 @@ class AddAccountViewModel(
         request: AccountRequest,
         resourceId: Long
     ): Response<ObjectResponse<Account>> {
-        return piggyApi.accountUpdate("Bearer ${tokenRepository.getToken()}", request, resourceId)
+        return piggyApi.accountUpdate("Bearer ${dataStoreRepository.getToken()}", request, resourceId)
     }
 
     override suspend fun storeRequest(request: AccountRequest): Response<ObjectResponse<Account>> {
-        return piggyApi.accountAdd("Bearer ${tokenRepository.getToken()}", request)
+        return piggyApi.accountAdd("Bearer ${dataStoreRepository.getToken()}", request)
     }
 }

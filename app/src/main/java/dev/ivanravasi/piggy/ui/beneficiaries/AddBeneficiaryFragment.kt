@@ -14,7 +14,7 @@ import dev.ivanravasi.piggy.api.dicebear.loadBeneficiary
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.BeneficiaryType
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.BeneficiaryRequest
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddBeneficiaryBinding
 import dev.ivanravasi.piggy.ui.afterTextChangedDebounced
 import dev.ivanravasi.piggy.ui.backWithSnackbar
@@ -31,7 +31,7 @@ class AddBeneficiaryFragment : Fragment() {
         // Initialize binding and view model
         binding = FragmentAddBeneficiaryBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(this, AddBeneficiaryViewModel.Factory(
-            TokenRepository(requireContext()),
+            DataStoreRepository(requireContext()),
             findNavController()
         ))[AddBeneficiaryViewModel::class.java]
 

@@ -3,14 +3,14 @@ package dev.ivanravasi.piggy.ui.beneficiaries
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.ui.common.viewmodels.IndexApiViewModel
 import kotlinx.coroutines.launch
 
 class BeneficiariesViewModel(
-    tokenRepository: TokenRepository,
+    dataStoreRepository: DataStoreRepository,
     navController: NavController
-) : IndexApiViewModel<Beneficiary>(tokenRepository, navController) {
+) : IndexApiViewModel<Beneficiary>(dataStoreRepository, navController) {
 
     init {
         viewModelScope.launch {
@@ -21,7 +21,7 @@ class BeneficiariesViewModel(
 
     private suspend fun getBeneficiaries() {
         tryApiRequest("beneficiaries") {
-            val response = piggyApi.beneficiaries("Bearer ${tokenRepository.getToken()}")
+            val response = piggyApi.beneficiaries("Bearer ${dataStoreRepository.getToken()}")
             _objList.value = response.body()!!.data
         }
     }

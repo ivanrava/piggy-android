@@ -13,7 +13,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.BudgetSerializer
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryType
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentCategoriesBinding
 import dev.ivanravasi.piggy.ui.categories.dialogs.ShowCategoryBottomSheet
 import dev.ivanravasi.piggy.ui.common.fragments.CRUDFragment
@@ -43,7 +43,7 @@ class CategoriesFragment : CRUDFragment<Category, CategoryAdapter.CategoryViewHo
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCategoriesBinding.inflate(inflater, container, false)
-        viewModel = CategoriesViewModel(TokenRepository(requireContext()), findNavController())
+        viewModel = CategoriesViewModel(DataStoreRepository(requireContext()), findNavController())
 
         setup(
             list = binding.listCategories,

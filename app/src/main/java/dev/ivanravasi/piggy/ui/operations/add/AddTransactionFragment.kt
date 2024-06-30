@@ -16,7 +16,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.BudgetDeserializer
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transaction
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransactionRequest
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddTransactionBinding
 import dev.ivanravasi.piggy.ui.backWithSnackbar
 import dev.ivanravasi.piggy.ui.beneficiaries.OnBeneficiaryClickListener
@@ -34,7 +34,7 @@ class AddTransactionFragment : Fragment() {
     ): View {
         binding = FragmentAddTransactionBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(this, AddTransactionViewModel.Factory(
-            TokenRepository(requireContext()),
+            DataStoreRepository(requireContext()),
             // FIXME: rename to account_id
             requireArguments().getLong("id"),
             findNavController()

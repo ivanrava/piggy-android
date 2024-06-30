@@ -147,7 +147,6 @@
         android:layout_height="wrap_content"
         android:enabled="true"
         android:text="@string/button_add_transfer"
-        android:textColor="@color/md_theme_onPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/switch_checked" />

@@ -14,17 +14,17 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transaction
 import dev.ivanravasi.piggy.api.piggy.bodies.errors.TransactionValidationError
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransactionRequest
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.ui.common.viewmodels.StoreApiViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class AddTransactionViewModel(
-    private val tokenRepository: TokenRepository,
+    private val dataStoreRepository: DataStoreRepository,
     private val accountId: Long,
     navController: NavController
 ) : StoreApiViewModel<Transaction, TransactionRequest, TransactionValidationError.Errors>(
-    tokenRepository, navController
+    dataStoreRepository, navController
 ) {
     override fun emptyErrorsProvider(): TransactionValidationError.Errors {
         return TransactionValidationError.Errors()
@@ -54,7 +54,7 @@ class AddTransactionViewModel(
 
     private suspend fun getBeneficiaries() {
         tryApiRequest("transactions.beneficiaries") {
-            val res = piggyApi.beneficiaries("Bearer ${tokenRepository.getToken()}")
+            val res = piggyApi.beneficiaries("Bearer ${dataStoreRepository.getToken()}")
             if (res.isSuccessful) {
                 _beneficiaries.value = res.body()!!.data
             }
@@ -63,7 +63,7 @@ class AddTransactionViewModel(
 
     private suspend fun getCategories() {
         tryApiRequest("transactions.categories") {
-            val res = piggyApi.categoryLeaves("Bearer ${tokenRepository.getToken()}")
+            val res = piggyApi.categoryLeaves("Bearer ${dataStoreRepository.getToken()}")
             if (res.isSuccessful) {
                 _categories.value = res.body()!!.data
             }
@@ -73,7 +73,7 @@ class AddTransactionViewModel(
     // TODO: try to avoid this call by grabbing the object from the previous fragment
     private suspend fun getAccount() {
         tryApiRequest("transactions.account") {
-            val response = piggyApi.account("Bearer ${tokenRepository.getToken()}", accountId)
+            val response = piggyApi.account("Bearer ${dataStoreRepository.getToken()}", accountId)
             if (response.isSuccessful) {
                 _account.value = response.body()!!.data
                 val mostFrequentTransaction = _account.value!!.transactions
@@ -87,12 +87,12 @@ class AddTransactionViewModel(
     }
 
     class Factory(
-        private val tokenRepository: TokenRepository,
+        private val dataStoreRepository: DataStoreRepository,
         private val accountId: Long,
         private val navController: NavController
     ): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AddTransactionViewModel(tokenRepository, accountId, navController) as T
+            return AddTransactionViewModel(dataStoreRepository, accountId, navController) as T
         }
     }
 
@@ -120,10 +120,10 @@ class AddTransactionViewModel(
         request: TransactionRequest,
         resourceId: Long
     ): Response<ObjectResponse<Transaction>> {
-        return piggyApi.transactionUpdate("Bearer ${tokenRepository.getToken()}", request, resourceId)
+        return piggyApi.transactionUpdate("Bearer ${dataStoreRepository.getToken()}", request, resourceId)
     }
 
     override suspend fun storeRequest(request: TransactionRequest): Response<ObjectResponse<Transaction>> {
-        return piggyApi.transactionAdd("Bearer ${tokenRepository.getToken()}", request)
+        return piggyApi.transactionAdd("Bearer ${dataStoreRepository.getToken()}", request)
     }
 }

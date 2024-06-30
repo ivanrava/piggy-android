@@ -6,14 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 abstract class StoreApiViewModel<Entity, Request, Errors>(
-    tokenRepository: TokenRepository,
+    dataStoreRepository: DataStoreRepository,
     navController: NavController
-): ApiViewModel(tokenRepository, navController) {
+): ApiViewModel(dataStoreRepository, navController) {
     protected val _isLoading = MutableLiveData<Boolean>().apply { value = true }
     val isLoading: LiveData<Boolean> = _isLoading
     protected val _errors = MutableLiveData<Errors>().apply { value = emptyErrorsProvider() }

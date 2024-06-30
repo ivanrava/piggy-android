@@ -7,16 +7,16 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.api.piggy.bodies.errors.PropertyVariationValidationError
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyVariationRequest
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.ui.common.viewmodels.StoreApiViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class VariationViewModel(
-    private val tokenRepository: TokenRepository,
+    private val dataStoreRepository: DataStoreRepository,
     navController: NavController
 ): StoreApiViewModel<Property.PropertyVariation, PropertyVariationRequest, PropertyVariationValidationError.Errors>(
-    tokenRepository,
+    dataStoreRepository,
     navController
 ) {
     init {
@@ -38,11 +38,11 @@ class VariationViewModel(
         resourceId: Long
     ): Response<ObjectResponse<Property.PropertyVariation>> {
         // TODO: implement
-        return piggyApi.variationAdd("Bearer ${tokenRepository.getToken()}", request.propertyId, request)
+        return piggyApi.variationAdd("Bearer ${dataStoreRepository.getToken()}", request.propertyId, request)
     }
 
     override suspend fun storeRequest(request: PropertyVariationRequest): Response<ObjectResponse<Property.PropertyVariation>> {
-        return piggyApi.variationAdd("Bearer ${tokenRepository.getToken()}", request.propertyId, request)
+        return piggyApi.variationAdd("Bearer ${dataStoreRepository.getToken()}", request.propertyId, request)
     }
 
     override fun validate(request: PropertyVariationRequest): Boolean {

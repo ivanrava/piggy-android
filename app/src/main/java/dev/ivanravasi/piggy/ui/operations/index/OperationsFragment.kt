@@ -12,7 +12,7 @@ import dev.ivanravasi.piggy.api.iconify.loadIconify
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.BudgetSerializer
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Operation
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentOperationsBinding
 import dev.ivanravasi.piggy.ui.accountTextColor
 import dev.ivanravasi.piggy.ui.accounts.dialogs.ShowAccountBottomSheet
@@ -54,7 +54,7 @@ class OperationsFragment : CRUDFragment<Operation, OperationAdapter.OperationVie
     ): View {
         binding = FragmentOperationsBinding.inflate(inflater, container, false)
         viewModel = OperationsViewModel(
-            TokenRepository(requireContext()),
+            DataStoreRepository(requireContext()),
             requireArguments().getLong("id"),
             findNavController()
         )

@@ -9,7 +9,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Chart
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.ChartTopListBinding
 import dev.ivanravasi.piggy.ui.charts.ChartLoader
 import dev.ivanravasi.piggy.ui.charts.vico.ChartLoaderViewModel
@@ -20,7 +20,7 @@ class TopListChartLoaderView(
 ): ChartLoader(context, attrs) {
     private var chartData: Chart? = null
     private val viewModel: ChartLoaderViewModel = ChartLoaderViewModel(
-        TokenRepository(context),
+        DataStoreRepository(context),
         getFragmentManager()!!.findFragmentById(R.id.nav_host_fragment_activity_main)!!.findNavController()
     )
     val binding = ChartTopListBinding.inflate(

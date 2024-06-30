@@ -12,7 +12,7 @@ import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transfer
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransferRequest
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddTransferBinding
 import dev.ivanravasi.piggy.ui.accounts.OnAccountClickListener
 import dev.ivanravasi.piggy.ui.backWithSnackbar
@@ -31,7 +31,7 @@ class AddTransferFragment : Fragment() {
     ): View {
         binding = FragmentAddTransferBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this, AddTransferViewModel.Factory(
-            TokenRepository(requireContext()),
+            DataStoreRepository(requireContext()),
             requireArguments().getLong("id"),
             findNavController()
         )

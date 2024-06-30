@@ -35,6 +35,7 @@
         app:layout_constraintTop_toBottomOf="@id/loading_progress" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:textColor="@color/md_theme_onBackground"
         android:id="@+id/beneficiary_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -51,6 +52,7 @@
         tools:text="Beneficiary name" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:textColor="@color/md_theme_onBackground"
         android:id="@+id/beneficiary_edit_hint"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -148,7 +150,6 @@
         android:layout_height="wrap_content"
         android:enabled="true"
         android:text="@string/button_add_transaction"
-        android:textColor="@color/md_theme_onPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/switch_checked" />

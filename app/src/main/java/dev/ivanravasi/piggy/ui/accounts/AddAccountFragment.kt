@@ -18,7 +18,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.BudgetDeserializer
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.AccountRequest
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddAccountBinding
 import dev.ivanravasi.piggy.ui.accountTextColor
 import dev.ivanravasi.piggy.ui.accounts.dialogs.ColorPickerDialog
@@ -34,7 +34,7 @@ class AddAccountFragment : Fragment() {
     ): View {
         val binding = FragmentAddAccountBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(this, AddAccountViewModel.Factory(
-            TokenRepository(requireContext()),
+            DataStoreRepository(requireContext()),
             ContextCompat.getColor(requireContext(), R.color.md_theme_primary),
             findNavController()
         ))[AddAccountViewModel::class.java]

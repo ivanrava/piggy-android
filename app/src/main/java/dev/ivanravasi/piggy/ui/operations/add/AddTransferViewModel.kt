@@ -12,17 +12,17 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transfer
 import dev.ivanravasi.piggy.api.piggy.bodies.errors.TransferValidationError
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransferRequest
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.ui.common.viewmodels.StoreApiViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class AddTransferViewModel(
-    private val tokenRepository: TokenRepository,
+    private val dataStoreRepository: DataStoreRepository,
     private val accountId: Long,
     navController: NavController
 ) : StoreApiViewModel<Transfer, TransferRequest, TransferValidationError.Errors>(
-    tokenRepository,
+    dataStoreRepository,
     navController
 ) {
     override fun emptyErrorsProvider(): TransferValidationError.Errors {
@@ -49,7 +49,7 @@ class AddTransferViewModel(
 
     private suspend fun getAccounts() {
         tryApiRequest("transactions.accounts") {
-            val res = piggyApi.accounts("Bearer ${tokenRepository.getToken()}")
+            val res = piggyApi.accounts("Bearer ${dataStoreRepository.getToken()}")
             if (res.isSuccessful) {
                 _accounts.value = res.body()!!.data.filter { it.id != accountId }.sortedBy { it.name }
                 toAccount.value = accounts.value!!.first()
@@ -60,19 +60,19 @@ class AddTransferViewModel(
     // TODO: try to avoid this call by grabbing the object from the previous fragment
     private suspend fun getAccount() {
         tryApiRequest("transactions.account") {
-            val response = piggyApi.account("Bearer ${tokenRepository.getToken()}", accountId)
+            val response = piggyApi.account("Bearer ${dataStoreRepository.getToken()}", accountId)
             if (response.isSuccessful)
                 _fromAccount.value = response.body()!!.data
         }
     }
 
     class Factory(
-        private val tokenRepository: TokenRepository,
+        private val dataStoreRepository: DataStoreRepository,
         private val accountId: Long,
         private val navController: NavController
     ): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AddTransferViewModel(tokenRepository, accountId, navController) as T
+            return AddTransferViewModel(dataStoreRepository, accountId, navController) as T
         }
     }
 
@@ -89,10 +89,10 @@ class AddTransferViewModel(
         request: TransferRequest,
         resourceId: Long
     ): Response<ObjectResponse<Transfer>> {
-        return piggyApi.transferUpdate("Bearer ${tokenRepository.getToken()}", request, resourceId)
+        return piggyApi.transferUpdate("Bearer ${dataStoreRepository.getToken()}", request, resourceId)
     }
 
     override suspend fun storeRequest(request: TransferRequest): Response<ObjectResponse<Transfer>> {
-        return piggyApi.transferAdd("Bearer ${tokenRepository.getToken()}", request)
+        return piggyApi.transferAdd("Bearer ${dataStoreRepository.getToken()}", request)
     }
 }

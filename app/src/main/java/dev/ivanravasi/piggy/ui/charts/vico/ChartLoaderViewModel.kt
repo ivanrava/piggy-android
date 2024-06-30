@@ -6,15 +6,15 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Chart
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Stat
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.ui.common.viewmodels.ApiViewModel
 import kotlinx.coroutines.launch
 
 
 class ChartLoaderViewModel(
-    private val tokenRepository: TokenRepository,
+    private val dataStoreRepository: DataStoreRepository,
     navController: NavController
-): ApiViewModel(tokenRepository, navController) {
+): ApiViewModel(dataStoreRepository, navController) {
     private val _stats = MutableLiveData<List<Stat>>().apply { value = emptyList() }
     val stats: LiveData<List<Stat>> = _stats
     private val statDescriptions = mapOf(
@@ -44,13 +44,13 @@ class ChartLoaderViewModel(
         tryApiRequest("chart_stat") {
             val response = if (chart.filter == "all") {
                 piggyApi.stats(
-                    "Bearer ${tokenRepository.getToken()}",
+                    "Bearer ${dataStoreRepository.getToken()}",
                     chart.interval,
                     chart.stat
                 )
             } else if (chart.filterId != null) {
                 piggyApi.statsFiltered(
-                    "Bearer ${tokenRepository.getToken()}",
+                    "Bearer ${dataStoreRepository.getToken()}",
                     chart.interval,
                     chart.filter,
                     chart.filterId,
@@ -58,7 +58,7 @@ class ChartLoaderViewModel(
                 )
             } else {
                 piggyApi.statsList(
-                    "Bearer ${tokenRepository.getToken()}",
+                    "Bearer ${dataStoreRepository.getToken()}",
                     chart.filter,
                     chart.interval,
                     chart.stat
@@ -81,7 +81,7 @@ class ChartLoaderViewModel(
     private suspend fun getAccount(accountId: Long) {
         tryApiRequest("chart_stats_account") {
             val response = piggyApi.account(
-                "Bearer ${tokenRepository.getToken()}",
+                "Bearer ${dataStoreRepository.getToken()}",
                 accountId
             )
             _chartName.value = response.body()!!.data.name
@@ -91,7 +91,7 @@ class ChartLoaderViewModel(
     private suspend fun getCategory(categoryId: Long) {
         tryApiRequest("chart_stats_category") {
             val response = piggyApi.category(
-                "Bearer ${tokenRepository.getToken()}",
+                "Bearer ${dataStoreRepository.getToken()}",
                 categoryId
             )
             _chartName.value = response.body()!!.data.name
@@ -101,7 +101,7 @@ class ChartLoaderViewModel(
     private suspend fun getBeneficiary(beneficiaryId: Long) {
         tryApiRequest("chart_stats_beneficiary") {
             val response = piggyApi.beneficiary(
-                "Bearer ${tokenRepository.getToken()}",
+                "Bearer ${dataStoreRepository.getToken()}",
                 beneficiaryId
             )
             _chartName.value = response.body()!!.data.name

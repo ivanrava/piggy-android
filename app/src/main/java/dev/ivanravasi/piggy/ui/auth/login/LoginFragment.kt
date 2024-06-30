@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import dev.ivanravasi.piggy.MainActivity
 import dev.ivanravasi.piggy.R
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentLoginBinding
 import dev.ivanravasi.piggy.ui.auth.ViewUtils
 import kotlinx.coroutines.runBlocking
@@ -20,7 +20,7 @@ import kotlinx.coroutines.runBlocking
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var navController: NavController
-    private lateinit var tokenRepository: TokenRepository
+    private lateinit var dataStoreRepository: DataStoreRepository
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,11 +28,11 @@ class LoginFragment : Fragment() {
     ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         navController = findNavController()
-        tokenRepository = TokenRepository(requireContext())
-        val viewModel = LoginViewModel(tokenRepository)
+        dataStoreRepository = DataStoreRepository(requireContext())
+        val viewModel = LoginViewModel(dataStoreRepository)
 
         runBlocking {
-            val token = tokenRepository.getToken()
+            val token = dataStoreRepository.getToken()
             if (token != null) {
                 startApp()
             }

@@ -11,16 +11,16 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.api.piggy.bodies.errors.CategoryValidationError
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.CategoryRequest
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.ui.common.viewmodels.StoreApiViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class AddCategoryViewModel(
-    private val tokenRepository: TokenRepository,
+    private val dataStoreRepository: DataStoreRepository,
     navController: NavController
 ) : StoreApiViewModel<Category, CategoryRequest, CategoryValidationError.Errors>(
-    tokenRepository, navController
+    dataStoreRepository, navController
 ) {
     override fun emptyErrorsProvider(): CategoryValidationError.Errors {
         return CategoryValidationError.Errors()
@@ -41,18 +41,18 @@ class AddCategoryViewModel(
 
     private suspend fun rootCategories() {
         tryApiRequest("categories_root") {
-            val res = piggyApi.categoryTrees("Bearer ${tokenRepository.getToken()}")
+            val res = piggyApi.categoryTrees("Bearer ${dataStoreRepository.getToken()}")
             if (res.isSuccessful)
                 _rootCategories.value = res.body()!!.data
         }
     }
 
     class Factory(
-        private val tokenRepository: TokenRepository,
+        private val dataStoreRepository: DataStoreRepository,
         private val navController: NavController
     ): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AddCategoryViewModel(tokenRepository, navController) as T
+            return AddCategoryViewModel(dataStoreRepository, navController) as T
         }
     }
 
@@ -104,10 +104,10 @@ class AddCategoryViewModel(
         request: CategoryRequest,
         resourceId: Long
     ): Response<ObjectResponse<Category>> {
-        return piggyApi.categoryUpdate("Bearer ${tokenRepository.getToken()}", request, resourceId)
+        return piggyApi.categoryUpdate("Bearer ${dataStoreRepository.getToken()}", request, resourceId)
     }
 
     override suspend fun storeRequest(request: CategoryRequest): Response<ObjectResponse<Category>> {
-        return piggyApi.categoryAdd("Bearer ${tokenRepository.getToken()}", request)
+        return piggyApi.categoryAdd("Bearer ${dataStoreRepository.getToken()}", request)
     }
 }

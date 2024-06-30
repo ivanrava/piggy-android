@@ -20,7 +20,7 @@ import com.patrykandpatrick.vico.views.cartesian.ScrollHandler
 import com.patrykandpatrick.vico.views.cartesian.ZoomHandler
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Chart
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.ChartBinding
 import dev.ivanravasi.piggy.ui.charts.ChartLoader
 import java.time.LocalDate
@@ -36,7 +36,7 @@ class VicoChartLoaderView(
     private val binding: ChartBinding =
         ChartBinding.inflate(LayoutInflater.from(context), this, true)
     private var viewModel: ChartLoaderViewModel = ChartLoaderViewModel(
-        TokenRepository(context),
+        DataStoreRepository(context),
         getFragmentManager()!!.findFragmentById(R.id.nav_host_fragment_activity_main)!!.findNavController()
     )
     private lateinit var chartData: Chart

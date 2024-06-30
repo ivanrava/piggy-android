@@ -10,11 +10,12 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 
 
-class TokenRepository(private val context: Context) {
+class DataStoreRepository(private val context: Context) {
     private companion object {
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
         val TOKEN_KEY = stringPreferencesKey("token")
         val DOMAIN_KEY = stringPreferencesKey("domain")
+        val MATERIAL_YOU_KEY = booleanPreferencesKey("materialyou")
     }
 
     suspend fun saveAuthData(token: String, domain: String) {
@@ -40,5 +41,16 @@ class TokenRepository(private val context: Context) {
         val values = context.dataStore.data.first()
         val domain = values[DOMAIN_KEY]
         return domain
+    }
+
+    suspend fun toggleMaterialYou() {
+        context.dataStore.edit {
+            it[MATERIAL_YOU_KEY] = ! (it[MATERIAL_YOU_KEY] ?: false)
+        }
+    }
+
+    suspend fun isMaterialYouEnabled(): Boolean? {
+        val values = context.dataStore.data.first()
+        return values[MATERIAL_YOU_KEY]
     }
 }

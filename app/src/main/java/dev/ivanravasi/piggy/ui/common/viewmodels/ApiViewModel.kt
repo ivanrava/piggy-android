@@ -8,22 +8,22 @@ import androidx.navigation.NavController
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.PiggyApi
 import dev.ivanravasi.piggy.api.RetrofitClient
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import java.net.SocketTimeoutException
 
 open class ApiViewModel(
-    private val tokenRepository: TokenRepository,
+    private val dataStoreRepository: DataStoreRepository,
     private val navController: NavController
 ): ViewModel() {
     protected lateinit var piggyApi: PiggyApi
 
     protected suspend fun hydrateApiClient() {
-        if (tokenRepository.getDomain() == null) {
+        if (dataStoreRepository.getDomain() == null) {
             navController.navigate(R.id.authActivity)
             return
         }
 
-        piggyApi = RetrofitClient.getPiggyInstance(tokenRepository.getDomain()!!)
+        piggyApi = RetrofitClient.getPiggyInstance(dataStoreRepository.getDomain()!!)
     }
 
     private val ERROR_NETWORK_TIMEOUT_MESSAGE = "There was a timeout in your request. Please try again."

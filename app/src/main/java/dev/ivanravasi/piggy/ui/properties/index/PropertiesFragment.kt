@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentPropertiesBinding
 import dev.ivanravasi.piggy.ui.common.fragments.CRUDFragment
 import dev.ivanravasi.piggy.ui.makeSnackbar
@@ -19,7 +19,7 @@ class PropertiesFragment : CRUDFragment<Property, PropertyAdapter.PropertyViewHo
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentPropertiesBinding.inflate(inflater, container, false)
-        val viewModel = PropertiesViewModel(TokenRepository(requireContext()), findNavController())
+        val viewModel = PropertiesViewModel(DataStoreRepository(requireContext()), findNavController())
 
         val adapter = PropertyAdapter(object : OnPropertyClickListener {
             override fun onPropertyClick(property: Property) {

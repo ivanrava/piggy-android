@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentBeneficiariesBinding
 import dev.ivanravasi.piggy.ui.beneficiaries.dialogs.ShowBeneficiaryBottomSheet
 import dev.ivanravasi.piggy.ui.common.fragments.CRUDFragment
@@ -24,7 +24,7 @@ class BeneficiariesFragment : CRUDFragment<Beneficiary, BeneficiaryAdapter.Benef
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentBeneficiariesBinding.inflate(inflater, container, false)
-        val viewModel = BeneficiariesViewModel(TokenRepository(requireContext()), findNavController())
+        val viewModel = BeneficiariesViewModel(DataStoreRepository(requireContext()), findNavController())
 
         val manager = GridLayoutManager(activity, SPAN_COUNT)
         binding.listBeneficiaries.layoutManager = manager

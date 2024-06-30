@@ -17,7 +17,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryType
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.CategoryRequest
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddCategoryBinding
 import dev.ivanravasi.piggy.ui.backWithSnackbar
 
@@ -34,7 +34,7 @@ class AddCategoryFragment : Fragment() {
         // Initialize binding and view model
         binding = FragmentAddCategoryBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this, AddCategoryViewModel.Factory(
-            TokenRepository(requireContext()),
+            DataStoreRepository(requireContext()),
             findNavController()
         ))[AddCategoryViewModel::class.java]
 

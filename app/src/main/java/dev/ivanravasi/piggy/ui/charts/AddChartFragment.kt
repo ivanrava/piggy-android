@@ -13,7 +13,7 @@ import dev.ivanravasi.piggy.api.dicebear.loadBeneficiary
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.ChartRequest
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddChartBinding
 import dev.ivanravasi.piggy.ui.accounts.OnAccountClickListener
 import dev.ivanravasi.piggy.ui.backWithSnackbar
@@ -33,7 +33,7 @@ class AddChartFragment : Fragment() {
     ): View {
         binding = FragmentAddChartBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this, AddChartViewModel.Factory(
-            TokenRepository(requireContext()),
+            DataStoreRepository(requireContext()),
             findNavController()
         ))[AddChartViewModel::class.java]
 

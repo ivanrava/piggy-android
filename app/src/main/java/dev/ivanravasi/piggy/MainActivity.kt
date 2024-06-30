@@ -11,13 +11,13 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.ActivityMainBinding
 import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var tokenRepository: TokenRepository
+    private lateinit var dataStoreRepository: DataStoreRepository
     private val fabActions = mapOf(
         R.id.navigation_accounts to R.id.navigation_add_account,
         R.id.navigation_beneficiaries to R.id.navigation_add_beneficiary,
@@ -27,11 +27,14 @@ class MainActivity : AppCompatActivity() {
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        tokenRepository = TokenRepository(this@MainActivity)
+        dataStoreRepository = DataStoreRepository(this@MainActivity)
         runBlocking {
-            if (tokenRepository.getToken() == null) {
+            if (dataStoreRepository.getToken() == null) {
                 val intent = Intent(this@MainActivity, AuthActivity::class.java)
                 startActivity(intent)
+            }
+            dataStoreRepository.isMaterialYouEnabled()?.let {
+                setTheme(if (it) R.style.Theme_Piggy_MaterialYou else R.style.Theme_Piggy)
             }
         }
 

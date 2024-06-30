@@ -10,15 +10,17 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentHomeBinding
 import dev.ivanravasi.piggy.ui.accounts.AccountAdapter
 import dev.ivanravasi.piggy.ui.accounts.OnAccountClickListener
 import dev.ivanravasi.piggy.ui.charts.ChartAdapter
+import kotlinx.coroutines.runBlocking
+
 
 class HomeFragment : Fragment() {
     private lateinit var navController: NavController
-    private lateinit var tokenRepository: TokenRepository
+    private lateinit var dataStoreRepository: DataStoreRepository
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,10 +28,17 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         navController = findNavController()
-        tokenRepository = TokenRepository(requireContext())
+        dataStoreRepository = DataStoreRepository(requireContext())
 
-        val viewModel = HomeViewModel(tokenRepository, navController)
+        val viewModel = HomeViewModel(dataStoreRepository, navController)
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        binding.btnTheme.setOnClickListener {
+            runBlocking {
+                dataStoreRepository.toggleMaterialYou()
+                requireActivity().recreate()
+            }
+        }
 
         binding.btnLogout.setOnClickListener {
             viewModel.revokeToken {

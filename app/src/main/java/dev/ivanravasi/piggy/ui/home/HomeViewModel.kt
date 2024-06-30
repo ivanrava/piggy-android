@@ -8,14 +8,14 @@ import androidx.navigation.NavController
 import dev.ivanravasi.piggy.api.RetrofitClient
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Chart
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.ui.common.viewmodels.ApiViewModel
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    val tokenRepository: TokenRepository,
+    val dataStoreRepository: DataStoreRepository,
     navController: NavController
-) : ApiViewModel(tokenRepository, navController) {
+) : ApiViewModel(dataStoreRepository, navController) {
     private val _isLoading = MutableLiveData<Boolean>().apply { value = true }
     val isLoading: LiveData<Boolean> = _isLoading
     private val _accounts = MutableLiveData<List<Account>>().apply { value = emptyList() }
@@ -35,27 +35,27 @@ class HomeViewModel(
 
     private suspend fun getAccounts() {
         tryApiRequest("home_accounts") {
-            val response = piggyApi.accounts("Bearer ${tokenRepository.getToken()}")
+            val response = piggyApi.accounts("Bearer ${dataStoreRepository.getToken()}")
             _accounts.value = response.body()!!.data.sortedBy { it.lastUpdate }
         }
     }
 
     private suspend fun getFavoriteCharts() {
         tryApiRequest("home_favorite_charts") {
-            val response = piggyApi.chartsFavorites("Bearer ${tokenRepository.getToken()}")
+            val response = piggyApi.chartsFavorites("Bearer ${dataStoreRepository.getToken()}")
             _favoriteCharts.value = response.body()!!.data.filter { it.kind != "pie" }
         }
     }
 
     fun revokeToken(onSuccess: () -> Unit) {
         viewModelScope.launch {
-            val domain = tokenRepository.getDomain()!!
-            val token = tokenRepository.getToken()!!
+            val domain = dataStoreRepository.getDomain()!!
+            val token = dataStoreRepository.getToken()!!
             val piggyApi = RetrofitClient.getPiggyInstance(domain)
             tryApiRequest("logout") {
                 val response = piggyApi.revoke("Bearer $token")
                 if (response.isSuccessful) {
-                    tokenRepository.deleteToken()
+                    dataStoreRepository.deleteToken()
                     onSuccess()
                 } else {
                     _error.value = "Error ${response.code()}. Please contact the app developer."

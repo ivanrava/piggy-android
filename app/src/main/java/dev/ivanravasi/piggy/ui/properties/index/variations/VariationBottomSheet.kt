@@ -10,7 +10,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryType
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyVariationRequest
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.BottomSheetPropertyVariationBinding
 
 class VariationBottomSheet(
@@ -28,7 +28,7 @@ class VariationBottomSheet(
     ): View {
         val binding = BottomSheetPropertyVariationBinding.inflate(inflater, container, false)
 
-        viewModel = VariationViewModel(TokenRepository(requireContext()), findNavController())
+        viewModel = VariationViewModel(DataStoreRepository(requireContext()), findNavController())
 
         binding.variationTitle.text = getString(when (type) {
             CategoryType.IN -> R.string.title_increment

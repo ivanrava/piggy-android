@@ -12,7 +12,7 @@ import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyRequest
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddPropertyBinding
 import dev.ivanravasi.piggy.ui.backWithSnackbar
 
@@ -25,7 +25,7 @@ class AddPropertyFragment : Fragment() {
     ): View {
         // Initialize binding and view model
         val binding = FragmentAddPropertyBinding.inflate(inflater, container, false)
-        val viewModel = AddPropertyViewModel(TokenRepository(requireContext()), findNavController())
+        val viewModel = AddPropertyViewModel(DataStoreRepository(requireContext()), findNavController())
 
         // Set listeners / observers
         binding.pickerIcon.setOnSelectedIconListener {

@@ -8,16 +8,16 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyRequest
 import dev.ivanravasi.piggy.api.piggy.bodies.errors.PropertyValidationError
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.ui.common.viewmodels.StoreApiViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class AddPropertyViewModel(
-    private val tokenRepository: TokenRepository,
+    private val dataStoreRepository: DataStoreRepository,
     navController: NavController
 ) : StoreApiViewModel<Property, PropertyRequest, PropertyValidationError.Errors>(
-    tokenRepository, navController
+    dataStoreRepository, navController
 ) {
     override fun emptyErrorsProvider(): PropertyValidationError.Errors {
         return PropertyValidationError.Errors()
@@ -45,10 +45,10 @@ class AddPropertyViewModel(
     }
 
     override suspend fun updateRequest(request: PropertyRequest, resourceId: Long): Response<ObjectResponse<Property>> {
-        return piggyApi.propertyUpdate("Bearer ${tokenRepository.getToken()}", request, resourceId)
+        return piggyApi.propertyUpdate("Bearer ${dataStoreRepository.getToken()}", request, resourceId)
     }
 
     override suspend fun storeRequest(request: PropertyRequest): Response<ObjectResponse<Property>> {
-        return piggyApi.propertyAdd("Bearer ${tokenRepository.getToken()}", request)
+        return piggyApi.propertyAdd("Bearer ${dataStoreRepository.getToken()}", request)
     }
 }

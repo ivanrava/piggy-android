@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.ChipGroup
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentAccountsBinding
 import dev.ivanravasi.piggy.ui.common.fragments.CRUDFragment
 
@@ -30,7 +30,7 @@ class AccountsFragment : CRUDFragment<Account, AccountAdapter.AccountViewHolder>
     ): View {
         binding = FragmentAccountsBinding.inflate(inflater, container, false)
         navController = findNavController()
-        val viewModel = AccountsViewModel(TokenRepository(requireContext()), navController)
+        val viewModel = AccountsViewModel(DataStoreRepository(requireContext()), navController)
 
         setup(
             list = binding.listAccounts,

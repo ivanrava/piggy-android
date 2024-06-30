@@ -9,16 +9,16 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.api.piggy.bodies.errors.BeneficiaryValidationError
 import dev.ivanravasi.piggy.api.piggy.bodies.meta.ObjectResponse
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.BeneficiaryRequest
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.ui.common.viewmodels.StoreApiViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class AddBeneficiaryViewModel(
-    private val tokenRepository: TokenRepository,
+    private val dataStoreRepository: DataStoreRepository,
     navController: NavController
 ) : StoreApiViewModel<Beneficiary, BeneficiaryRequest, BeneficiaryValidationError.Errors>(
-    tokenRepository, navController
+    dataStoreRepository, navController
 ) {
     override fun emptyErrorsProvider(): BeneficiaryValidationError.Errors {
         return BeneficiaryValidationError.Errors()
@@ -31,11 +31,11 @@ class AddBeneficiaryViewModel(
     }
 
     class Factory(
-        private val tokenRepository: TokenRepository,
+        private val dataStoreRepository: DataStoreRepository,
         private val navController: NavController
     ): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AddBeneficiaryViewModel(tokenRepository, navController) as T
+            return AddBeneficiaryViewModel(dataStoreRepository, navController) as T
         }
     }
 
@@ -49,10 +49,10 @@ class AddBeneficiaryViewModel(
         request: BeneficiaryRequest,
         resourceId: Long
     ): Response<ObjectResponse<Beneficiary>> {
-        return piggyApi.beneficiaryUpdate("Bearer ${tokenRepository.getToken()}", request, resourceId)
+        return piggyApi.beneficiaryUpdate("Bearer ${dataStoreRepository.getToken()}", request, resourceId)
     }
 
     override suspend fun storeRequest(request: BeneficiaryRequest): Response<ObjectResponse<Beneficiary>> {
-        return piggyApi.beneficiaryAdd("Bearer ${tokenRepository.getToken()}", request)
+        return piggyApi.beneficiaryAdd("Bearer ${dataStoreRepository.getToken()}", request)
     }
 }

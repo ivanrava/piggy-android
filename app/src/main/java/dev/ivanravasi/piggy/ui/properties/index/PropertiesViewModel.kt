@@ -3,14 +3,14 @@ package dev.ivanravasi.piggy.ui.properties.index
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
-import dev.ivanravasi.piggy.data.TokenRepository
+import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.ui.common.viewmodels.IndexApiViewModel
 import kotlinx.coroutines.launch
 
 class PropertiesViewModel(
-    tokenRepository: TokenRepository,
+    dataStoreRepository: DataStoreRepository,
     navController: NavController
-) : IndexApiViewModel<Property>(tokenRepository, navController) {
+) : IndexApiViewModel<Property>(dataStoreRepository, navController) {
     init {
         viewModelScope.launch {
             hydrateApiClient()
@@ -20,7 +20,7 @@ class PropertiesViewModel(
 
     private suspend fun getProperties() {
         tryApiRequest("properties") {
-            val response = piggyApi.properties("Bearer ${tokenRepository.getToken()}")
+            val response = piggyApi.properties("Bearer ${dataStoreRepository.getToken()}")
             _objList.value = response.body()!!.data
         }
     }
