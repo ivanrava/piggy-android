@@ -3,8 +3,10 @@ package dev.ivanravasi.piggy.ui.charts.vico
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.patrykandpatrick.vico.core.cartesian.Scroll
 import com.patrykandpatrick.vico.core.cartesian.Zoom
 import com.patrykandpatrick.vico.core.cartesian.axis.AxisPosition
@@ -16,6 +18,7 @@ import com.patrykandpatrick.vico.core.cartesian.data.lineSeries
 import com.patrykandpatrick.vico.views.cartesian.CartesianChartView
 import com.patrykandpatrick.vico.views.cartesian.ScrollHandler
 import com.patrykandpatrick.vico.views.cartesian.ZoomHandler
+import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Chart
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.ChartBinding
@@ -30,9 +33,12 @@ class VicoChartLoaderView(
     attrs: AttributeSet?
 ): ChartLoader(context, attrs) {
     private var chartView: CartesianChartView
-    private var viewModel: ChartLoaderViewModel = ChartLoaderViewModel(TokenRepository(context), findNavController())
     private val binding: ChartBinding =
         ChartBinding.inflate(LayoutInflater.from(context), this, true)
+    private var viewModel: ChartLoaderViewModel = ChartLoaderViewModel(
+        TokenRepository(context),
+        getFragmentManager()!!.findFragmentById(R.id.nav_host_fragment_activity_main)!!.findNavController()
+    )
     private lateinit var chartData: Chart
 
     init {
@@ -103,5 +109,12 @@ class VicoChartLoaderView(
     override fun hydrateChart(chartData: Chart) {
         this.chartData = chartData
         viewModel.requestChart(chartData)
+    }
+
+    private fun getFragmentManager(): FragmentManager? {
+        return if (context is FragmentActivity)
+            (context as FragmentActivity).supportFragmentManager
+        else
+            null
     }
 }
