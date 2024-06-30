@@ -28,7 +28,7 @@ class HomeFragment : Fragment() {
         navController = findNavController()
         tokenRepository = TokenRepository(requireContext())
 
-        val viewModel = HomeViewModel(tokenRepository)
+        val viewModel = HomeViewModel(tokenRepository, navController)
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         binding.btnLogout.setOnClickListener {

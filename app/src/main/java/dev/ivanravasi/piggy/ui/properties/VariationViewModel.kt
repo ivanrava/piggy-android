@@ -1,6 +1,7 @@
 package dev.ivanravasi.piggy.ui.properties
 
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.google.gson.Gson
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.api.piggy.bodies.errors.PropertyVariationValidationError
@@ -12,8 +13,12 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class VariationViewModel(
-    private val tokenRepository: TokenRepository
-): StoreApiViewModel<Property.PropertyVariation, PropertyVariationRequest, PropertyVariationValidationError.Errors>(tokenRepository) {
+    private val tokenRepository: TokenRepository,
+    navController: NavController
+): StoreApiViewModel<Property.PropertyVariation, PropertyVariationRequest, PropertyVariationValidationError.Errors>(
+    tokenRepository,
+    navController
+) {
     init {
         viewModelScope.launch {
             hydrateApiClient()

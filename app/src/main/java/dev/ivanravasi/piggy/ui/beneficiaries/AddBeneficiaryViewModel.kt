@@ -3,6 +3,7 @@ package dev.ivanravasi.piggy.ui.beneficiaries
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.google.gson.Gson
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.api.piggy.bodies.errors.BeneficiaryValidationError
@@ -14,9 +15,10 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class AddBeneficiaryViewModel(
-    private val tokenRepository: TokenRepository
+    private val tokenRepository: TokenRepository,
+    navController: NavController
 ) : StoreApiViewModel<Beneficiary, BeneficiaryRequest, BeneficiaryValidationError.Errors>(
-    tokenRepository
+    tokenRepository, navController
 ) {
     override fun emptyErrorsProvider(): BeneficiaryValidationError.Errors {
         return BeneficiaryValidationError.Errors()
@@ -30,9 +32,10 @@ class AddBeneficiaryViewModel(
 
     class Factory(
         private val tokenRepository: TokenRepository,
+        private val navController: NavController
     ): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AddBeneficiaryViewModel(tokenRepository) as T
+            return AddBeneficiaryViewModel(tokenRepository, navController) as T
         }
     }
 

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.gson.GsonBuilder
 import com.skydoves.colorpickerview.ColorEnvelope
@@ -33,7 +34,8 @@ class AddAccountFragment : Fragment() {
         val binding = FragmentAddAccountBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(this, AddAccountViewModel.Factory(
             TokenRepository(requireContext()),
-            ContextCompat.getColor(requireContext(), R.color.md_theme_primary)
+            ContextCompat.getColor(requireContext(), R.color.md_theme_primary),
+            findNavController()
         ))[AddAccountViewModel::class.java]
 
         binding.editOpening.setToday()

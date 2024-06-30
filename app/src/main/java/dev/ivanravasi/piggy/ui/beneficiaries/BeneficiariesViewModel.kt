@@ -1,14 +1,16 @@
 package dev.ivanravasi.piggy.ui.beneficiaries
 
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.ui.common.IndexApiViewModel
 import kotlinx.coroutines.launch
 
 class BeneficiariesViewModel(
-    tokenRepository: TokenRepository
-) : IndexApiViewModel<Beneficiary>(tokenRepository) {
+    tokenRepository: TokenRepository,
+    navController: NavController
+) : IndexApiViewModel<Beneficiary>(tokenRepository, navController) {
 
     init {
         viewModelScope.launch {

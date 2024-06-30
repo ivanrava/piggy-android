@@ -1,14 +1,17 @@
 package dev.ivanravasi.piggy.ui.accounts
 
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.ui.common.IndexApiViewModel
 import kotlinx.coroutines.launch
+import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities.Private
 
 class AccountsViewModel(
-    tokenRepository: TokenRepository
-) : IndexApiViewModel<Account>(tokenRepository) {
+    tokenRepository: TokenRepository,
+    navController: NavController
+) : IndexApiViewModel<Account>(tokenRepository, navController) {
     init {
         viewModelScope.launch {
             hydrateApiClient()

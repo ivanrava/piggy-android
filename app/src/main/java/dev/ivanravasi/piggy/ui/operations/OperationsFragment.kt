@@ -51,7 +51,11 @@ class OperationsFragment : CRUDFragment<Operation, OperationAdapter.OperationVie
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentOperationsBinding.inflate(inflater, container, false)
-        viewModel = OperationsViewModel(TokenRepository(requireContext()), requireArguments().getLong("id"))
+        viewModel = OperationsViewModel(
+            TokenRepository(requireContext()),
+            requireArguments().getLong("id"),
+            findNavController()
+        )
 
         binding.listOperations.adapter = adapter
         setup(

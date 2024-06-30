@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.dicebear.loadAvatar
@@ -31,6 +32,7 @@ class AddBeneficiaryFragment : Fragment() {
         binding = FragmentAddBeneficiaryBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(this, AddBeneficiaryViewModel.Factory(
             TokenRepository(requireContext()),
+            findNavController()
         ))[AddBeneficiaryViewModel::class.java]
 
         // Set default initial values

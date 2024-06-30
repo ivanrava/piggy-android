@@ -1,14 +1,16 @@
 package dev.ivanravasi.piggy.ui.properties
 
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.ui.common.IndexApiViewModel
 import kotlinx.coroutines.launch
 
 class PropertiesViewModel(
-    tokenRepository: TokenRepository
-) : IndexApiViewModel<Property>(tokenRepository) {
+    tokenRepository: TokenRepository,
+    navController: NavController
+) : IndexApiViewModel<Property>(tokenRepository, navController) {
     init {
         viewModelScope.launch {
             hydrateApiClient()

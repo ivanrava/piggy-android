@@ -3,6 +3,7 @@ package dev.ivanravasi.piggy.ui.charts
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Chart
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Stat
 import dev.ivanravasi.piggy.data.TokenRepository
@@ -12,7 +13,8 @@ import kotlinx.coroutines.launch
 
 class ChartLoaderViewModel(
     private val tokenRepository: TokenRepository,
-): ApiViewModel(tokenRepository) {
+    private val navController: NavController
+): ApiViewModel(tokenRepository, navController) {
     private val _stats = MutableLiveData<List<Stat>>().apply { value = emptyList() }
     val stats: LiveData<List<Stat>> = _stats
     private val statDescriptions = mapOf(

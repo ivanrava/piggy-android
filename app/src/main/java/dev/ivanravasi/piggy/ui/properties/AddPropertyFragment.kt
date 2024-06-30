@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
@@ -24,7 +25,7 @@ class AddPropertyFragment : Fragment() {
     ): View {
         // Initialize binding and view model
         val binding = FragmentAddPropertyBinding.inflate(inflater, container, false)
-        val viewModel = AddPropertyViewModel(TokenRepository(requireContext()))
+        val viewModel = AddPropertyViewModel(TokenRepository(requireContext()), findNavController())
 
         // Set listeners / observers
         binding.pickerIcon.setOnSelectedIconListener {

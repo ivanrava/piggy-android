@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.dicebear.loadBeneficiary
@@ -34,7 +35,8 @@ class AddTransactionFragment : Fragment() {
         val viewModel = ViewModelProvider(this, AddTransactionViewModel.Factory(
             TokenRepository(requireContext()),
             // FIXME: rename to account_id
-            requireArguments().getLong("id")
+            requireArguments().getLong("id"),
+            findNavController()
         ))[AddTransactionViewModel::class.java]
 
         defaultCardStrokeColor = binding.cardBeneficiary.beneficiaryCard.strokeColorStateList!!

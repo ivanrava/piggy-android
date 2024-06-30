@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.RetrofitClient
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
@@ -15,8 +16,9 @@ import dev.ivanravasi.piggy.ui.common.ApiViewModel
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    val tokenRepository: TokenRepository
-) : ApiViewModel(tokenRepository) {
+    val tokenRepository: TokenRepository,
+    navController: NavController
+) : ApiViewModel(tokenRepository, navController) {
     private val _isLoading = MutableLiveData<Boolean>().apply { value = true }
     val isLoading: LiveData<Boolean> = _isLoading
     private val _accounts = MutableLiveData<List<Account>>().apply { value = emptyList() }

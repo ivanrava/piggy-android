@@ -42,7 +42,7 @@ class CategoriesFragment : CRUDFragment<Category, CategoryAdapter.CategoryViewHo
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCategoriesBinding.inflate(inflater, container, false)
-        viewModel = CategoriesViewModel(TokenRepository(requireContext()))
+        viewModel = CategoriesViewModel(TokenRepository(requireContext()), findNavController())
 
         setup(
             list = binding.listCategories,

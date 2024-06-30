@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.google.gson.Gson
 import com.skydoves.colorpickerview.ColorEnvelope
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
@@ -19,9 +20,10 @@ import retrofit2.Response
 
 class AddAccountViewModel(
     private val tokenRepository: TokenRepository,
-    private val startingColor: Int
+    private val startingColor: Int,
+    navController: NavController
 ) : StoreApiViewModel<Account, AccountRequest, AccountValidationError.Errors>(
-    tokenRepository
+    tokenRepository, navController
 ) {
     override fun emptyErrorsProvider(): AccountValidationError.Errors {
         return AccountValidationError.Errors()
@@ -52,10 +54,11 @@ class AddAccountViewModel(
 
     class Factory(
         private val tokenRepository: TokenRepository,
-        private val startingColor: Int
+        private val startingColor: Int,
+        private val navController: NavController
     ): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AddAccountViewModel(tokenRepository, startingColor) as T
+            return AddAccountViewModel(tokenRepository, startingColor, navController) as T
         }
     }
 

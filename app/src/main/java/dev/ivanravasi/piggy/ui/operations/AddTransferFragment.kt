@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
@@ -30,7 +31,8 @@ class AddTransferFragment : Fragment() {
         binding = FragmentAddTransferBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this, AddTransferViewModel.Factory(
             TokenRepository(requireContext()),
-            requireArguments().getLong("id")
+            requireArguments().getLong("id"),
+            findNavController()
         ))[AddTransferViewModel::class.java]
 
         viewModel.errors.observe(viewLifecycleOwner) {

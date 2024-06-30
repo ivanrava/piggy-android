@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.google.gson.Gson
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
@@ -20,9 +21,10 @@ import retrofit2.Response
 
 class AddTransactionViewModel(
     private val tokenRepository: TokenRepository,
-    private val accountId: Long
+    private val accountId: Long,
+    navController: NavController
 ) : StoreApiViewModel<Transaction, TransactionRequest, TransactionValidationError.Errors>(
-    tokenRepository
+    tokenRepository, navController
 ) {
     override fun emptyErrorsProvider(): TransactionValidationError.Errors {
         return TransactionValidationError.Errors()
@@ -86,10 +88,11 @@ class AddTransactionViewModel(
 
     class Factory(
         private val tokenRepository: TokenRepository,
-        private val accountId: Long
+        private val accountId: Long,
+        private val navController: NavController
     ): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AddTransactionViewModel(tokenRepository, accountId) as T
+            return AddTransactionViewModel(tokenRepository, accountId, navController) as T
         }
     }
 

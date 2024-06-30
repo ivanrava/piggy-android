@@ -24,7 +24,7 @@ class BeneficiariesFragment : CRUDFragment<Beneficiary, BeneficiaryAdapter.Benef
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentBeneficiariesBinding.inflate(inflater, container, false)
-        val viewModel = BeneficiariesViewModel(TokenRepository(requireContext()))
+        val viewModel = BeneficiariesViewModel(TokenRepository(requireContext()), findNavController())
 
         val manager = GridLayoutManager(activity, SPAN_COUNT)
         binding.listBeneficiaries.layoutManager = manager

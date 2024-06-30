@@ -29,8 +29,8 @@ class AccountsFragment : CRUDFragment<Account, AccountAdapter.AccountViewHolder>
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAccountsBinding.inflate(inflater, container, false)
-        val viewModel = AccountsViewModel(TokenRepository(requireContext()))
         navController = findNavController()
+        val viewModel = AccountsViewModel(TokenRepository(requireContext()), navController)
 
         setup(
             list = binding.listAccounts,

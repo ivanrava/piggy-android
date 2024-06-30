@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.findNavController
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Chart
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.ChartTopListBinding
@@ -16,7 +17,7 @@ class TopListChartLoaderView(
     attrs: AttributeSet?
 ): ChartLoader(context, attrs) {
     private var chartData: Chart? = null
-    private val viewModel: ChartLoaderViewModel = ChartLoaderViewModel(TokenRepository(context))
+    private val viewModel: ChartLoaderViewModel = ChartLoaderViewModel(TokenRepository(context), findNavController())
     val binding = ChartTopListBinding.inflate(
         LayoutInflater.from(context), this, true
     )

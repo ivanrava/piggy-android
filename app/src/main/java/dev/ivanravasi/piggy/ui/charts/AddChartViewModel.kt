@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.google.gson.Gson
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
@@ -22,9 +23,10 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class AddChartViewModel(
-    private val tokenRepository: TokenRepository
+    private val tokenRepository: TokenRepository,
+    navController: NavController
 ) : StoreApiViewModel<Chart, ChartRequest, ChartValidationError.Errors>(
-    tokenRepository
+    tokenRepository, navController
 ) {
     override fun emptyErrorsProvider(): ChartValidationError.Errors {
         return ChartValidationError.Errors()
@@ -85,10 +87,11 @@ class AddChartViewModel(
     }
 
     class Factory(
-        private val tokenRepository: TokenRepository
+        private val tokenRepository: TokenRepository,
+        private val navController: NavController
     ): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AddChartViewModel(tokenRepository) as T
+            return AddChartViewModel(tokenRepository, navController) as T
         }
     }
 

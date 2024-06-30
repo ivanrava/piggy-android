@@ -20,7 +20,7 @@ class PropertiesFragment : CRUDFragment<Property, PropertyAdapter.PropertyViewHo
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentPropertiesBinding.inflate(inflater, container, false)
-        val viewModel = PropertiesViewModel(TokenRepository(requireContext()))
+        val viewModel = PropertiesViewModel(TokenRepository(requireContext()), findNavController())
 
         val adapter = PropertyAdapter(object : OnPropertyClickListener {
             override fun onPropertyClick(property: Property) {

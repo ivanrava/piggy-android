@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Budget
@@ -33,7 +34,8 @@ class AddCategoryFragment : Fragment() {
         // Initialize binding and view model
         binding = FragmentAddCategoryBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this, AddCategoryViewModel.Factory(
-            TokenRepository(requireContext())
+            TokenRepository(requireContext()),
+            findNavController()
         ))[AddCategoryViewModel::class.java]
 
         // Set default initial values

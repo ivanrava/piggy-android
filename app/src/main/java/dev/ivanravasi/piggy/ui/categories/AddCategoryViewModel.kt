@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.google.gson.Gson
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.api.piggy.bodies.errors.CategoryValidationError
@@ -16,9 +17,10 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class AddCategoryViewModel(
-    private val tokenRepository: TokenRepository
+    private val tokenRepository: TokenRepository,
+    navController: NavController
 ) : StoreApiViewModel<Category, CategoryRequest, CategoryValidationError.Errors>(
-    tokenRepository
+    tokenRepository, navController
 ) {
     override fun emptyErrorsProvider(): CategoryValidationError.Errors {
         return CategoryValidationError.Errors()
@@ -46,10 +48,11 @@ class AddCategoryViewModel(
     }
 
     class Factory(
-        private val tokenRepository: TokenRepository
+        private val tokenRepository: TokenRepository,
+        private val navController: NavController
     ): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AddCategoryViewModel(tokenRepository) as T
+            return AddCategoryViewModel(tokenRepository, navController) as T
         }
     }
 

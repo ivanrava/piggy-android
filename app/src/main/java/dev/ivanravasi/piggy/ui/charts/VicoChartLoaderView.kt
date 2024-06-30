@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.findNavController
 import com.patrykandpatrick.vico.core.cartesian.Scroll
 import com.patrykandpatrick.vico.core.cartesian.Zoom
 import com.patrykandpatrick.vico.core.cartesian.axis.AxisPosition
@@ -29,7 +30,7 @@ class VicoChartLoaderView(
     attrs: AttributeSet?
 ): ChartLoader(context, attrs) {
     private var chartView: CartesianChartView
-    private var viewModel: ChartLoaderViewModel = ChartLoaderViewModel(TokenRepository(context))
+    private var viewModel: ChartLoaderViewModel = ChartLoaderViewModel(TokenRepository(context), findNavController())
     private val binding: ChartBinding =
         ChartBinding.inflate(LayoutInflater.from(context), this, true)
     private lateinit var chartData: Chart

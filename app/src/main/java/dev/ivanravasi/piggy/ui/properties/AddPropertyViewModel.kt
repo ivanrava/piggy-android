@@ -2,6 +2,7 @@ package dev.ivanravasi.piggy.ui.properties
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.google.gson.Gson
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyRequest
@@ -13,9 +14,10 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class AddPropertyViewModel(
-    private val tokenRepository: TokenRepository
+    private val tokenRepository: TokenRepository,
+    navController: NavController
 ) : StoreApiViewModel<Property, PropertyRequest, PropertyValidationError.Errors>(
-    tokenRepository
+    tokenRepository, navController
 ) {
     override fun emptyErrorsProvider(): PropertyValidationError.Errors {
         return PropertyValidationError.Errors()

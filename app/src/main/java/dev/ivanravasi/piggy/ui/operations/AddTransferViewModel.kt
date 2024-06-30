@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.google.gson.Gson
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transfer
@@ -18,9 +19,11 @@ import retrofit2.Response
 
 class AddTransferViewModel(
     private val tokenRepository: TokenRepository,
-    private val accountId: Long
+    private val accountId: Long,
+    navController: NavController
 ) : StoreApiViewModel<Transfer, TransferRequest, TransferValidationError.Errors>(
-    tokenRepository
+    tokenRepository,
+    navController
 ) {
     override fun emptyErrorsProvider(): TransferValidationError.Errors {
         return TransferValidationError.Errors()
@@ -65,10 +68,11 @@ class AddTransferViewModel(
 
     class Factory(
         private val tokenRepository: TokenRepository,
-        private val accountId: Long
+        private val accountId: Long,
+        private val navController: NavController
     ): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AddTransferViewModel(tokenRepository, accountId) as T
+            return AddTransferViewModel(tokenRepository, accountId, navController) as T
         }
     }
 

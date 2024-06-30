@@ -1,5 +1,6 @@
 package dev.ivanravasi.piggy.ui.auth.register
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import dev.ivanravasi.piggy.MainActivity
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentRegisterBinding
@@ -53,7 +55,7 @@ class RegisterFragment : Fragment() {
 
             // TODO: validate domain
             viewModel.register(domain, name, email, password, passwordConfirmation, {
-                navController.navigate(R.id.action_registerFragment_to_mainActivity)
+                startApp()
             }, {
                 Toast.makeText(
                     context,
@@ -74,5 +76,11 @@ class RegisterFragment : Fragment() {
                 binding.inputPasswordConfirmation.editText!!.text.toString().isNotEmpty() &&
                 binding.inputInstanceDomain.editText!!.text.toString().isNotEmpty()
                 )
+    }
+
+    private fun startApp() {
+        val intent = Intent(requireView().context, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
     }
 }

@@ -3,12 +3,14 @@ package dev.ivanravasi.piggy.ui.common
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import dev.ivanravasi.piggy.data.TokenRepository
 import kotlinx.coroutines.launch
 
 abstract class IndexApiViewModel<T>(
-    val tokenRepository: TokenRepository
-): ApiViewModel(tokenRepository) {
+    val tokenRepository: TokenRepository,
+    navController: NavController
+): ApiViewModel(tokenRepository, navController) {
     fun delete(id: Long, resources: String) {
         viewModelScope.launch {
             tryApiRequest("delete_$resources") {

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryType
@@ -27,7 +28,7 @@ class VariationBottomSheet(
     ): View {
         val binding = BottomSheetPropertyVariationBinding.inflate(inflater, container, false)
 
-        viewModel = VariationViewModel(TokenRepository(requireContext()))
+        viewModel = VariationViewModel(TokenRepository(requireContext()), findNavController())
 
         binding.variationTitle.text = getString(when (type) {
             CategoryType.IN -> R.string.title_increment

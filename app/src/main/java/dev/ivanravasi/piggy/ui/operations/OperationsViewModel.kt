@@ -3,6 +3,7 @@ package dev.ivanravasi.piggy.ui.operations
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Operation
 import dev.ivanravasi.piggy.data.TokenRepository
@@ -11,8 +12,9 @@ import kotlinx.coroutines.launch
 
 class OperationsViewModel(
     tokenRepository: TokenRepository,
-    private val accountId: Long
-) : IndexApiViewModel<Operation>(tokenRepository) {
+    private val accountId: Long,
+    navController: NavController
+) : IndexApiViewModel<Operation>(tokenRepository, navController) {
     private val _account = MutableLiveData<Account>().apply {
         value = null
     }

@@ -1,14 +1,15 @@
 package dev.ivanravasi.piggy.ui.auth.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import dev.ivanravasi.piggy.MainActivity
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.FragmentLoginBinding
@@ -17,7 +18,6 @@ import kotlinx.coroutines.runBlocking
 
 
 class LoginFragment : Fragment() {
-    private val viewModel: LoginViewModel by viewModels()
     private lateinit var binding: FragmentLoginBinding
     private lateinit var navController: NavController
     private lateinit var tokenRepository: TokenRepository
@@ -29,11 +29,13 @@ class LoginFragment : Fragment() {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         navController = findNavController()
         tokenRepository = TokenRepository(requireContext())
+        val viewModel = LoginViewModel(tokenRepository)
 
         runBlocking {
             val token = tokenRepository.getToken()
-            if (token != null)
-                navController.navigate(R.id.action_loginFragment_to_mainActivity)
+            if (token != null) {
+                startApp()
+            }
         }
 
         binding.linkRegister.apply {
@@ -49,7 +51,7 @@ class LoginFragment : Fragment() {
             val domain = binding.inputInstanceDomain.editText!!.text.toString()
             // TODO: validate domain
             viewModel.requestToken(domain, email, password, {
-                navController.navigate(R.id.action_loginFragment_to_mainActivity)
+                startApp()
             }, {
                 if (it == 422) {
                     setErrorBadCredentials()
@@ -69,5 +71,11 @@ class LoginFragment : Fragment() {
     private fun setErrorBadCredentials() {
         binding.inputEmail.error = "Bad credentials"
         binding.inputPassword.error = "Bad credentials"
+    }
+
+    private fun startApp() {
+        val intent = Intent(context, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
     }
 }

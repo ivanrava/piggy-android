@@ -1,5 +1,6 @@
 package dev.ivanravasi.piggy
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -14,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -27,13 +29,19 @@ class MainActivity : AppCompatActivity() {
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        tokenRepository = TokenRepository(this@MainActivity)
+        runBlocking {
+            if (tokenRepository.getToken() == null) {
+                val intent = Intent(this@MainActivity, AuthActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        tokenRepository = TokenRepository(this@MainActivity)
 
         val navView: BottomNavigationView = binding.navView
 

@@ -1,14 +1,16 @@
 package dev.ivanravasi.piggy.ui.categories
 
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.data.TokenRepository
 import dev.ivanravasi.piggy.ui.common.IndexApiViewModel
 import kotlinx.coroutines.launch
 
 class CategoriesViewModel(
-    tokenRepository: TokenRepository
-) : IndexApiViewModel<Category>(tokenRepository) {
+    tokenRepository: TokenRepository,
+    navController: NavController
+) : IndexApiViewModel<Category>(tokenRepository, navController) {
     init {
         viewModelScope.launch {
             hydrateApiClient()
