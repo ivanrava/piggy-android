@@ -95,8 +95,7 @@ fun makeSnackbar(viewRef: View, message: String) {
         viewRef,
         message,
         Snackbar.LENGTH_SHORT
-    ).setAnchorView(R.id.coordinator_layout)
-        .show()
+    ).show()
 }
 
 fun TextView.afterTextChangedDebounced(afterTextChanged: (String) -> Unit) {
