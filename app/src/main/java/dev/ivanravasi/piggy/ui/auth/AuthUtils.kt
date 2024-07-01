@@ -13,7 +13,5 @@ object ViewUtils {
 }
 
 object ModelUtils {
-    fun deviceName(): String {
-        return Build.MANUFACTURER + " " + Build.MODEL
-    }
+    fun deviceName(): String = "${Build.MANUFACTURER} ${Build.MODEL}"
 }
