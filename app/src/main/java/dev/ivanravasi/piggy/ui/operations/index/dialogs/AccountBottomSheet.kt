@@ -5,24 +5,21 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.ui.accounts.AccountAdapter
-import dev.ivanravasi.piggy.ui.accounts.OnAccountClickListener
 import dev.ivanravasi.piggy.ui.common.dialogs.SearchPickerBottomSheet
 
 class AccountBottomSheet(
     val accounts: List<Account>,
-    val onAccountClickListener: OnAccountClickListener
+    val onAccountClickListener: (account: Account) -> Unit
 ) : SearchPickerBottomSheet<Account, AccountAdapter.AccountViewHolder>() {
     override fun createHook() {
         submitListOrNoData(accounts)
     }
 
     override fun buildAdapter(): ListAdapter<Account, AccountAdapter.AccountViewHolder> {
-        return AccountAdapter(object : OnAccountClickListener {
-            override fun onAccountClick(account: Account) {
-                onAccountClickListener.onAccountClick(account)
-                dismiss()
-            }
-        })
+        return AccountAdapter {
+            onAccountClickListener(it)
+            dismiss()
+        }
     }
 
     override fun buildLayoutManager(): RecyclerView.LayoutManager {

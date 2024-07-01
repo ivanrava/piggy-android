@@ -14,7 +14,6 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transfer
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransferRequest
 import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddTransferBinding
-import dev.ivanravasi.piggy.ui.accounts.OnAccountClickListener
 import dev.ivanravasi.piggy.ui.backWithSnackbar
 import dev.ivanravasi.piggy.ui.operations.index.dialogs.AccountBottomSheet
 import dev.ivanravasi.piggy.ui.setAccount
@@ -68,11 +67,9 @@ class AddTransferFragment : Fragment() {
         }
 
         binding.cardAccount.cardAccount.setOnClickListener {
-            AccountBottomSheet(viewModel.accounts.value!!, object : OnAccountClickListener {
-                override fun onAccountClick(account: Account) {
-                    viewModel.toAccount.value = account
-                }
-            }).show(parentFragmentManager, "AccountBottomSheet")
+            AccountBottomSheet(viewModel.accounts.value!!) {
+                viewModel.toAccount.value = it
+            }.show(parentFragmentManager, "AccountBottomSheet")
         }
 
         binding.editDate.setToday()

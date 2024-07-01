@@ -15,7 +15,6 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.ChartRequest
 import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddChartBinding
-import dev.ivanravasi.piggy.ui.accounts.OnAccountClickListener
 import dev.ivanravasi.piggy.ui.backWithSnackbar
 import dev.ivanravasi.piggy.ui.beneficiaries.OnBeneficiaryClickListener
 import dev.ivanravasi.piggy.ui.operations.index.dialogs.AccountBottomSheet
@@ -97,11 +96,9 @@ class AddChartFragment : Fragment() {
             viewModel.category.value = it
         }
         binding.cardAccount.cardAccount.setOnClickListener {
-            AccountBottomSheet(viewModel.accounts.value!!, object : OnAccountClickListener {
-                override fun onAccountClick(account: Account) {
-                    viewModel.account.value = account
-                }
-            }).show(parentFragmentManager, "AccountBottomSheet")
+            AccountBottomSheet(viewModel.accounts.value!!) {
+                viewModel.account.value = it
+            }.show(parentFragmentManager, "AccountBottomSheet")
         }
 
         binding.buttonAdd.setOnClickListener {

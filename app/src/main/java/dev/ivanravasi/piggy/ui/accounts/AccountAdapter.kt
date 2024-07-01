@@ -11,16 +11,8 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.databinding.ListItemAccountBinding
 import dev.ivanravasi.piggy.ui.setAccount
 
-interface OnAccountClickListener {
-    fun onAccountClick(account: Account)
-}
-
 class AccountAdapter(
-    private val accountClickListener: OnAccountClickListener = object : OnAccountClickListener {
-        override fun onAccountClick(account: Account) {
-            TODO("Not yet implemented")
-        }
-    }
+    private val accountClickListener: (account: Account) -> Unit
 ) : ListAdapter<Account, AccountAdapter.AccountViewHolder>(AccountDiffCallback()) {
     override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {
         val account = getItem(position)
@@ -34,10 +26,10 @@ class AccountAdapter(
     class AccountViewHolder private constructor(
         private val binding: ListItemAccountBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(account: Account, listener: OnAccountClickListener) {
+        fun bind(account: Account, listener: (account: Account) -> Unit) {
             binding.cardAccount.setAccount(account)
             binding.cardAccount.cardAccount.setOnClickListener {
-                listener.onAccountClick(account)
+                listener(account)
             }
         }
 

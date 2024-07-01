@@ -15,13 +15,11 @@ import dev.ivanravasi.piggy.ui.common.fragments.CRUDFragment
 
 class AccountsFragment : CRUDFragment<Account, AccountAdapter.AccountViewHolder>() {
     private lateinit var navController: NavController
-    private val adapter = AccountAdapter(object : OnAccountClickListener {
-        override fun onAccountClick(account: Account) {
-            val bundle = Bundle()
-            bundle.putLong("id", account.id)
-            navController.navigate(R.id.navigation_operations, bundle)
-        }
-    })
+    private val adapter = AccountAdapter {
+        val bundle = Bundle()
+        bundle.putLong("id", it.id)
+        navController.navigate(R.id.navigation_operations, bundle)
+    }
     private lateinit var binding: FragmentAccountsBinding
 
     override fun onCreateView(

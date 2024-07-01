@@ -13,7 +13,6 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentHomeBinding
 import dev.ivanravasi.piggy.ui.accounts.AccountAdapter
-import dev.ivanravasi.piggy.ui.accounts.OnAccountClickListener
 import dev.ivanravasi.piggy.ui.charts.ChartAdapter
 import kotlinx.coroutines.runBlocking
 
@@ -69,13 +68,11 @@ class HomeFragment : Fragment() {
             }
         }
 
-        val adapter = AccountAdapter(object : OnAccountClickListener {
-            override fun onAccountClick(account: Account) {
-                val bundle = Bundle()
-                bundle.putLong("id", account.id)
-                navController.navigate(R.id.navigation_operations, bundle)
-            }
-        })
+        val adapter = AccountAdapter {
+            val bundle = Bundle()
+            bundle.putLong("id", it.id)
+            navController.navigate(R.id.navigation_operations, bundle)
+        }
         binding.listRecentAccounts.adapter = adapter
         viewModel.accounts.observe(viewLifecycleOwner) {
             adapter.submitList(it)
