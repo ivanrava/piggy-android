@@ -49,7 +49,12 @@ class LoginFragment : Fragment() {
             val email = binding.inputEmail.editText!!.text.toString()
             val password = binding.inputPassword.editText!!.text.toString()
             val domain = binding.inputInstanceDomain.editText!!.text.toString()
-            // TODO: validate domain
+            if (!domain.startsWith("http://") && !domain.startsWith("https://")) {
+                binding.inputInstanceDomain.error = "Not a valid domain"
+                return@setOnClickListener
+            } else {
+                binding.inputInstanceDomain.error = null
+            }
             viewModel.requestToken(domain, email, password, {
                 startApp()
             }, {
