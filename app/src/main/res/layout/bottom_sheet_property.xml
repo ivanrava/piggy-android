@@ -52,7 +52,7 @@
         android:id="@+id/btn_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="Delete this property"
+        android:contentDescription="@string/delete_this_property"
         app:icon="@drawable/ic_delete_24"
         />
 
@@ -63,7 +63,7 @@
         android:id="@+id/btn_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="Edit this property"
+        android:contentDescription="@string/edit_this_property"
         app:icon="@drawable/ic_icon_24"
         />
 

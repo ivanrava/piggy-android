@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter"
-        android:textSize="24sp"
+        android:textSize="20sp"
         tools:text="42,42 €" />
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/date"

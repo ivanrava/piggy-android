@@ -27,16 +27,17 @@
             android:text="@string/title_home"
             style="@style/fragment_title" />
 
-        <com.google.android.material.button.MaterialButton
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/btn_theme"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toStartOf="@id/btn_logout"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/title"
-            style="?attr/materialIconButtonFilledStyle"
-            android:id="@+id/btn_theme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="Change theme"
             app:icon="@drawable/ic_icon_24"
+            android:text="@string/material_you"
+            android:contentDescription="@string/change_theme"
             />
 
         <com.google.android.material.button.MaterialButton

@@ -66,8 +66,7 @@
             android:fontFamily="@font/josefin_slab_semibold"
             android:hint="@string/hint_instance_domain"
             android:inputType="text"
-            android:paddingBottom="@dimen/vseparation_fields"
-            android:text="https://piggy.f29.duckdns.org" />
+            android:paddingBottom="@dimen/vseparation_fields" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton

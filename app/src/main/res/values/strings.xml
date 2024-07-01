@@ -99,4 +99,22 @@
     <string name="nodata_bottom_sheet_search">There is nothing here!</string>
     <string name="search">Search...</string>
     <string name="update_account">Update account</string>
+    <string name="material_you">Material You</string>
+    <string name="change_theme">Change theme</string>
+    <string name="add_a_new_resource">Add a new resource</string>
+    <string name="add_a_transaction">Add a transaction</string>
+    <string name="new_transaction">New transaction</string>
+    <string name="add_a_transfer">Add a transfer</string>
+    <string name="delete_this_account">Delete this account</string>
+    <string name="edit_this_account">Edit this account</string>
+    <string name="delete_this_beneficiary">Delete this beneficiary</string>
+    <string name="edit_this_beneficiary">Edit this beneficiary</string>
+    <string name="delete_this_category">Delete this category</string>
+    <string name="edit_this_category">Edit this category</string>
+    <string name="delete_this_property">Delete this property</string>
+    <string name="edit_this_property">Edit this property</string>
+    <string name="delete_this_transaction">Delete this transaction</string>
+    <string name="edit_this_transaction">Edit this transaction</string>
+    <string name="delete_this_transfer">Delete this transfer</string>
+    <string name="edit_this_transfer">Edit this transfer</string>
 </resources>
