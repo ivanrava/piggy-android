@@ -18,7 +18,7 @@
             android:id="@+id/title"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_theme"
+            app:layout_constraintEnd_toStartOf="@id/switch_theme"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             style="@style/fragment_title" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/btn_theme"
+            android:id="@+id/switch_theme"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toStartOf="@id/btn_logout"
             app:layout_constraintTop_toTopOf="parent"

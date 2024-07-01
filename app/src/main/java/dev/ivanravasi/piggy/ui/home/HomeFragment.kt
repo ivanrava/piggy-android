@@ -33,7 +33,10 @@ class HomeFragment : Fragment() {
         val viewModel = HomeViewModel(dataStoreRepository, navController)
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding.btnTheme.setOnClickListener {
+        runBlocking {
+            binding.switchTheme.isChecked = dataStoreRepository.isMaterialYouEnabled() ?: false
+        }
+        binding.switchTheme.setOnCheckedChangeListener { _, _ ->
             runBlocking {
                 dataStoreRepository.toggleMaterialYou()
                 requireActivity().recreate()
