@@ -41,6 +41,7 @@
         app:layout_constraintStart_toEndOf="@id/input_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/input_name"
+        app:layout_constraintBottom_toBottomOf="@id/input_name"
         android:src="@drawable/ic_icon_24"
         app:layout_constraintDimensionRatio="w,1:1"
         style="@style/icon_picker_baseline" />
