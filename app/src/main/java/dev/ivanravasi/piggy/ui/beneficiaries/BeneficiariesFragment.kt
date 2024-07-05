@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.GsonProvider
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentBeneficiariesBinding
@@ -33,7 +33,7 @@ class BeneficiariesFragment : CRUDFragment<Beneficiary, BeneficiaryAdapter.Benef
             override fun onBeneficiaryClick(beneficiary: Beneficiary) {
                 ShowBeneficiaryBottomSheet(beneficiary, parentFragmentManager, {
                     val bundle = Bundle()
-                    bundle.putString("beneficiary", GsonBuilder().create().toJson(beneficiary))
+                    bundle.putString("beneficiary", GsonProvider.getSerializer().toJson(beneficiary))
                     findNavController().navigate(R.id.navigation_add_beneficiary, bundle)
                 }, {
                     viewModel.delete(it.id, "beneficiaries")

@@ -32,17 +32,13 @@ class AddTransferViewModel(
     private val _accounts = MutableLiveData<List<Account>>().apply { value = emptyList() }
     val accounts: LiveData<List<Account>> = _accounts
 
-    private val _fromAccount = MutableLiveData<Account>().apply { value = null }
-    val fromAccount: LiveData<Account> = _fromAccount
-
-    val toAccount = MutableLiveData<Account?>().apply { value = null }
+    val otherAccount = MutableLiveData<Account?>().apply { value = null }
 
     init {
         viewModelScope.launch {
             hydrateApiClient()
             _isLoading.value = true
             getAccounts()
-            getAccount()
             _isLoading.value = false
         }
     }
@@ -52,17 +48,8 @@ class AddTransferViewModel(
             val res = piggyApi.accounts("Bearer ${dataStoreRepository.getToken()}")
             if (res.isSuccessful) {
                 _accounts.value = res.body()!!.data.filter { it.id != accountId }.sortedBy { it.name }
-                toAccount.value = accounts.value!!.first()
+                otherAccount.value = otherAccount.value ?: accounts.value!!.first()
             }
-        }
-    }
-
-    // TODO: try to avoid this call by grabbing the object from the previous fragment
-    private suspend fun getAccount() {
-        tryApiRequest("transactions.account") {
-            val response = piggyApi.account("Bearer ${dataStoreRepository.getToken()}", accountId)
-            if (response.isSuccessful)
-                _fromAccount.value = response.body()!!.data
         }
     }
 

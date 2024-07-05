@@ -8,12 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.GsonProvider
 import dev.ivanravasi.piggy.api.dicebear.loadBeneficiary
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
-import dev.ivanravasi.piggy.api.piggy.bodies.entities.BudgetDeserializer
-import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transaction
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransactionRequest
 import dev.ivanravasi.piggy.data.DataStoreRepository
@@ -33,10 +32,10 @@ class AddTransactionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAddTransactionBinding.inflate(inflater, container, false)
+        val account = GsonProvider.getDeserializer().fromJson(requireArguments().getString("account"), Account::class.java)
         val viewModel = ViewModelProvider(this, AddTransactionViewModel.Factory(
             DataStoreRepository(requireContext()),
-            // FIXME: rename to account_id
-            requireArguments().getLong("id"),
+            account,
             findNavController()
         )
         )[AddTransactionViewModel::class.java]
@@ -97,10 +96,7 @@ class AddTransactionFragment : Fragment() {
 
         val transactionStr = arguments?.getString("transaction")
         transactionStr?.let {
-            transactionToUpdate = GsonBuilder()
-                .registerTypeAdapter(CategoryBudget::class.java, BudgetDeserializer())
-                .create()
-                .fromJson(it, Transaction::class.java)
+            transactionToUpdate = GsonProvider.getDeserializer().fromJson(it, Transaction::class.java)
             viewModel.beneficiary.value = transactionToUpdate!!.beneficiary
             viewModel.category.value = transactionToUpdate!!.category
 
@@ -124,7 +120,7 @@ class AddTransactionFragment : Fragment() {
                 return@setOnClickListener
             }
             val request = TransactionRequest(
-                requireArguments().getLong("id"),
+                account.id,
                 viewModel.beneficiary.value!!,
                 viewModel.category.value!!,
                 binding.editDate.date(),

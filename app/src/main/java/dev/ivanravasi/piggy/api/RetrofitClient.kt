@@ -15,9 +15,7 @@ object RetrofitClient {
             .baseUrl(domain)
             .addConverterFactory(GsonConverterFactory
                 .create(
-                    GsonBuilder()
-                        .registerTypeAdapter(CategoryBudget::class.java, BudgetDeserializer())
-                        .create()
+                    GsonProvider.getDeserializer()
                 )
             )
             .build()

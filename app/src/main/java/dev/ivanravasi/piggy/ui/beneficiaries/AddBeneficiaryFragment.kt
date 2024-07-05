@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.GsonProvider
 import dev.ivanravasi.piggy.api.dicebear.loadAvatar
 import dev.ivanravasi.piggy.api.dicebear.loadBeneficiary
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
@@ -57,7 +57,7 @@ class AddBeneficiaryFragment : Fragment() {
         // Set initial values from editable (if present)
         val beneficiaryStr = arguments?.getString("beneficiary")
         beneficiaryStr?.let {
-            beneficiaryToUpdate = GsonBuilder().create().fromJson(it, Beneficiary::class.java)
+            beneficiaryToUpdate = GsonProvider.getDeserializer().fromJson(it, Beneficiary::class.java)
 
             binding.beneficiaryType.check(when (beneficiaryToUpdate!!.type()) {
                 BeneficiaryType.PEOPLE -> R.id.people

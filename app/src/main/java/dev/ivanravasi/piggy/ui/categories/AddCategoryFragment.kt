@@ -9,10 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.GsonProvider
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Budget
-import dev.ivanravasi.piggy.api.piggy.bodies.entities.BudgetDeserializer
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryType
@@ -112,9 +111,7 @@ class AddCategoryFragment : Fragment() {
         // Set initial values from editable (if present)
         val categoryStr = arguments?.getString("category")
         categoryStr?.let {
-            categoryToUpdate = GsonBuilder()
-                .registerTypeAdapter(CategoryBudget::class.java, BudgetDeserializer())
-                .create().fromJson(it, Category::class.java)
+            categoryToUpdate = GsonProvider.getDeserializer().fromJson(it, Category::class.java)
 
             binding.addTitle.text = requireContext().getString(R.string.button_update_category)
             binding.buttonAdd.text = requireContext().getString(R.string.button_update_category)

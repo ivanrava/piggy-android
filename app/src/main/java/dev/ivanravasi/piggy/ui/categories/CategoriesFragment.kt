@@ -6,12 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButtonToggleGroup
-import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
-import dev.ivanravasi.piggy.api.piggy.bodies.entities.AnnotationExclusionStrategy
-import dev.ivanravasi.piggy.api.piggy.bodies.entities.BudgetSerializer
+import dev.ivanravasi.piggy.api.GsonProvider
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
-import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryType
 import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentCategoriesBinding
@@ -25,10 +22,7 @@ class CategoriesFragment : CRUDFragment<Category, CategoryAdapter.CategoryViewHo
         override fun onCategoryClick(category: Category) {
             ShowCategoryBottomSheet(category, parentFragmentManager, {
                 val bundle = Bundle()
-                bundle.putString("category", GsonBuilder()
-                    .setExclusionStrategies(AnnotationExclusionStrategy())
-                    .registerTypeAdapter(CategoryBudget::class.java, BudgetSerializer())
-                    .create().toJson(category))
+                bundle.putString("category", GsonProvider.getSerializer().toJson(category))
                 findNavController().navigate(R.id.navigation_add_category, bundle)
             }, {
                 viewModel.delete(category.id, "categories")

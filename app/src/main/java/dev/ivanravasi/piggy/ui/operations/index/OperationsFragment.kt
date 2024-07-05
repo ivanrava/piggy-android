@@ -6,11 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.GsonProvider
 import dev.ivanravasi.piggy.api.iconify.loadIconify
-import dev.ivanravasi.piggy.api.piggy.bodies.entities.BudgetSerializer
-import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
+import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Operation
 import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentOperationsBinding
@@ -29,9 +28,8 @@ class OperationsFragment : CRUDFragment<Operation, OperationAdapter.OperationVie
     private val adapter = OperationAdapter({
         ShowTransactionBottomSheet(it, parentFragmentManager, {
             val bundle = requireArguments()
-            bundle.putString("transaction", GsonBuilder()
-                .registerTypeAdapter(CategoryBudget::class.java, BudgetSerializer())
-                .create().toJson(it))
+            bundle.putString("transaction", GsonProvider.getSerializer().toJson(it))
+            bundle.putString("account", GsonProvider.getSerializer().toJson(viewModel.account.value))
             findNavController().navigate(R.id.navigation_add_transaction, bundle)
         }, {
             viewModel.delete(it.id, "transactions")
@@ -40,7 +38,8 @@ class OperationsFragment : CRUDFragment<Operation, OperationAdapter.OperationVie
     }, {
         ShowTransferBottomSheet(viewModel.account.value!!, it, parentFragmentManager, {
             val bundle = requireArguments()
-            bundle.putString("transfer", GsonBuilder().create().toJson(it))
+            bundle.putString("transfer", GsonProvider.getSerializer().toJson(it))
+            bundle.putString("account", GsonProvider.getSerializer().toJson(viewModel.account.value))
             findNavController().navigate(R.id.navigation_add_transfer, bundle)
         }, {
             viewModel.delete(it.id, "transfers")
@@ -53,9 +52,10 @@ class OperationsFragment : CRUDFragment<Operation, OperationAdapter.OperationVie
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentOperationsBinding.inflate(inflater, container, false)
+        val account = GsonProvider.getDeserializer().fromJson(requireArguments().getString("account"), Account::class.java)
         viewModel = OperationsViewModel(
             DataStoreRepository(requireContext()),
-            requireArguments().getLong("id"),
+            account.id,
             findNavController()
         )
 
@@ -92,11 +92,7 @@ class OperationsFragment : CRUDFragment<Operation, OperationAdapter.OperationVie
             binding.titleCard.setOnClickListener { _ ->
                 ShowAccountBottomSheet(it, parentFragmentManager, {
                     val bundle = Bundle()
-                    bundle.putString("account", GsonBuilder()
-                        .registerTypeAdapter(CategoryBudget::class.java, BudgetSerializer())
-                        .create()
-                        .toJson(it)
-                    )
+                    bundle.putString("account", GsonProvider.getSerializer().toJson(it))
                     findNavController().navigate(R.id.navigation_add_account, bundle)
                 }, {
                     viewModel.delete(it.id, "accounts")

@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.GsonProvider
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.PropertyRequest
 import dev.ivanravasi.piggy.data.DataStoreRepository
@@ -44,7 +44,7 @@ class AddPropertyFragment : Fragment() {
 
         val propertyStr = arguments?.getString("property")
         propertyStr?.let {
-            propertyToUpdate = GsonBuilder().create().fromJson(it, Property::class.java)
+            propertyToUpdate = GsonProvider.getSerializer().fromJson(it, Property::class.java)
 
             binding.editName.setText(propertyToUpdate!!.name)
             binding.pickerIcon.loadIconify(propertyToUpdate!!.icon)

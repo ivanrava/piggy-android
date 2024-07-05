@@ -21,7 +21,7 @@ import retrofit2.Response
 
 class AddTransactionViewModel(
     private val dataStoreRepository: DataStoreRepository,
-    private val accountId: Long,
+    private val accountCached: Account,
     navController: NavController
 ) : StoreApiViewModel<Transaction, TransactionRequest, TransactionValidationError.Errors>(
     dataStoreRepository, navController
@@ -73,26 +73,26 @@ class AddTransactionViewModel(
     // TODO: try to avoid this call by grabbing the object from the previous fragment
     private suspend fun getAccount() {
         tryApiRequest("transactions.account") {
-            val response = piggyApi.account("Bearer ${dataStoreRepository.getToken()}", accountId)
+            val response = piggyApi.account("Bearer ${dataStoreRepository.getToken()}", accountCached.id)
             if (response.isSuccessful) {
                 _account.value = response.body()!!.data
                 val mostFrequentTransaction = _account.value!!.transactions
                     .groupBy { it.beneficiary.name + it.category.name }
                     .values.maxBy { it.count() }
                     .firstOrNull()
-                beneficiary.value = mostFrequentTransaction?.beneficiary
-                category.value = mostFrequentTransaction?.category
+                beneficiary.value = beneficiary.value ?: mostFrequentTransaction?.beneficiary
+                category.value = category.value ?: mostFrequentTransaction?.category
             }
         }
     }
 
     class Factory(
         private val dataStoreRepository: DataStoreRepository,
-        private val accountId: Long,
+        private val account: Account,
         private val navController: NavController
     ): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AddTransactionViewModel(dataStoreRepository, accountId, navController) as T
+            return AddTransactionViewModel(dataStoreRepository, account, navController) as T
         }
     }
 

@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.GsonProvider
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Transfer
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransferRequest
@@ -23,6 +23,7 @@ class AddTransferFragment : Fragment() {
     private var transferToUpdate: Transfer? = null
     private lateinit var binding: FragmentAddTransferBinding
     private lateinit var viewModel: AddTransferViewModel
+    private lateinit var account: Account
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +36,7 @@ class AddTransferFragment : Fragment() {
             findNavController()
         )
         )[AddTransferViewModel::class.java]
+        account = GsonProvider.getDeserializer().fromJson(requireArguments().getString("account"), Account::class.java)
 
         viewModel.errors.observe(viewLifecycleOwner) {
             binding.inputDate.error = it.date.first()
@@ -48,7 +50,7 @@ class AddTransferFragment : Fragment() {
             if (it) binding.loadingProgress.show()
             else {
                 binding.loadingProgress.hide()
-                if (viewModel.toAccount.value == null) {
+                if (viewModel.otherAccount.value == null) {
                     backWithSnackbar(binding.root, "You do not have any other accounts to make a transfer with!")
                 }
             }
@@ -56,19 +58,16 @@ class AddTransferFragment : Fragment() {
 
         binding.toggleTransferType.check(R.id.button_outcome)
 
-        viewModel.toAccount.observe(viewLifecycleOwner) {to ->
+        viewModel.otherAccount.observe(viewLifecycleOwner) { to ->
             if (to != null)
                 setAccount(to)
 
             updateCheckedSwitchVisibility()
         }
-        viewModel.fromAccount.observe(viewLifecycleOwner) {
-            updateCheckedSwitchVisibility()
-        }
 
         binding.cardAccount.cardAccount.setOnClickListener {
             AccountBottomSheet(viewModel.accounts.value!!) {
-                viewModel.toAccount.value = it
+                viewModel.otherAccount.value = it
             }.show(parentFragmentManager, "AccountBottomSheet")
         }
 
@@ -76,8 +75,16 @@ class AddTransferFragment : Fragment() {
 
         val transferStr = arguments?.getString("transfer")
         transferStr?.let {
-            transferToUpdate = GsonBuilder().create().fromJson(it, Transfer::class.java)
-            viewModel.toAccount.value = transferToUpdate!!.from
+            transferToUpdate = GsonProvider.getDeserializer().fromJson(it, Transfer::class.java)
+            val from = transferToUpdate!!.from
+            val to = transferToUpdate!!.to
+            if (from == null) {
+                viewModel.otherAccount.value = to!!
+                binding.toggleTransferType.check(R.id.button_outcome)
+            } else {
+                viewModel.otherAccount.value = from
+                binding.toggleTransferType.check(R.id.button_income)
+            }
 
             binding.editDate.setText(transferToUpdate!!.date)
             binding.editAmount.setText(transferToUpdate!!.amount)
@@ -90,7 +97,7 @@ class AddTransferFragment : Fragment() {
         binding.buttonAdd.setOnClickListener {
             val request = TransferRequest(
                 requireArguments().getLong("id"),
-                viewModel.toAccount.value!!.id,
+                viewModel.otherAccount.value!!.id,
                 binding.editDate.date(),
                 binding.editAmount.text.toString(),
                 binding.editNotes.text.toString(),
@@ -116,8 +123,8 @@ class AddTransferFragment : Fragment() {
 
     private fun updateCheckedSwitchVisibility() {
         if (
-            (viewModel.toAccount.value != null && viewModel.toAccount.value!!.type == "Bank account")
-            || (viewModel.fromAccount.value != null && viewModel.fromAccount.value!!.type == "Bank account")
+            (viewModel.otherAccount.value != null && viewModel.otherAccount.value!!.type == "Bank account")
+            || (account.type == "Bank account")
         ) {
             binding.switchChecked.isChecked = false
             binding.switchChecked.visibility = View.VISIBLE

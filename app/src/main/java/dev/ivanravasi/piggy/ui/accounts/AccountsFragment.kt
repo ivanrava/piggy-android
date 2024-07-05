@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.ChipGroup
 import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.GsonProvider
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentAccountsBinding
@@ -17,7 +18,7 @@ class AccountsFragment : CRUDFragment<Account, AccountAdapter.AccountViewHolder>
     private lateinit var navController: NavController
     private val adapter = AccountAdapter {
         val bundle = Bundle()
-        bundle.putLong("id", it.id)
+        bundle.putString("account", GsonProvider.getSerializer().toJson(it))
         navController.navigate(R.id.navigation_operations, bundle)
     }
     private lateinit var binding: FragmentAccountsBinding

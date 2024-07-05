@@ -11,12 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
-import com.google.gson.GsonBuilder
 import com.skydoves.colorpickerview.ColorEnvelope
 import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.GsonProvider
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
-import dev.ivanravasi.piggy.api.piggy.bodies.entities.BudgetDeserializer
-import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
 import dev.ivanravasi.piggy.api.piggy.bodies.requests.AccountRequest
 import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddAccountBinding
@@ -73,10 +71,7 @@ class AddAccountFragment : Fragment() {
 
         val accountStr = arguments?.getString("account")
         accountStr?.let {
-            accountToUpdate = GsonBuilder()
-                .registerTypeAdapter(CategoryBudget::class.java, BudgetDeserializer())
-                .create()
-                .fromJson(it, Account::class.java)
+            accountToUpdate = GsonProvider.getDeserializer().fromJson(it, Account::class.java)
 
             binding.editName.setText(accountToUpdate!!.name)
             binding.editAccountType.setText(accountToUpdate!!.type)

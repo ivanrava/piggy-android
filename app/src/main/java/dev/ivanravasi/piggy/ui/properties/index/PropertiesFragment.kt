@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.google.gson.GsonBuilder
 import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.GsonProvider
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentPropertiesBinding
@@ -25,7 +25,7 @@ class PropertiesFragment : CRUDFragment<Property, PropertyAdapter.PropertyViewHo
             override fun onPropertyClick(property: Property) {
                 ShowPropertyBottomSheet(property, parentFragmentManager, {
                     val bundle = Bundle()
-                    bundle.putString("property", GsonBuilder().create().toJson(property))
+                    bundle.putString("property", GsonProvider.getSerializer(true).toJson(property))
                     findNavController().navigate(R.id.navigation_add_property, bundle)
                 }, {
                     viewModel.delete(it.id, "properties")
