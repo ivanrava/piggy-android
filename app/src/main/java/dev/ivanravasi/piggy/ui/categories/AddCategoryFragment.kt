@@ -121,6 +121,7 @@ class AddCategoryFragment : Fragment() {
                 binding.pickerCategory.setCategory(categoryToUpdate!!.parent!!)
                 binding.switchVirtual.isChecked = categoryToUpdate!!.virtual
                 binding.chipMonthlyFixed.visibility = View.GONE
+                binding.layoutBudget.visibility = View.VISIBLE
                 when (categoryToUpdate!!.budget!!) {
                     is CategoryBudget.Monthly -> {
                         binding.chipsBudgetType.check(R.id.chip_monthly_custom)
