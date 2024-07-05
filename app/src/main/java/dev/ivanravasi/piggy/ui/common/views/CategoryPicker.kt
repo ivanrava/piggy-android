@@ -19,6 +19,8 @@ class CategoryPicker(
     context: Context,
     attrs: AttributeSet
 ): ConstraintLayout(context, attrs) {
+    private var category: Category? = null
+
     private val categoryName: MaterialTextView
     private val categoryIcon: ShapeableImageView
     private val categoryHint: MaterialTextView
@@ -73,6 +75,7 @@ class CategoryPicker(
     }
 
     fun setCategory(category: Category) {
+        this.category = category
         categoryName.text = category.name
         categoryIcon.loadIconify(category.icon, categoryName.currentTextColor)
         setError(null)
@@ -88,6 +91,10 @@ class CategoryPicker(
 
     fun disableDeselection() {
         card.isLongClickable = false
+    }
+
+    fun emit() {
+        listeners.forEach{ it(category) }
     }
 
     fun setError(message: String?) {
