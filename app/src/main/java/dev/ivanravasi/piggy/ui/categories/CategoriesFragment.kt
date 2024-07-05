@@ -22,7 +22,7 @@ class CategoriesFragment : CRUDFragment<Category, CategoryAdapter.CategoryViewHo
         override fun onCategoryClick(category: Category) {
             ShowCategoryBottomSheet(category, parentFragmentManager, {
                 val bundle = Bundle()
-                bundle.putString("category", GsonProvider.getSerializer().toJson(category))
+                bundle.putString("category", GsonProvider.getSerializer(true).toJson(category))
                 findNavController().navigate(R.id.navigation_add_category, bundle)
             }, {
                 viewModel.delete(category.id, "categories")
