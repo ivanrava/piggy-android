@@ -25,7 +25,7 @@ class TextInputEditDate(
         setOnClickListener {
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
-                    .setTitleText("Select variation date")
+                    .setTitleText("Select a date")
                     .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                     .build()
             getFragmentManager()?.let { fragmentManager ->
