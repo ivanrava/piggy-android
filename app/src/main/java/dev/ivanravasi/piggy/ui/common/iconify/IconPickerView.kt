@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.imageview.ShapeableImageView
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.iconify.loadIconify
@@ -15,7 +16,11 @@ class IconPickerView(
     context: Context,
     attrs: AttributeSet
 ): ShapeableImageView(context, attrs) {
-    private val iconColor = ContextCompat.getColor(context, R.color.md_theme_onPrimary)
+    private val iconColor = MaterialColors.getColor(
+                    context,
+                    com.google.android.material.R.attr.colorOnBackground,
+                    context.getColor(R.color.md_theme_onBackground)
+                )
     private val errorColor = ContextCompat.getColor(context, R.color.md_theme_error)
     private val listeners: MutableList<(icon: String) -> Unit> = mutableListOf()
 
