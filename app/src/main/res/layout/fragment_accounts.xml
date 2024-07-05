@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/fragment_padding"
+    android:paddingHorizontal="@dimen/fragment_padding"
+    android:paddingTop="@dimen/fragment_padding"
     tools:context=".ui.accounts.AccountsFragment">
 
     <com.google.android.material.textview.MaterialTextView
@@ -71,7 +72,7 @@
         style="@style/progress_initial_api_request" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="8dp"
+        android:layout_marginVertical="8dp"
         app:layout_constraintTop_toBottomOf="@+id/chip_container"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
