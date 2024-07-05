@@ -96,8 +96,8 @@ class AddTransferFragment : Fragment() {
 
         binding.buttonAdd.setOnClickListener {
             val request = TransferRequest(
-                requireArguments().getLong("id"),
-                viewModel.otherAccount.value!!.id,
+                if (binding.toggleTransferType.checkedButtonId == R.id.button_income) viewModel.otherAccount.value!!.id else account.id,
+                if (binding.toggleTransferType.checkedButtonId == R.id.button_income) account.id else viewModel.otherAccount.value!!.id,
                 binding.editDate.date(),
                 binding.editAmount.text.toString(),
                 binding.editNotes.text.toString(),
