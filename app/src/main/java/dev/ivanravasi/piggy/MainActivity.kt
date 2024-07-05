@@ -56,12 +56,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.fabTransaction.setOnClickListener {
-            navController.navigate(R.id.navigation_add_transaction, getCurrentBundle())
+            val bundle = getCurrentBundle()
+            bundle!!.remove("transaction")
+            navController.navigate(R.id.navigation_add_transaction, bundle)
             binding.fabTransaction.hide()
             binding.fabTransfer.hide()
         }
         binding.fabTransfer.setOnClickListener {
-            navController.navigate(R.id.navigation_add_transfer, getCurrentBundle())
+            val bundle = getCurrentBundle()
+            bundle!!.remove("transfer")
+            navController.navigate(R.id.navigation_add_transfer, bundle)
             binding.fabTransaction.hide()
             binding.fabTransfer.hide()
         }
