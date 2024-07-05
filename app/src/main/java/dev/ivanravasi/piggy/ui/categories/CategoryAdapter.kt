@@ -1,5 +1,6 @@
 package dev.ivanravasi.piggy.ui.categories
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.textview.MaterialTextView
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.iconify.loadIconify
@@ -71,8 +73,20 @@ class CategoryAdapter(
                 }
                 binding.budgetBar.hide()
             } else {
-                binding.btnShowChildren.visibility = View.GONE
-                binding.cardCategory.setCardBackgroundColor(binding.root.context.getColor(R.color.md_theme_surfaceContainer))
+                if (category.virtual) {
+                    binding.btnShowChildren.icon = AppCompatResources.getDrawable(
+                        binding.root.context,
+                        R.drawable.ic_virtual_24
+                    )
+                    binding.btnShowChildren.isEnabled = false
+                } else {
+                    binding.btnShowChildren.visibility = View.GONE
+                }
+                binding.cardCategory.setCardBackgroundColor(MaterialColors.getColor(
+                    binding.root.context,
+                    com.google.android.material.R.attr.colorSurfaceContainer,
+                    binding.root.context.getColor(R.color.md_theme_surfaceContainer)
+                ))
                 binding.children.adapter = null
 
                 if (category.budget != null && category.expenditures != null) {
