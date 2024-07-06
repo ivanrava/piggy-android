@@ -1,5 +1,6 @@
 package dev.ivanravasi.piggy.ui.operations.add
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -70,7 +71,6 @@ class AddTransactionViewModel(
         }
     }
 
-    // TODO: try to avoid this call by grabbing the object from the previous fragment
     private suspend fun getAccount() {
         tryApiRequest("transactions.account") {
             val response = piggyApi.account("Bearer ${dataStoreRepository.getToken()}", accountCached.id)
@@ -98,13 +98,11 @@ class AddTransactionViewModel(
 
     override fun validate(request: TransactionRequest): Boolean {
         if (beneficiary.value == null) {
-            // FIXME: the only error is the beneficiary id
             _errors.value!!.beneficiary.name = mutableListOf("The beneficiary is required")
             _errors.postValue(_errors.value)
             return false
         }
         if (category.value == null) {
-            // FIXME: the only error is the beneficiary id
             _errors.value!!.category.name = mutableListOf("The category is required")
             _errors.postValue(_errors.value)
             return false

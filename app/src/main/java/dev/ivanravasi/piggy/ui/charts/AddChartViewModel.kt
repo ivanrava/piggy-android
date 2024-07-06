@@ -72,7 +72,6 @@ class AddChartViewModel(
         }
     }
 
-    // TODO: try to avoid this call by grabbing the object from the previous fragment
     private suspend fun getAccounts() {
         tryApiRequest("charts.accounts") {
             val response = piggyApi.accounts("Bearer ${dataStoreRepository.getToken()}")

@@ -37,7 +37,7 @@ class VariationViewModel(
         request: PropertyVariationRequest,
         resourceId: Long
     ): Response<ObjectResponse<Property.PropertyVariation>> {
-        // TODO: implement
+        // TODO: Unimplemented
         return piggyApi.variationAdd("Bearer ${dataStoreRepository.getToken()}", request.propertyId, request)
     }
 
