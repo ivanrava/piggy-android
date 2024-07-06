@@ -50,6 +50,7 @@ class AddPropertyFragment : Fragment() {
             binding.pickerIcon.loadIconify(propertyToUpdate!!.icon)
 
             binding.editInitialValue.setText(propertyToUpdate!!.initialValue)
+            binding.inputInitialValue.visibility = View.GONE
             binding.editDescription.setText(propertyToUpdate!!.description)
 
             binding.buttonAdd.text = requireContext().getString(R.string.update_property)
