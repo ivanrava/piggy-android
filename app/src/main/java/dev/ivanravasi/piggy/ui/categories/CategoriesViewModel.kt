@@ -6,6 +6,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
 import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.ui.common.viewmodels.IndexApiViewModel
 import kotlinx.coroutines.launch
+import java.time.Year
 
 class CategoriesViewModel(
     dataStoreRepository: DataStoreRepository,
@@ -27,8 +28,7 @@ class CategoriesViewModel(
 
     private suspend fun getBudgets() {
         tryApiRequest("budget") {
-            // TODO: parametrize with current year
-            val response = piggyApi.budget("Bearer ${dataStoreRepository.getToken()}", 2024)
+            val response = piggyApi.budget("Bearer ${dataStoreRepository.getToken()}", Year.now().value)
             if (response.isSuccessful) {
                 _objList.value = _objList.value!!.map { parent ->
                     parent.children = parent.children.map { child ->
