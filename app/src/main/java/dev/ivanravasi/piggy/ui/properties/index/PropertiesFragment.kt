@@ -22,23 +22,22 @@ class PropertiesFragment : CRUDFragment<Property, PropertyAdapter.PropertyViewHo
         val binding = FragmentPropertiesBinding.inflate(inflater, container, false)
         val viewModel = PropertiesViewModel(DataStoreRepository(requireContext()), findNavController())
 
-        val adapter = PropertyAdapter(object : OnPropertyClickListener {
-            override fun onPropertyClick(property: Property) {
-                ShowPropertyBottomSheet(property, parentFragmentManager, {
-                    val bundle = Bundle()
-                    bundle.putString("property", GsonProvider.getSerializer(true).toJson(property))
-                    findNavController().navigate(R.id.navigation_add_property, bundle)
-                }, {
-                    confirmDeleteWithDialog(it.name) {
-                        viewModel.delete(it.id, "properties")
-                        makeSnackbar(binding.root, "Property \"${it.name}\" deleted successfully")
-                    }
-                }).show()
-            }
-        }) {
+        val adapter = PropertyAdapter({
             makeSnackbar(binding.root, "Property variation added successfully")
             viewModel.refreshAll()
+        }) { property ->
+            ShowPropertyBottomSheet(property, parentFragmentManager, {
+                val bundle = Bundle()
+                bundle.putString("property", GsonProvider.getSerializer(true).toJson(property))
+                findNavController().navigate(R.id.navigation_add_property, bundle)
+            }, {
+                confirmDeleteWithDialog(it.name) {
+                    viewModel.delete(it.id, "properties")
+                    makeSnackbar(binding.root, "Property \"${it.name}\" deleted successfully")
+                }
+            }).show()
         }
+
         setup(
             list = binding.listProperties,
             adapter = adapter,

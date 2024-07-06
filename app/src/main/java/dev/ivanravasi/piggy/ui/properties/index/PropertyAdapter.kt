@@ -14,13 +14,9 @@ import dev.ivanravasi.piggy.databinding.ListItemPropertyBinding
 import dev.ivanravasi.piggy.ui.properties.index.variations.VariationBottomSheet
 import dev.ivanravasi.piggy.ui.setCurrency
 
-interface OnPropertyClickListener {
-    fun onPropertyClick(property: Property)
-}
-
 class PropertyAdapter(
-    private val propertyClickListener: OnPropertyClickListener,
-    private val onVariationAdded: () -> Unit
+    private val onVariationAdded: () -> Unit,
+    private val propertyClickListener: (property: Property) -> Unit
 ): ListAdapter<Property, PropertyAdapter.PropertyViewHolder>(PropertyDiffCallback()) {
     override fun onBindViewHolder(holder: PropertyViewHolder, position: Int) {
         val property = getItem(position)
@@ -34,7 +30,7 @@ class PropertyAdapter(
     class PropertyViewHolder private constructor(
         private val binding: ListItemPropertyBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(property: Property, listener: OnPropertyClickListener, onVariationAdded: () -> Unit) {
+        fun bind(property: Property, listener: (property: Property) -> Unit, onVariationAdded: () -> Unit) {
             binding.propertyIcon.loadIconify(property.icon, binding.propertyName.currentTextColor)
             binding.propertyName.text = property.name
             binding.propertyDescription.text = property.description
@@ -43,7 +39,7 @@ class PropertyAdapter(
             }
             binding.propertyValue.setCurrency(property.value)
             binding.cardProperty.setOnClickListener {
-                listener.onPropertyClick(property)
+                listener(property)
             }
 
             binding.btnPlus.setOnClickListener {
