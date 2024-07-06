@@ -18,7 +18,6 @@ import dev.ivanravasi.piggy.api.piggy.bodies.requests.TransactionRequest
 import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentAddTransactionBinding
 import dev.ivanravasi.piggy.ui.backWithSnackbar
-import dev.ivanravasi.piggy.ui.beneficiaries.OnBeneficiaryClickListener
 import dev.ivanravasi.piggy.ui.operations.add.dialogs.SearchBeneficiaryBottomSheet
 
 
@@ -79,11 +78,9 @@ class AddTransactionFragment : Fragment() {
         }
 
         binding.cardBeneficiary.beneficiaryImg.setOnClickListener {
-            SearchBeneficiaryBottomSheet(viewModel.beneficiaries.value!!, object : OnBeneficiaryClickListener {
-                override fun onBeneficiaryClick(beneficiary: Beneficiary) {
-                    viewModel.beneficiary.value = beneficiary
-                }
-            }).show(parentFragmentManager, "BeneficiaryBottomSheet")
+            SearchBeneficiaryBottomSheet(viewModel.beneficiaries.value!!) {
+                viewModel.beneficiary.value = it
+            }.show(parentFragmentManager, "BeneficiaryBottomSheet")
         }
         viewModel.categories.observe(viewLifecycleOwner) {
             binding.pickCategory.updateCategories(it)

@@ -12,7 +12,6 @@ import com.google.android.material.textview.MaterialTextView
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.iconify.loadIconify
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Category
-import dev.ivanravasi.piggy.ui.categories.OnCategoryClickListener
 import dev.ivanravasi.piggy.ui.operations.add.dialogs.SearchCategoryBottomSheet
 
 class CategoryPicker(
@@ -44,18 +43,16 @@ class CategoryPicker(
 
         card.setOnClickListener {
             getFragmentManager()?.let { fragmentManager ->
-                SearchCategoryBottomSheet(categories, object : OnCategoryClickListener {
-                    override fun onCategoryClick(category: Category) {
-                        setCategory(category)
-                        if (card.isLongClickable) {
-                            categoryHint.text = context.getString(
-                                R.string.hint_long_press_to_clear,
-                                categoryHint.text
-                            )
-                        }
-                        listeners.forEach { it(category) }
+                SearchCategoryBottomSheet(categories) { category ->
+                    setCategory(category)
+                    if (card.isLongClickable) {
+                        categoryHint.text = context.getString(
+                            R.string.hint_long_press_to_clear,
+                            categoryHint.text
+                        )
                     }
-                }).show(fragmentManager, "CategoryBottomSheet")
+                    listeners.forEach { it(category) }
+                }.show(fragmentManager, "CategoryBottomSheet")
             }
         }
         card.setOnLongClickListener {

@@ -9,18 +9,8 @@ import dev.ivanravasi.piggy.api.dicebear.loadBeneficiary
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.databinding.ListItemBeneficiaryBinding
 
-interface OnBeneficiaryClickListener {
-    fun onBeneficiaryClick(beneficiary: Beneficiary)
-}
-
-
 class BeneficiaryAdapter(
-    private val beneficiaryClickListener: OnBeneficiaryClickListener = object :
-        OnBeneficiaryClickListener {
-        override fun onBeneficiaryClick(beneficiary: Beneficiary) {
-            TODO("Not yet implemented")
-        }
-    }
+    private val beneficiaryClickListener: (beneficiary: Beneficiary) -> Unit
 ): ListAdapter<Beneficiary, BeneficiaryAdapter.BeneficiaryViewHolder>(BeneficiaryDiffCallback()) {
     override fun onBindViewHolder(holder: BeneficiaryViewHolder, position: Int) {
         val beneficiary = getItem(position)
@@ -34,10 +24,10 @@ class BeneficiaryAdapter(
     class BeneficiaryViewHolder private constructor(
         private val binding: ListItemBeneficiaryBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(beneficiary: Beneficiary, listener: OnBeneficiaryClickListener) {
+        fun bind(beneficiary: Beneficiary, listener: (beneficiary: Beneficiary) -> Unit) {
             binding.cardBeneficiary.beneficiaryImg.loadBeneficiary(img = beneficiary.img, seed = beneficiary.name)
             binding.cardBeneficiary.beneficiaryImg.setOnClickListener {
-                listener.onBeneficiaryClick(beneficiary)
+                listener(beneficiary)
             }
         }
 

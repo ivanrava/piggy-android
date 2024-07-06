@@ -29,18 +29,16 @@ class BeneficiariesFragment : CRUDFragment<Beneficiary, BeneficiaryAdapter.Benef
         val manager = GridLayoutManager(activity, SPAN_COUNT)
         binding.listBeneficiaries.layoutManager = manager
 
-        val adapter = BeneficiaryAdapter(object : OnBeneficiaryClickListener {
-            override fun onBeneficiaryClick(beneficiary: Beneficiary) {
-                ShowBeneficiaryBottomSheet(beneficiary, parentFragmentManager, {
-                    val bundle = Bundle()
-                    bundle.putString("beneficiary", GsonProvider.getSerializer().toJson(beneficiary))
-                    findNavController().navigate(R.id.navigation_add_beneficiary, bundle)
-                }, {
-                    viewModel.delete(it.id, "beneficiaries")
-                    makeSnackbar(binding.root, "Beneficiary \"${it.name}\" deleted successfully")
-                }).show()
-            }
-        })
+        val adapter = BeneficiaryAdapter { beneficiary ->
+            ShowBeneficiaryBottomSheet(beneficiary, parentFragmentManager, {
+                val bundle = Bundle()
+                bundle.putString("beneficiary", GsonProvider.getSerializer().toJson(beneficiary))
+                findNavController().navigate(R.id.navigation_add_beneficiary, bundle)
+            }, {
+                viewModel.delete(it.id, "beneficiaries")
+                makeSnackbar(binding.root, "Beneficiary \"${it.name}\" deleted successfully")
+            }).show()
+        }
         setup(
             list = binding.listBeneficiaries,
             adapter = adapter,

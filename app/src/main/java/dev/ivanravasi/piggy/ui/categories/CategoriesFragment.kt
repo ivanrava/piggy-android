@@ -18,18 +18,16 @@ import dev.ivanravasi.piggy.ui.makeSnackbar
 
 class CategoriesFragment : CRUDFragment<Category, CategoryAdapter.CategoryViewHolder>() {
     private lateinit var viewModel: CategoriesViewModel
-    private val adapter = CategoryAdapter(object : OnCategoryClickListener {
-        override fun onCategoryClick(category: Category) {
-            ShowCategoryBottomSheet(category, parentFragmentManager, {
-                val bundle = Bundle()
-                bundle.putString("category", GsonProvider.getSerializer(true).toJson(category))
-                findNavController().navigate(R.id.navigation_add_category, bundle)
-            }, {
-                viewModel.delete(category.id, "categories")
-                makeSnackbar(binding.root, "Category \"${category.name}\" deleted successfully")
-            }).show()
-        }
-    })
+    private val adapter = CategoryAdapter { category ->
+        ShowCategoryBottomSheet(category, parentFragmentManager, {
+            val bundle = Bundle()
+            bundle.putString("category", GsonProvider.getSerializer(true).toJson(category))
+            findNavController().navigate(R.id.navigation_add_category, bundle)
+        }, {
+            viewModel.delete(category.id, "categories")
+            makeSnackbar(binding.root, "Category \"${category.name}\" deleted successfully")
+        }).show()
+    }
     private lateinit var binding: FragmentCategoriesBinding
 
     override fun onCreateView(

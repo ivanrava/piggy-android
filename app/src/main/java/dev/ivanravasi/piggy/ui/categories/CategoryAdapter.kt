@@ -1,6 +1,5 @@
 package dev.ivanravasi.piggy.ui.categories
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,17 +17,10 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.CategoryBudget
 import dev.ivanravasi.piggy.databinding.ListItemCategoryBinding
 import dev.ivanravasi.piggy.ui.toCurrency
 
-interface OnCategoryClickListener {
-    fun onCategoryClick(category: Category)
-}
 
 class CategoryAdapter(
-    private val categoryClickListener: OnCategoryClickListener = object : OnCategoryClickListener {
-        override fun onCategoryClick(category: Category) {
-            TODO("Not yet implemented")
-        }
-    },
-    private val noChildren: Boolean = false
+    private val noChildren: Boolean = false,
+    private val categoryClickListener: (category: Category) -> Unit
 ): ListAdapter<Category, CategoryAdapter.CategoryViewHolder>(CategoryDiffCallback()) {
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val category = getItem(position)
@@ -41,10 +33,10 @@ class CategoryAdapter(
 
     class CategoryViewHolder private constructor(
         private val binding: ListItemCategoryBinding,
-        private val listener: OnCategoryClickListener,
+        private val listener: (category: Category) -> Unit,
         private val noChildren: Boolean
     ): RecyclerView.ViewHolder(binding.root) {
-        private val adapterChildren = CategoryAdapter(listener)
+        private val adapterChildren = CategoryAdapter(noChildren = true, listener)
         private var isOpened: Boolean = false
 
         fun bind(category: Category) {
@@ -103,7 +95,7 @@ class CategoryAdapter(
                 }
             }
             binding.cardCategory.setOnClickListener {
-                listener.onCategoryClick(category)
+                listener(category)
             }
         }
 
@@ -118,7 +110,7 @@ class CategoryAdapter(
         }
 
         companion object {
-            fun from(parent: ViewGroup, listener: OnCategoryClickListener, noChildren: Boolean): CategoryViewHolder {
+            fun from(parent: ViewGroup, listener: (category: Category) -> Unit, noChildren: Boolean): CategoryViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ListItemCategoryBinding.inflate(layoutInflater, parent, false)
                 return CategoryViewHolder(binding, listener, noChildren)

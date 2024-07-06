@@ -5,12 +5,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Beneficiary
 import dev.ivanravasi.piggy.ui.beneficiaries.BeneficiaryAdapter
-import dev.ivanravasi.piggy.ui.beneficiaries.OnBeneficiaryClickListener
 import dev.ivanravasi.piggy.ui.common.dialogs.SearchPickerBottomSheet
 
 class SearchBeneficiaryBottomSheet(
     val beneficiaries: List<Beneficiary>,
-    val onBeneficiaryClickListener: OnBeneficiaryClickListener
+    val onBeneficiaryClickListener: (beneficiary: Beneficiary) -> Unit
 ) : SearchPickerBottomSheet<Beneficiary, BeneficiaryAdapter.BeneficiaryViewHolder>() {
     private val SPAN_COUNT = 6
 
@@ -19,12 +18,10 @@ class SearchBeneficiaryBottomSheet(
     }
 
     override fun buildAdapter(): ListAdapter<Beneficiary, BeneficiaryAdapter.BeneficiaryViewHolder> {
-        return BeneficiaryAdapter(object : OnBeneficiaryClickListener {
-            override fun onBeneficiaryClick(beneficiary: Beneficiary) {
-                onBeneficiaryClickListener.onBeneficiaryClick(beneficiary)
-                dismiss()
-            }
-        })
+        return BeneficiaryAdapter {
+            onBeneficiaryClickListener(it)
+            dismiss()
+        }
     }
 
     override fun buildLayoutManager(): RecyclerView.LayoutManager {
