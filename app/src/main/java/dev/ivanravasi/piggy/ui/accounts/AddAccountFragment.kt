@@ -56,7 +56,12 @@ class AddAccountFragment : Fragment() {
         }
 
         viewModel.accountTypes.observe(viewLifecycleOwner) {
-            (binding.editAccountType as? MaterialAutoCompleteTextView)?.setSimpleItems(it.map { it.type }.toTypedArray())
+            if (it.isEmpty())
+                return@observe
+
+            val types = it.map { it.type }.toTypedArray()
+            binding.editAccountType.setSimpleItems(types)
+            binding.editAccountType.setText(types.first(), false)
         }
 
         binding.pickerColor.setOnClickListener {
@@ -87,11 +92,6 @@ class AddAccountFragment : Fragment() {
         }
 
         binding.buttonAdd.setOnClickListener {
-            binding.editAccountType.error = null
-            if (binding.editAccountType.text.isEmpty()) {
-                binding.editAccountType.error = "You need to specify an account type"
-                return@setOnClickListener
-            }
             val request = AccountRequest(
                 binding.editName.text.toString(),
                 viewModel.icon.value,

@@ -77,10 +77,11 @@
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/edit_account_type"
-            android:fontFamily="@font/josefin_slab"
+            android:fontFamily="@font/josefin_slab_semibold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
+            android:textColor="?colorOnSurface"
             />
     </com.google.android.material.textfield.TextInputLayout>
 
