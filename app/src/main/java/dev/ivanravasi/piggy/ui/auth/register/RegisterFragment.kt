@@ -48,11 +48,9 @@ class RegisterFragment : Fragment() {
             val passwordConfirmation = binding.inputPasswordConfirmation.editText!!.text.toString()
             val domain = binding.inputInstanceDomain.editText!!.text.toString()
 
-            if (password != passwordConfirmation) {
-                binding.inputPasswordConfirmation.error = "The passwords do not match"
-            }
+            if (invalid(password, passwordConfirmation, domain))
+                return@setOnClickListener
 
-            // TODO: validate domain
             viewModel.register(domain, name, email, password, passwordConfirmation, {
                 startApp()
             }, {
@@ -65,6 +63,27 @@ class RegisterFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun invalid(
+        password: String,
+        passwordConfirmation: String,
+        domain: String
+    ): Boolean {
+        if (password != passwordConfirmation) {
+            binding.inputPasswordConfirmation.error = "The passwords do not match"
+            return true
+        } else {
+            binding.inputPasswordConfirmation.error = null
+        }
+
+        if (!domain.startsWith("http://") && !domain.startsWith("https://")) {
+            binding.inputInstanceDomain.error = "Not a valid domain"
+            return true
+        } else {
+            binding.inputInstanceDomain.error = null
+        }
+        return false
     }
 
     private fun conditionallyDisableButton() {
