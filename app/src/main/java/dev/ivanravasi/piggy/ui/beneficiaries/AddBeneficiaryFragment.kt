@@ -56,8 +56,10 @@ class AddBeneficiaryFragment : Fragment() {
 
         // Set initial values from editable (if present)
         val beneficiaryStr = arguments?.getString("beneficiary")
-        beneficiaryStr?.let {
-            beneficiaryToUpdate = GsonProvider.getDeserializer().fromJson(it, Beneficiary::class.java)
+        if (beneficiaryStr == null) {
+            updateBeneficiaryFrontend()
+        } else {
+            beneficiaryToUpdate = GsonProvider.getDeserializer().fromJson(beneficiaryStr, Beneficiary::class.java)
 
             binding.beneficiaryType.check(when (beneficiaryToUpdate!!.type()) {
                 BeneficiaryType.PEOPLE -> R.id.people
