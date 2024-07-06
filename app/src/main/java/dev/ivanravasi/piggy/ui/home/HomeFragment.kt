@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.color.DynamicColors
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.data.DataStoreRepository
@@ -32,14 +33,18 @@ class HomeFragment : Fragment() {
         val viewModel = HomeViewModel(dataStoreRepository, navController)
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        runBlocking {
-            binding.switchTheme.isChecked = dataStoreRepository.isMaterialYouEnabled() ?: false
-        }
-        binding.switchTheme.setOnCheckedChangeListener { _, _ ->
+        if (DynamicColors.isDynamicColorAvailable()) {
             runBlocking {
-                dataStoreRepository.toggleMaterialYou()
-                requireActivity().recreate()
+                binding.switchTheme.isChecked = dataStoreRepository.isMaterialYouEnabled() ?: false
             }
+            binding.switchTheme.setOnCheckedChangeListener { _, _ ->
+                runBlocking {
+                    dataStoreRepository.toggleMaterialYou()
+                    requireActivity().recreate()
+                }
+            }
+        } else {
+            binding.switchTheme.visibility = View.GONE
         }
 
         binding.btnLogout.setOnClickListener {
