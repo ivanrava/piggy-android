@@ -11,17 +11,9 @@ import dev.ivanravasi.piggy.databinding.TopListItemAccountBinding
 import dev.ivanravasi.piggy.ui.setAccount
 import dev.ivanravasi.piggy.ui.setCurrency
 
-interface OnAccountClickListener {
-    fun onAccountClick(account: Account)
-}
-
 class TopListAccountAdapter(
     private val requestedStat: String,
-    private val accountClickListener: OnAccountClickListener = object : OnAccountClickListener {
-        override fun onAccountClick(account: Account) {
-            TODO("Not yet implemented")
-        }
-    }
+    private val accountClickListener: (account: Account) -> Unit = {}
 ) : ListAdapter<Stat, TopListAccountAdapter.AccountViewHolder>(StatDiffCallback()) {
     override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {
         val accountStat = getItem(position)
@@ -36,7 +28,7 @@ class TopListAccountAdapter(
         private val binding: TopListItemAccountBinding,
         private val requestedStat: String
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(stat: Stat, listener: OnAccountClickListener) {
+        fun bind(stat: Stat, listener: (account: Account) -> Unit) {
             binding.cardAccount.setAccount(stat)
             if (requestedStat != "count") {
                 binding.statNumber.setCurrency(stat.getStat(requestedStat).toDouble())
