@@ -11,6 +11,7 @@ import dev.ivanravasi.piggy.api.piggy.bodies.entities.Property
 import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentPropertiesBinding
 import dev.ivanravasi.piggy.ui.common.fragments.CRUDFragment
+import dev.ivanravasi.piggy.ui.confirmDeleteWithDialog
 import dev.ivanravasi.piggy.ui.makeSnackbar
 
 class PropertiesFragment : CRUDFragment<Property, PropertyAdapter.PropertyViewHolder>() {
@@ -28,8 +29,10 @@ class PropertiesFragment : CRUDFragment<Property, PropertyAdapter.PropertyViewHo
                     bundle.putString("property", GsonProvider.getSerializer(true).toJson(property))
                     findNavController().navigate(R.id.navigation_add_property, bundle)
                 }, {
-                    viewModel.delete(it.id, "properties")
-                    makeSnackbar(binding.root, "Property \"${it.name}\" deleted successfully")
+                    confirmDeleteWithDialog(it.name) {
+                        viewModel.delete(it.id, "properties")
+                        makeSnackbar(binding.root, "Property \"${it.name}\" deleted successfully")
+                    }
                 }).show()
             }
         }) {

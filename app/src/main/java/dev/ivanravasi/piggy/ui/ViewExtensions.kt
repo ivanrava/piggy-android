@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.iconify.loadIconify
@@ -116,4 +117,16 @@ fun TextView.afterTextChangedDebounced(afterTextChanged: (String) -> Unit) {
             }.start()
         }
     })
+}
+
+fun Fragment.confirmDeleteWithDialog(name: String? = null, onDeleteConfirmed: () -> Unit) {
+    val hint = if (name == null) "this" else "\"$name\""
+    MaterialAlertDialogBuilder(requireContext())
+        .setTitle("Are you sure?")
+        .setMessage("Do you really want to delete $hint?")
+        .setPositiveButton("Yes, delete") { _,_ ->
+            onDeleteConfirmed()
+        }
+        .setNeutralButton("Ignore") { _,_ -> }
+        .show()
 }

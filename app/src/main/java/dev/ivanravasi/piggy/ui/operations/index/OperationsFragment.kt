@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dev.ivanravasi.piggy.R
 import dev.ivanravasi.piggy.api.GsonProvider
 import dev.ivanravasi.piggy.api.iconify.loadIconify
@@ -17,6 +18,7 @@ import dev.ivanravasi.piggy.ui.accountTextColor
 import dev.ivanravasi.piggy.ui.accounts.dialogs.ShowAccountBottomSheet
 import dev.ivanravasi.piggy.ui.backWithSnackbar
 import dev.ivanravasi.piggy.ui.common.fragments.CRUDFragment
+import dev.ivanravasi.piggy.ui.confirmDeleteWithDialog
 import dev.ivanravasi.piggy.ui.makeSnackbar
 import dev.ivanravasi.piggy.ui.operations.index.dialogs.ShowTransactionBottomSheet
 import dev.ivanravasi.piggy.ui.operations.index.dialogs.ShowTransferBottomSheet
@@ -32,8 +34,10 @@ class OperationsFragment : CRUDFragment<Operation, OperationAdapter.OperationVie
             bundle.putString("account", GsonProvider.getSerializer().toJson(viewModel.account.value))
             findNavController().navigate(R.id.navigation_add_transaction, bundle)
         }, {
-            viewModel.delete(it.id, "transactions")
-            makeSnackbar(binding.root, "Transaction deleted successfully")
+            confirmDeleteWithDialog {
+                viewModel.delete(it.id, "transactions")
+                makeSnackbar(binding.root, "Transaction deleted successfully")
+            }
         }).show()
     }, {
         ShowTransferBottomSheet(viewModel.account.value!!, it, parentFragmentManager, {
@@ -42,8 +46,10 @@ class OperationsFragment : CRUDFragment<Operation, OperationAdapter.OperationVie
             bundle.putString("account", GsonProvider.getSerializer().toJson(viewModel.account.value))
             findNavController().navigate(R.id.navigation_add_transfer, bundle)
         }, {
-            viewModel.delete(it.id, "transfers")
-            makeSnackbar(binding.root, "Transfer deleted successfully")
+            confirmDeleteWithDialog {
+                viewModel.delete(it.id, "transfers")
+                makeSnackbar(binding.root, "Transfer deleted successfully")
+            }
         }).show()
     })
 
@@ -95,8 +101,10 @@ class OperationsFragment : CRUDFragment<Operation, OperationAdapter.OperationVie
                     bundle.putString("account", GsonProvider.getSerializer().toJson(it))
                     findNavController().navigate(R.id.navigation_add_account, bundle)
                 }, {
-                    viewModel.delete(it.id, "accounts")
-                    backWithSnackbar(binding.root, "Account \"${it.name}\" deleted successfully")
+                    confirmDeleteWithDialog(it.name) {
+                        viewModel.delete(it.id, "accounts")
+                        backWithSnackbar(binding.root, "Account \"${it.name}\" deleted successfully")
+                    }
                 }).show()
             }
         }

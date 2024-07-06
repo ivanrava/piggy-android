@@ -14,6 +14,7 @@ import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentCategoriesBinding
 import dev.ivanravasi.piggy.ui.categories.dialogs.ShowCategoryBottomSheet
 import dev.ivanravasi.piggy.ui.common.fragments.CRUDFragment
+import dev.ivanravasi.piggy.ui.confirmDeleteWithDialog
 import dev.ivanravasi.piggy.ui.makeSnackbar
 
 class CategoriesFragment : CRUDFragment<Category, CategoryAdapter.CategoryViewHolder>() {
@@ -24,8 +25,10 @@ class CategoriesFragment : CRUDFragment<Category, CategoryAdapter.CategoryViewHo
             bundle.putString("category", GsonProvider.getSerializer(true).toJson(category))
             findNavController().navigate(R.id.navigation_add_category, bundle)
         }, {
-            viewModel.delete(category.id, "categories")
-            makeSnackbar(binding.root, "Category \"${category.name}\" deleted successfully")
+            confirmDeleteWithDialog(it.name) {
+                viewModel.delete(category.id, "categories")
+                makeSnackbar(binding.root, "Category \"${category.name}\" deleted successfully")
+            }
         }).show()
     }
     private lateinit var binding: FragmentCategoriesBinding

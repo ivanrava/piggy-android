@@ -13,6 +13,7 @@ import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentBeneficiariesBinding
 import dev.ivanravasi.piggy.ui.beneficiaries.dialogs.ShowBeneficiaryBottomSheet
 import dev.ivanravasi.piggy.ui.common.fragments.CRUDFragment
+import dev.ivanravasi.piggy.ui.confirmDeleteWithDialog
 import dev.ivanravasi.piggy.ui.makeSnackbar
 
 private const val SPAN_COUNT = 5
@@ -35,8 +36,10 @@ class BeneficiariesFragment : CRUDFragment<Beneficiary, BeneficiaryAdapter.Benef
                 bundle.putString("beneficiary", GsonProvider.getSerializer().toJson(beneficiary))
                 findNavController().navigate(R.id.navigation_add_beneficiary, bundle)
             }, {
-                viewModel.delete(it.id, "beneficiaries")
-                makeSnackbar(binding.root, "Beneficiary \"${it.name}\" deleted successfully")
+                confirmDeleteWithDialog(it.name) {
+                    viewModel.delete(it.id, "beneficiaries")
+                    makeSnackbar(binding.root, "Beneficiary \"${it.name}\" deleted successfully")
+                }
             }).show()
         }
         setup(
