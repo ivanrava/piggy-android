@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.color.DynamicColors
 import dev.ivanravasi.piggy.R
+import dev.ivanravasi.piggy.api.GsonProvider
 import dev.ivanravasi.piggy.api.piggy.bodies.entities.Account
 import dev.ivanravasi.piggy.data.DataStoreRepository
 import dev.ivanravasi.piggy.databinding.FragmentHomeBinding
@@ -75,7 +76,7 @@ class HomeFragment : Fragment() {
 
         val adapter = AccountAdapter {
             val bundle = Bundle()
-            bundle.putLong("id", it.id)
+            bundle.putString("account", GsonProvider.getSerializer().toJson(it))
             navController.navigate(R.id.navigation_operations, bundle)
         }
         binding.listRecentAccounts.adapter = adapter
