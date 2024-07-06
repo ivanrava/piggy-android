@@ -41,6 +41,10 @@ class VicoChartLoaderView(
     )
     private lateinit var chartData: Chart
 
+    fun something() {
+
+    }
+
     init {
         chartView = binding.chartHost
         chartView.modelProducer = CartesianChartModelProducer.build()
@@ -77,7 +81,6 @@ class VicoChartLoaderView(
                     }
                 } else {
                     columnSeries {
-                        // TODO: factor duplicate
                         if (statsOut.isNotEmpty()) {
                             series(
                                 y = statsOut.map { it.getStat(chartData.stat).toDouble() },
