@@ -31,6 +31,7 @@ class ShowTransferBottomSheet(
         binding.from.setAccount(transfer.from ?: account)
         binding.to.setAccount(transfer.to ?: account)
         binding.amount.setCurrency(transfer.amount.toDouble() * if (transfer.to == null) 1 else -1, true)
+        binding.amount.alpha = if (transfer.checked) 1f else 0.2f
         binding.date.setDate(transfer.date)
         binding.notes.text = transfer.notes
         if (transfer.notes == null || transfer.notes.isEmpty()) {

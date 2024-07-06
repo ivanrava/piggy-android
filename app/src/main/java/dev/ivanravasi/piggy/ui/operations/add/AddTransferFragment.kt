@@ -89,6 +89,7 @@ class AddTransferFragment : Fragment() {
             binding.editDate.setText(transferToUpdate!!.date)
             binding.editAmount.setText(transferToUpdate!!.amount)
             binding.editNotes.setText(transferToUpdate!!.notes)
+            binding.switchChecked.isChecked = transferToUpdate!!.checked
 
             binding.buttonAdd.text = requireContext().getString(R.string.update_transfer)
             binding.addTitle.text = requireContext().getString(R.string.update_transfer)
@@ -126,7 +127,6 @@ class AddTransferFragment : Fragment() {
             (viewModel.otherAccount.value != null && viewModel.otherAccount.value!!.type == "Bank account")
             || (account.type == "Bank account")
         ) {
-            binding.switchChecked.isChecked = false
             binding.switchChecked.visibility = View.VISIBLE
         } else {
             binding.switchChecked.isChecked = true

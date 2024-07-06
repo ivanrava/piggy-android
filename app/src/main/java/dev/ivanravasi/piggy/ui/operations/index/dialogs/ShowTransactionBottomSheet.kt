@@ -42,6 +42,7 @@ class ShowTransactionBottomSheet(
         binding.categoryIcon.loadIconify(transaction.category.icon, binding.categoryName.currentTextColor)
 
         binding.amount.setCurrency(transaction.amount.toDouble() * if (transaction.category.type() == CategoryType.IN) 1 else -1, true)
+        binding.amount.alpha = if (transaction.checked) 1f else 0.2f
         binding.date.setDate(transaction.date)
 
         binding.notes.text = transaction.notes

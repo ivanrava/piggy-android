@@ -42,7 +42,9 @@ class OperationAdapter(
     }
 
     abstract class OperationViewHolder(val root: View) : RecyclerView.ViewHolder(root) {
+        val UNCHECKED_ALPHA = 0.2f
         abstract fun bind(operation: Operation)
+        fun alpha(checked: Boolean) = if (checked) 1.0f else UNCHECKED_ALPHA
     }
 
     class TransactionViewHolder private constructor(
@@ -62,6 +64,7 @@ class OperationAdapter(
             }
 
             binding.value.setCurrency(transaction.amount.toDouble() * if (transaction.category.type() == CategoryType.OUT) -1 else 1, true)
+            binding.value.alpha = alpha(transaction.checked)
             binding.date.setDate(transaction.date)
 
             binding.root.setOnClickListener {
@@ -95,6 +98,7 @@ class OperationAdapter(
                 binding.cardAccount.cardAccount.visibility = View.GONE
 
             binding.value.setCurrency(transfer.amount.toDouble() * if (transfer.to != null) -1 else 1, true)
+            binding.value.alpha = alpha(transfer.checked)
             binding.date.setDate(transfer.date)
 
             binding.root.setOnClickListener {

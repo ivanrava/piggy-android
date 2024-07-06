@@ -117,4 +117,5 @@
     <string name="edit_this_transaction">Edit this transaction</string>
     <string name="delete_this_transfer">Delete this transfer</string>
     <string name="edit_this_transfer">Edit this transfer</string>
+    <string name="no_beneficiary_selected">No beneficiary selected</string>
 </resources>

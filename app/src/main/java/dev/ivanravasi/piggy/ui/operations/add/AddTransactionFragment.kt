@@ -59,7 +59,7 @@ class AddTransactionFragment : Fragment() {
                 setBeneficiary(it)
                 binding.cardBeneficiary.beneficiaryCard.setStrokeColor(defaultCardStrokeColor)
             } else {
-                binding.beneficiaryName.text = "No beneficiary selected"
+                binding.beneficiaryName.text = getString(R.string.no_beneficiary_selected)
             }
         }
         viewModel.category.observe(viewLifecycleOwner) {
@@ -100,6 +100,7 @@ class AddTransactionFragment : Fragment() {
             binding.editDate.setText(transactionToUpdate!!.date)
             binding.editAmount.setText(transactionToUpdate!!.amount)
             binding.editNotes.setText(transactionToUpdate!!.notes)
+            binding.switchChecked.isChecked = transactionToUpdate!!.checked
 
             binding.buttonAdd.text = requireContext().getString(R.string.update_transaction)
             binding.addTitle.text = requireContext().getString(R.string.update_transaction)
