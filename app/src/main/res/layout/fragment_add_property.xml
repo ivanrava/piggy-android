@@ -58,8 +58,7 @@
             android:id="@+id/input_initial_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:endIconDrawable="@drawable/ic_money_24"
-            app:endIconMode="custom">
+            app:prefixText="@string/prefix_value">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_initial_value"

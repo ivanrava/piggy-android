@@ -141,4 +141,5 @@
     <string name="average">Average</string>
     <string name="max">Max</string>
     <string name="subtitle_top_list_options">Top list options</string>
+    <string name="prefix_value">€</string>
 </resources>
