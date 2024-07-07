@@ -35,7 +35,8 @@ open class CRUDFragment<T, Q : ViewHolder?>: Fragment() {
         }
 
         viewModel.error.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+            if (it.isNotEmpty())
+                Toast.makeText(context, it, Toast.LENGTH_LONG).show()
         }
     }
 }

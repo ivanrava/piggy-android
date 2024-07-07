@@ -55,7 +55,8 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.error.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+            if (it.isNotEmpty())
+                Toast.makeText(context, it, Toast.LENGTH_LONG).show()
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {

@@ -82,7 +82,7 @@
                 android:gravity="end|center"
                 android:textAlignment="textEnd"
                 android:layout_marginHorizontal="8dp"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:fontFamily="@font/inter_light"
                 tools:text="0.00 €"
                 />
