@@ -48,7 +48,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/inter_bold"
             android:maxLines="1"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@id/beneficiary_edit_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/card_beneficiary"
@@ -63,7 +63,7 @@
             android:layout_marginStart="16dp"
             android:fontFamily="@font/inter_light"
             android:text="@string/card_edit_hint"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@id/card_beneficiary"
             app:layout_constraintTop_toBottomOf="@id/beneficiary_name" />
 

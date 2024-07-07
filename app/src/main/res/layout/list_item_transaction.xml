@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter"
-        android:textSize="28sp"
+        android:textSize="24sp"
         tools:textColor="@color/in_value"
         tools:text="-42,42 €" />
     <com.google.android.material.textview.MaterialTextView

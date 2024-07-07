@@ -36,7 +36,7 @@
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/inter_bold"
                 tools:text="Property name"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@id/property_description"
                 app:layout_constraintStart_toEndOf="@+id/property_icon"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -35,7 +35,7 @@
         android:fontFamily="@font/inter_bold"
         android:maxLines="1"
         android:textAlignment="textEnd"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@id/category_edit_hint"
         app:layout_constraintEnd_toStartOf="@id/card_category"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +52,7 @@
         android:fontFamily="@font/inter_light"
         android:text="@string/card_edit_hint"
         android:textAlignment="textEnd"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/card_category"
         app:layout_constraintEnd_toStartOf="@id/card_category" />
 </androidx.constraintlayout.widget.ConstraintLayout>
