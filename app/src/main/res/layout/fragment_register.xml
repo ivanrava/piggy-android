@@ -1,125 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".ui.auth.login.LoginFragment">
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/vseparation_fields"
-        android:fontFamily="@font/josefin_slab"
-        android:text="@string/fragment_title_register"
-        android:textSize="@dimen/title_size" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/text_input_layout"
-        android:id="@+id/input_email"
+    android:layout_height="wrap_content">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:endIconDrawable="@drawable/ic_mail_24"
-        app:endIconMode="custom">
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:context=".ui.auth.login.LoginFragment">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_email"
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/vseparation_fields"
+            android:fontFamily="@font/josefin_slab"
+            android:text="@string/fragment_title_register"
+            android:textSize="@dimen/title_size" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/text_input_layout"
+            android:id="@+id/input_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:hint="@string/hint_email"
-            android:inputType="textEmailAddress"
-            android:paddingBottom="@dimen/vseparation_fields" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:endIconDrawable="@drawable/ic_mail_24"
+            app:endIconMode="custom">
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/text_input_layout"
-        android:id="@+id/input_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:endIconDrawable="@drawable/ic_beneficiaries_24"
-        app:endIconMode="custom">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="@string/hint_email"
+                android:inputType="textEmailAddress"
+                android:paddingBottom="@dimen/vseparation_fields" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_name"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/text_input_layout"
+            android:id="@+id/input_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:hint="@string/name_hint"
-            android:inputType="textEmailAddress"
-            android:paddingBottom="@dimen/vseparation_fields" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:endIconDrawable="@drawable/ic_beneficiaries_24"
+            app:endIconMode="custom">
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/text_input_layout"
-        android:id="@+id/input_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:passwordToggleEnabled="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="@string/name_hint"
+                android:inputType="textEmailAddress"
+                android:paddingBottom="@dimen/vseparation_fields" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_password"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/text_input_layout"
+            android:id="@+id/input_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:hint="@string/hint_password"
-            android:inputType="textPassword"
-            android:paddingBottom="@dimen/vseparation_fields" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:passwordToggleEnabled="true">
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/text_input_layout"
-        android:id="@+id/input_password_confirmation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:paddingBottom="@dimen/vseparation_fields" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_password_confirm"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/text_input_layout"
+            android:id="@+id/input_password_confirmation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_password_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="@string/hint_password_confirm"
+                android:inputType="textPassword"
+                android:paddingBottom="@dimen/vseparation_fields" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/text_input_layout"
+            android:id="@+id/input_instance_domain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:hint="@string/hint_password_confirm"
-            android:inputType="textPassword"
-            android:paddingBottom="@dimen/vseparation_fields" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:endIconDrawable="@drawable/ic_instance_24"
+            app:endIconMode="custom">
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/text_input_layout"
-        android:id="@+id/input_instance_domain"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:endIconDrawable="@drawable/ic_instance_24"
-        app:endIconMode="custom">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_instance_domain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="@string/hint_instance_domain"
+                android:inputType="text"
+                android:paddingBottom="@dimen/vseparation_fields" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_instance_domain"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_sign_up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:hint="@string/hint_instance_domain"
-            android:inputType="text"
-            android:paddingBottom="@dimen/vseparation_fields" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginVertical="@dimen/vseparation_small"
+            android:enabled="false"
+            android:fontFamily="@font/inter"
+            android:padding="@dimen/vseparation_fields"
+            android:text="@string/button_sign_up"
+            android:textSize="@dimen/button_text_size"
+            app:cornerRadius="@dimen/corner_radius" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_sign_up"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/vseparation_small"
-        android:enabled="false"
-        android:fontFamily="@font/inter"
-        android:padding="@dimen/vseparation_fields"
-        android:text="@string/button_sign_up"
-        android:textSize="@dimen/button_text_size"
-        app:cornerRadius="@dimen/corner_radius" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/link_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/vseparation_medium"
+            android:text="@string/link_login" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/link_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/vseparation_medium"
-        android:text="@string/link_login" />
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
