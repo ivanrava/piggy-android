@@ -1,129 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="@dimen/fragment_padding"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/add_title"
-        style="@style/fragment_title"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/title_new_beneficiary" />
+        android:padding="@dimen/fragment_padding"
+        >
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/add_title"
+            style="@style/fragment_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_new_beneficiary" />
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/beneficiary_type"
-        app:layout_constraintTop_toBottomOf="@id/add_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:singleSelection="true"
-        app:selectionRequired="true"
-        android:layout_marginVertical="@dimen/vseparation_small"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content">
-        <com.google.android.material.button.MaterialButton
-            style="?attr/materialButtonOutlinedStyle"
-            android:id="@+id/people"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/type_people"
-            app:icon="@drawable/ic_person_24"
-            />
-        <com.google.android.material.button.MaterialButton
-            style="?attr/materialButtonOutlinedStyle"
-            android:id="@+id/companies"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/type_companies"
-            app:icon="@drawable/ic_domain_24"
-            />
-        <com.google.android.material.button.MaterialButton
-            style="?attr/materialButtonOutlinedStyle"
-            android:id="@+id/generic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/type_generic"
-            app:icon="@drawable/ic_categories_24"
-            />
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/beneficiary_type"
+            app:layout_constraintTop_toBottomOf="@id/add_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            android:layout_marginVertical="@dimen/vseparation_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <com.google.android.material.button.MaterialButton
+                style="?attr/materialButtonOutlinedStyle"
+                android:id="@+id/people"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/type_people"
+                app:icon="@drawable/ic_person_24"
+                />
+            <com.google.android.material.button.MaterialButton
+                style="?attr/materialButtonOutlinedStyle"
+                android:id="@+id/companies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/type_companies"
+                app:icon="@drawable/ic_domain_24"
+                />
+            <com.google.android.material.button.MaterialButton
+                style="?attr/materialButtonOutlinedStyle"
+                android:id="@+id/generic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/type_generic"
+                app:icon="@drawable/ic_categories_24"
+                />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/beneficiary_card"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/beneficiary_type"
-        android:layout_marginTop="@dimen/vseparation_medium"
-        app:strokeWidth="0dp"
-        android:elevation="1dp"
-        android:layout_width="128dp"
-        android:layout_height="0dp">
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@id/beneficiary_img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/beneficiary_card"
             app:layout_constraintDimensionRatio="w,1:1"
-            tools:src="@drawable/logo_align_left" />
-    </com.google.android.material.card.MaterialCardView>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/beneficiary_type"
+            android:layout_marginTop="@dimen/vseparation_medium"
+            app:strokeWidth="0dp"
+            android:elevation="1dp"
+            android:layout_width="128dp"
+            android:layout_height="0dp">
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@id/beneficiary_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintDimensionRatio="w,1:1"
+                tools:src="@drawable/logo_align_left" />
+        </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/beneficiary_card"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        style="@style/text_input_layout"
-        app:endIconDrawable="@drawable/ic_text_24"
-        app:endIconMode="custom">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/beneficiary_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/text_input_layout"
+            app:endIconDrawable="@drawable/ic_text_24"
+            app:endIconMode="custom">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_name"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="@string/name_hint"
+                android:inputType="text"
+                android:paddingBottom="@dimen/vseparation_fields" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_domain"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_name"
+            style="@style/text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:hint="@string/name_hint"
-            android:inputType="text"
-            android:paddingBottom="@dimen/vseparation_fields" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:endIconDrawable="@drawable/ic_domain_24"
+            app:endIconMode="custom">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_domain"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_name"
-        style="@style/text_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:endIconDrawable="@drawable/ic_domain_24"
-        app:endIconMode="custom">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_domain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="@string/domain_hint"
+                android:inputType="text"
+                android:paddingBottom="@dimen/vseparation_fields" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_domain"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_add"
+            app:layout_constraintTop_toBottomOf="@id/input_domain"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:hint="@string/domain_hint"
-            android:inputType="text"
-            android:paddingBottom="@dimen/vseparation_fields" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:enabled="true"
+            android:text="@string/button_add_beneficiary"
+            style="@style/button_submit" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_add"
-        app:layout_constraintTop_toBottomOf="@id/input_domain"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:enabled="true"
-        android:text="@string/button_add_beneficiary"
-        style="@style/button_submit" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

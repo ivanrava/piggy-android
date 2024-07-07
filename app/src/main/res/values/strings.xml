@@ -118,4 +118,27 @@
     <string name="delete_this_transfer">Delete this transfer</string>
     <string name="edit_this_transfer">Edit this transfer</string>
     <string name="no_beneficiary_selected">No beneficiary selected</string>
+    <string name="new_chart">New chart</string>
+    <string name="chart_type_top_list">Top list</string>
+    <string name="chart_type_history">History</string>
+    <string name="subtitle_in_out_history">In / Out History</string>
+    <string name="monthly">Monthly</string>
+    <string name="yearly">Yearly</string>
+    <string name="line">Line</string>
+    <string name="bar_column">Bar / Column</string>
+    <string name="account">Account</string>
+    <string name="category">Category</string>
+    <string name="beneficiary">Beneficiary</string>
+    <string name="beneficiaries">Beneficiaries</string>
+    <string name="categories">Categories</string>
+    <string name="accounts">Accounts</string>
+    <string name="timeframe_all_time">All time</string>
+    <string name="timeframe_last_year">Last year</string>
+    <string name="timeframe_last_month">Last month</string>
+    <string name="add_chart">Add chart</string>
+    <string name="sum">Sum</string>
+    <string name="count">Count</string>
+    <string name="average">Average</string>
+    <string name="max">Max</string>
+    <string name="subtitle_top_list_options">Top list options</string>
 </resources>

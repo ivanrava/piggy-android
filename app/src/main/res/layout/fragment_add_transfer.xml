@@ -1,154 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/fragment_padding">
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/add_title"
-        style="@style/fragment_title"
-        android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/title_new_transfer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:padding="@dimen/fragment_padding">
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        app:layout_constraintTop_toBottomOf="@+id/add_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/toggle_transfer_type"
-        android:id="@+id/loading_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/progress_initial_api_request" />
-
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggle_transfer_type"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_title"
-        app:singleSelection="true"
-        app:selectionRequired="true"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content">
-        <com.google.android.material.button.MaterialButton
-            style="?attr/materialButtonOutlinedStyle"
-            android:id="@+id/button_outcome"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/add_title"
+            style="@style/fragment_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/type_to"
-            app:icon="@drawable/ic_right_24"
-            app:iconGravity="textStart"
-            />
-        <com.google.android.material.button.MaterialButton
-            style="?attr/materialButtonOutlinedStyle"
-            android:id="@+id/button_income"
+            android:text="@string/title_new_transfer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            app:layout_constraintTop_toBottomOf="@+id/add_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/toggle_transfer_type"
+            android:id="@+id/loading_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/type_from"
-            app:icon="@drawable/ic_left_24"
-            app:iconGravity="textStart"
-            />
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+            style="@style/progress_initial_api_request" />
 
-    <include
-        android:id="@+id/card_account"
-        layout="@layout/card_account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toggle_transfer_type" />
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggle_transfer_type"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_title"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <com.google.android.material.button.MaterialButton
+                style="?attr/materialButtonOutlinedStyle"
+                android:id="@+id/button_outcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/type_to"
+                app:icon="@drawable/ic_right_24"
+                app:iconGravity="textStart"
+                />
+            <com.google.android.material.button.MaterialButton
+                style="?attr/materialButtonOutlinedStyle"
+                android:id="@+id/button_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/type_from"
+                app:icon="@drawable/ic_left_24"
+                app:iconGravity="textStart"
+                />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_date"
-        style="@style/text_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:endIconDrawable="@drawable/ic_calendar_24"
-        android:layout_marginVertical="16dp"
-        app:endIconMode="custom"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_account">
+        <include
+            android:id="@+id/card_account"
+            layout="@layout/card_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toggle_transfer_type" />
 
-        <dev.ivanravasi.piggy.ui.common.views.TextInputEditDate
-            android:id="@+id/edit_date"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_date"
+            style="@style/text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:hint="@string/date_hint"
-            android:paddingBottom="@dimen/vseparation_fields" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:endIconDrawable="@drawable/ic_calendar_24"
+            android:layout_marginVertical="16dp"
+            app:endIconMode="custom"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_account">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_amount"
-        style="@style/text_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:endIconDrawable="@drawable/ic_money_24"
-        app:endIconMode="custom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_date">
+            <dev.ivanravasi.piggy.ui.common.views.TextInputEditDate
+                android:id="@+id/edit_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="@string/date_hint"
+                android:paddingBottom="@dimen/vseparation_fields" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_amount"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_amount"
+            style="@style/text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:hint="@string/value_hint"
-            android:inputType="numberDecimal"
-            android:paddingBottom="@dimen/vseparation_fields" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:endIconDrawable="@drawable/ic_money_24"
+            app:endIconMode="custom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_date">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_notes"
-        style="@style/text_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_amount">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="@string/value_hint"
+                android:inputType="numberDecimal"
+                android:paddingBottom="@dimen/vseparation_fields" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_notes"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_notes"
+            style="@style/text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:gravity="top"
-            android:hint="@string/notes_hint"
-            android:inputType="textMultiLine"
-            android:lines="4"
-            android:paddingBottom="@dimen/vseparation_fields" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_amount">
 
-    <com.google.android.material.materialswitch.MaterialSwitch
-        android:id="@+id/switch_checked"
-        app:layout_constraintTop_toBottomOf="@id/input_notes"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/switch_padding_start"
-        android:paddingEnd="@dimen/switch_padding_end"
-        android:text="@string/checked" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:gravity="top"
+                android:hint="@string/notes_hint"
+                android:inputType="textMultiLine"
+                android:lines="4"
+                android:paddingBottom="@dimen/vseparation_fields" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_add"
-        style="@style/button_submit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:enabled="true"
-        android:text="@string/button_add_transfer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/switch_checked" />
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switch_checked"
+            app:layout_constraintTop_toBottomOf="@id/input_notes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/switch_padding_start"
+            android:paddingEnd="@dimen/switch_padding_end"
+            android:text="@string/checked" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_add"
+            style="@style/button_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="true"
+            android:text="@string/button_add_transfer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/switch_checked" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

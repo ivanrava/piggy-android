@@ -1,168 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:padding="@dimen/fragment_padding"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/add_title"
-        style="@style/fragment_title"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title_new_account" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/picker_icon"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/fragment_padding">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/add_title"
+            style="@style/fragment_title"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginVertical="0dp"
-            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/title_new_account" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/picker_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginVertical="0dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/text_input_layout"
+                app:endIconDrawable="@drawable/ic_text_24"
+                app:endIconMode="custom">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/josefin_slab_semibold"
+                    android:hint="@string/name_hint"
+                    android:inputType="text"
+                    android:paddingBottom="@dimen/vseparation_fields" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <dev.ivanravasi.piggy.ui.common.iconify.IconPickerView
+                android:id="@+id/picker_icon"
+                app:layout_constraintStart_toEndOf="@id/input_name"
+                app:layout_constraintEnd_toStartOf="@id/picker_color"
+                app:layout_constraintTop_toTopOf="@id/input_name"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/ic_icon_24"
+                app:layout_constraintDimensionRatio="w,1:1"
+                style="@style/icon_picker_baseline" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/picker_color"
+                app:layout_constraintTop_toTopOf="@id/input_name"
+                app:layout_constraintStart_toEndOf="@id/picker_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@string/color_picker_description"
+                style="@style/Widget.Material3.Button.IconButton.Filled"
+                android:layout_marginTop="4dp"
+                app:icon="@drawable/ic_color_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_account_type"
+            android:layout_marginVertical="4dp"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:boxCornerRadiusBottomEnd="@dimen/corner_radius"
+            app:boxCornerRadiusBottomStart="@dimen/corner_radius"
+            app:boxCornerRadiusTopEnd="@dimen/corner_radius"
+            app:boxCornerRadiusTopStart="@dimen/corner_radius"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/edit_account_type"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textColor="?colorOnSurface"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_opening"
             style="@style/text_input_layout"
-            app:endIconDrawable="@drawable/ic_text_24"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:endIconDrawable="@drawable/ic_calendar_24"
             app:endIconMode="custom">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_name"
+            <dev.ivanravasi.piggy.ui.common.views.TextInputEditDate
+                android:id="@+id/edit_opening"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/josefin_slab_semibold"
-                android:hint="@string/name_hint"
-                android:inputType="text"
+                android:hint="@string/opening_hint"
+                android:focusable="false"
                 android:paddingBottom="@dimen/vseparation_fields" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <dev.ivanravasi.piggy.ui.common.iconify.IconPickerView
-            android:id="@+id/picker_icon"
-            app:layout_constraintStart_toEndOf="@id/input_name"
-            app:layout_constraintEnd_toStartOf="@id/picker_color"
-            app:layout_constraintTop_toTopOf="@id/input_name"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/ic_icon_24"
-            app:layout_constraintDimensionRatio="w,1:1"
-            style="@style/icon_picker_baseline" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_closing"
+            style="@style/text_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:endIconDrawable="@drawable/ic_calendar_24"
+            app:endIconMode="custom">
+
+            <dev.ivanravasi.piggy.ui.common.views.TextInputEditDate
+                android:id="@+id/edit_closing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="@string/closing_hint"
+                android:focusable="false"
+                android:paddingBottom="@dimen/vseparation_fields" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/text_input_layout"
+            android:id="@+id/input_initial_balance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:endIconDrawable="@drawable/ic_money_24"
+            app:endIconMode="custom">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_initial_balance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="@string/initial_balance_hint"
+                android:inputType="numberDecimal"
+                android:paddingBottom="@dimen/vseparation_fields" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/text_input_layout"
+            android:id="@+id/input_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="4"
+                android:gravity="top"
+                android:fontFamily="@font/josefin_slab_semibold"
+                android:hint="@string/notes_hint"
+                android:inputType="textMultiLine"
+                android:paddingBottom="@dimen/vseparation_fields" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/picker_color"
-            app:layout_constraintTop_toTopOf="@id/input_name"
-            app:layout_constraintStart_toEndOf="@id/picker_icon"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="@string/color_picker_description"
-            style="@style/Widget.Material3.Button.IconButton.Filled"
-            android:layout_marginTop="4dp"
-            app:icon="@drawable/ic_color_24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_account_type"
-        android:layout_marginVertical="4dp"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        app:boxCornerRadiusBottomEnd="@dimen/corner_radius"
-        app:boxCornerRadiusBottomStart="@dimen/corner_radius"
-        app:boxCornerRadiusTopEnd="@dimen/corner_radius"
-        app:boxCornerRadiusTopStart="@dimen/corner_radius"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/edit_account_type"
-            android:fontFamily="@font/josefin_slab_semibold"
+            android:id="@+id/button_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="none"
-            android:textColor="?colorOnSurface"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:enabled="true"
+            android:text="@string/button_add_account"
+            style="@style/button_submit" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_opening"
-        style="@style/text_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:endIconDrawable="@drawable/ic_calendar_24"
-        app:endIconMode="custom">
-
-        <dev.ivanravasi.piggy.ui.common.views.TextInputEditDate
-            android:id="@+id/edit_opening"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:hint="@string/opening_hint"
-            android:focusable="false"
-            android:paddingBottom="@dimen/vseparation_fields" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_closing"
-        style="@style/text_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:endIconDrawable="@drawable/ic_calendar_24"
-        app:endIconMode="custom">
-
-        <dev.ivanravasi.piggy.ui.common.views.TextInputEditDate
-            android:id="@+id/edit_closing"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:hint="@string/closing_hint"
-            android:focusable="false"
-            android:paddingBottom="@dimen/vseparation_fields" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/text_input_layout"
-        android:id="@+id/input_initial_balance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:endIconDrawable="@drawable/ic_money_24"
-        app:endIconMode="custom">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_initial_balance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:hint="@string/initial_balance_hint"
-            android:inputType="numberDecimal"
-            android:paddingBottom="@dimen/vseparation_fields" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/text_input_layout"
-        android:id="@+id/input_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lines="4"
-            android:gravity="top"
-            android:fontFamily="@font/josefin_slab_semibold"
-            android:hint="@string/notes_hint"
-            android:inputType="textMultiLine"
-            android:paddingBottom="@dimen/vseparation_fields" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:enabled="true"
-        android:text="@string/button_add_account"
-        style="@style/button_submit" />
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
