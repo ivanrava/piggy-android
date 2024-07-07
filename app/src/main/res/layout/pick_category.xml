@@ -19,8 +19,8 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/category_icon"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:padding="16dp"
             tools:src="@drawable/ic_categories_24" />
     </com.google.android.material.card.MaterialCardView>
