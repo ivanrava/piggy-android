@@ -56,9 +56,9 @@
                 app:layout_constraintTop_toBottomOf="@id/property_description"
                 app:layout_constraintStart_toStartOf="parent"
                 app:cornerRadius="@dimen/corner_radius"
-                android:textSize="20sp"
                 android:fontFamily="@font/inter_bold"
-                android:text="@string/minus"
+                style="@style/Widget.Material3.Button.IconButton.Filled"
+                app:icon="@drawable/ic_minus_24"
                 />
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_plus"
@@ -67,9 +67,9 @@
                 app:layout_constraintTop_toBottomOf="@id/property_description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:cornerRadius="@dimen/corner_radius"
-                android:textSize="20sp"
                 android:fontFamily="@font/inter_bold"
-                android:text="@string/plus"
+                style="@style/Widget.Material3.Button.IconButton.Filled"
+                app:icon="@drawable/ic_plus_24"
                 />
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/property_value"
